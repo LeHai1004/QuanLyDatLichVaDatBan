@@ -11,7 +11,10 @@ object SeedData {
         val category: String, val lat: Double, val lng: Double, val rating: Double
     )
 
-    private data class T(val name: String, val floor: Int, val type: String, val capacity: Int)
+    private data class T(
+        val name: String, val floor: Int, val type: String, val capacity: Int,
+        val x: Double, val y: Double
+    )
     private data class M(val name: String, val price: Long, val category: String)
 
     private val restaurants = listOf(
@@ -21,13 +24,15 @@ object SeedData {
     )
 
     // Mỗi quán dùng chung bộ bàn này: 2 tầng, có bàn và phòng
+    // Tọa độ x, y chuẩn hóa 0-100 trên khung sơ đồ tầng (khớp frame IndoorMap)
     private val tables = listOf(
-        T("Bàn 1", 1, "table", 2),
-        T("Bàn 2", 1, "table", 4),
-        T("Bàn 3", 1, "table", 4),
-        T("Phòng VIP 1", 2, "room", 8),
-        T("Phòng VIP 2", 2, "room", 10),
-        T("Bàn 4", 2, "table", 6)
+        T("Bàn 1", 1, "table", 2, 20.0, 30.0),
+        T("Bàn 2", 1, "table", 4, 80.0, 30.0),
+        T("Bàn 3", 1, "table", 4, 20.0, 70.0),
+        T("Phòng VIP 1", 2, "room", 8, 22.0, 27.0),
+        T("Phòng VIP 2", 2, "room", 10, 78.0, 27.0),
+        T("Phòng VIP 3", 2, "room", 8, 22.0, 58.0),
+        T("Phòng VIP 4", 2, "room", 10, 78.0, 58.0)
     )
 
     private val menus = mapOf(
@@ -74,7 +79,7 @@ object SeedData {
                 val id = "${r.id}_t${i + 1}"
                 batch.set(rRef.collection("tables").document(id), mapOf(
                     "id" to id, "name" to t.name, "floor" to t.floor, "type" to t.type,
-                    "capacity" to t.capacity, "mapX" to 0.0, "mapY" to 0.0,
+                    "capacity" to t.capacity, "mapX" to t.x, "mapY" to t.y,
                     "status" to "available", "qrCode" to id
                 ))
             }
