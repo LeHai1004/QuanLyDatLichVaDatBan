@@ -1,0 +1,1 @@
+Đọc và tuân thủ toàn bộ file AGENTS.md ở thư mục gốc repo. Không dùng Playwright.
