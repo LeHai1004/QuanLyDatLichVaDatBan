@@ -2,4 +2,15 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <!-- Navigation and shared state colors -->
+    <color name="booktable_cream">#FFF8F2</color>
+    <color name="booktable_orange">#E8622C</color>
+    <color name="booktable_dark">#2B1B14</color>
+    <color name="booktable_muted">#8A7468</color>
+    <color name="booktable_border">#EEDACF</color>
+    <color name="booktable_surface">#FFFFFF</color>
+    <color name="booktable_active">#C94A1A</color>
+    <color name="booktable_nav_active">#FFE5D6</color>
+    <color name="booktable_error">#B93825</color>
 </resources>

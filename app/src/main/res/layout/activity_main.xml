@@ -5,15 +5,71 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/booktable_cream"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/nav_host_fragment"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/nav_bottom"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
+    <LinearLayout
+        android:id="@+id/nav_bottom"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/nav_bottom_height"
+        android:layout_marginStart="@dimen/nav_bottom_margin_horizontal"
+        android:layout_marginEnd="@dimen/nav_bottom_margin_horizontal"
+        android:layout_marginBottom="@dimen/nav_bottom_margin_bottom"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:background="@drawable/bg_bottom_navigation"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/nav_item_1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            tools:ignore="UseCompoundDrawables">
+            <ImageView
+                android:id="@+id/ivNav1"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:src="@drawable/ic_nav_home"
+                android:contentDescription="@string/nav_home" />
+            <TextView
+                android:id="@+id/tvNav1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:text="@string/nav_home"
+                android:textSize="10sp"
+                android:textColor="@color/booktable_muted" />
+        </LinearLayout>
+
+        <LinearLayout android:id="@+id/nav_item_2" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+            <ImageView android:id="@+id/ivNav2" android:layout_width="@dimen/nav_icon_size" android:layout_height="@dimen/nav_icon_size" android:src="@drawable/ic_nav_calendar" android:contentDescription="@string/nav_booking" />
+            <TextView android:id="@+id/tvNav2" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="@string/nav_booking" android:textSize="10sp" android:textColor="@color/booktable_muted" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/nav_item_3" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+            <ImageView android:id="@+id/ivNav3" android:layout_width="@dimen/nav_icon_size" android:layout_height="@dimen/nav_icon_size" android:src="@drawable/ic_nav_history" android:contentDescription="@string/nav_history" />
+            <TextView android:id="@+id/tvNav3" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="@string/nav_history" android:textSize="10sp" android:textColor="@color/booktable_muted" />
+        </LinearLayout>
+        <LinearLayout android:id="@+id/nav_item_4" android:layout_width="0dp" android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical" android:gravity="center">
+            <ImageView android:id="@+id/ivNav4" android:layout_width="@dimen/nav_icon_size" android:layout_height="@dimen/nav_icon_size" android:src="@drawable/ic_nav_profile" android:contentDescription="@string/nav_profile" />
+            <TextView android:id="@+id/tvNav4" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="5dp" android:text="@string/nav_profile" android:textSize="10sp" android:textColor="@color/booktable_muted" />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
