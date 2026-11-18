@@ -8,111 +8,48 @@
         android:id="@+id/customerHomeFragment"
         android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_home">
-<<<<<<< HEAD
-        <argument
-            android:name="screenTitle"
-            app:argType="string"
-            android:defaultValue="Trang chủ" />
-=======
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_home" />
->>>>>>> c19a1da6b4a32680d697e87b35e1441edf11f1d3
     </fragment>
-
     <fragment
         android:id="@+id/customerBookingFragment"
         android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_booking">
-<<<<<<< HEAD
-        <argument
-            android:name="screenTitle"
-            app:argType="string"
-            android:defaultValue="Đặt bàn" />
-=======
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_booking" />
->>>>>>> c19a1da6b4a32680d697e87b35e1441edf11f1d3
     </fragment>
-
     <fragment
         android:id="@+id/customerHistoryFragment"
         android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_history">
-<<<<<<< HEAD
-        <argument
-            android:name="screenTitle"
-            app:argType="string"
-            android:defaultValue="Lịch sử" />
-=======
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_history" />
->>>>>>> c19a1da6b4a32680d697e87b35e1441edf11f1d3
     </fragment>
-
     <fragment
         android:id="@+id/customerProfileFragment"
         android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_profile">
-<<<<<<< HEAD
-        <argument
-            android:name="screenTitle"
-            app:argType="string"
-            android:defaultValue="Hồ sơ" />
-=======
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_profile" />
->>>>>>> c19a1da6b4a32680d697e87b35e1441edf11f1d3
     </fragment>
-
     <fragment
         android:id="@+id/ownerOverviewFragment"
         android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_owner_overview">
-<<<<<<< HEAD
-        <argument
-            android:name="screenTitle"
-            app:argType="string"
-            android:defaultValue="Tổng quan" />
-=======
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_owner_overview" />
->>>>>>> c19a1da6b4a32680d697e87b35e1441edf11f1d3
     </fragment>
-
     <fragment
         android:id="@+id/ownerBookingFragment"
         android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_owner_orders">
-<<<<<<< HEAD
-        <argument
-            android:name="screenTitle"
-            app:argType="string"
-            android:defaultValue="Đơn đặt bàn" />
-=======
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_owner_orders" />
->>>>>>> c19a1da6b4a32680d697e87b35e1441edf11f1d3
     </fragment>
-
     <fragment
         android:id="@+id/ownerHistoryFragment"
         android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_history">
-<<<<<<< HEAD
-        <argument
-            android:name="screenTitle"
-            app:argType="string"
-            android:defaultValue="Lịch sử" />
-=======
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_history" />
->>>>>>> c19a1da6b4a32680d697e87b35e1441edf11f1d3
     </fragment>
-
     <fragment
         android:id="@+id/ownerProfileFragment"
         android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_profile">
-<<<<<<< HEAD
-        <argument
-            android:name="screenTitle"
-            app:argType="string"
-            android:defaultValue="Hồ sơ" />
-=======
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_profile" />
->>>>>>> c19a1da6b4a32680d697e87b35e1441edf11f1d3
     </fragment>
 </navigation>
