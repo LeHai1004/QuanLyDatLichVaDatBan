@@ -26,19 +26,7 @@ class PlaceholderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.tvPlaceholderTitle.text =
             arguments?.getString(SCREEN_TITLE) ?: getString(R.string.nav_home)
-
-        binding.btnStateLoading.setOnClickListener {
-            UiStateHelper.showLoading(binding.root)
-        }
-        binding.btnStateEmpty.setOnClickListener {
-            UiStateHelper.showEmpty(binding.root)
-        }
-        binding.btnStateError.setOnClickListener {
-            UiStateHelper.showError(binding.root, getString(R.string.state_error))
-        }
-        binding.root.findViewById<View>(R.id.btnRetry)?.setOnClickListener {
-            UiStateHelper.showLoading(binding.root)
-        }
+        UiStateHelper.showLoading(binding.root)
     }
 
     override fun onDestroyView() {
