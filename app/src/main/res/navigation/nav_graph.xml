@@ -6,50 +6,50 @@
 
     <fragment
         android:id="@+id/customerHomeFragment"
-        android:name="com.ute.quanlydatban.ui.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_home">
-        <argument android:name="screenTitle" app:argType="string" android:defaultValue="@string/nav_home" />
+        <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_home" />
     </fragment>
     <fragment
         android:id="@+id/customerBookingFragment"
-        android:name="com.ute.quanlydatban.ui.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_booking">
-        <argument android:name="screenTitle" app:argType="string" android:defaultValue="@string/nav_booking" />
+        <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_booking" />
     </fragment>
     <fragment
         android:id="@+id/customerHistoryFragment"
-        android:name="com.ute.quanlydatban.ui.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_history">
-        <argument android:name="screenTitle" app:argType="string" android:defaultValue="@string/nav_history" />
+        <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_history" />
     </fragment>
     <fragment
         android:id="@+id/customerProfileFragment"
-        android:name="com.ute.quanlydatban.ui.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_profile">
-        <argument android:name="screenTitle" app:argType="string" android:defaultValue="@string/nav_profile" />
+        <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_profile" />
     </fragment>
     <fragment
         android:id="@+id/ownerOverviewFragment"
-        android:name="com.ute.quanlydatban.ui.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_owner_overview">
-        <argument android:name="screenTitle" app:argType="string" android:defaultValue="@string/nav_owner_overview" />
+        <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_owner_overview" />
     </fragment>
     <fragment
         android:id="@+id/ownerBookingFragment"
-        android:name="com.ute.quanlydatban.ui.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_owner_orders">
-        <argument android:name="screenTitle" app:argType="string" android:defaultValue="@string/nav_owner_orders" />
+        <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_owner_orders" />
     </fragment>
     <fragment
         android:id="@+id/ownerHistoryFragment"
-        android:name="com.ute.quanlydatban.ui.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_history">
-        <argument android:name="screenTitle" app:argType="string" android:defaultValue="@string/nav_history" />
+        <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_history" />
     </fragment>
     <fragment
         android:id="@+id/ownerProfileFragment"
-        android:name="com.ute.quanlydatban.ui.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
         android:label="@string/nav_profile">
-        <argument android:name="screenTitle" app:argType="string" android:defaultValue="@string/nav_profile" />
+        <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_profile" />
     </fragment>
 </navigation>

@@ -13,4 +13,5 @@
     <color name="booktable_active">#C94A1A</color>
     <color name="booktable_nav_active">#FFE5D6</color>
     <color name="booktable_error">#B93825</color>
+    <color name="nav_bottom_border">#EBDDD2</color>
 </resources>

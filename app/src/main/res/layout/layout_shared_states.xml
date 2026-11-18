@@ -2,10 +2,10 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="220dp">
+    android:minHeight="@dimen/state_min_height">
 
     <LinearLayout
-        android:id="@+id/loadingState"
+        android:id="@+id/llLoadingState"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -17,13 +17,13 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/state_content_margin_top"
             android:text="@string/state_loading"
             android:textColor="@color/booktable_muted" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/emptyState"
+        android:id="@+id/llEmptyState"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -34,12 +34,12 @@
             android:layout_height="wrap_content"
             android:text="@string/state_empty"
             android:textColor="@color/booktable_dark"
-            android:textSize="16sp"
+            android:textSize="@dimen/state_empty_text_size"
             android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/errorState"
+        android:id="@+id/llErrorState"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
@@ -55,7 +55,7 @@
             android:id="@+id/btnRetry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="@dimen/state_content_margin_top"
             android:text="@string/state_retry"
             android:textAllCaps="false" />
     </LinearLayout>

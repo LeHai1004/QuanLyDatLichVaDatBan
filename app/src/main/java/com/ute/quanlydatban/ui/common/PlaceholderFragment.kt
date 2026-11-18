@@ -1,4 +1,4 @@
-package com.ute.quanlydatban.ui
+package com.ute.quanlydatban.ui.common
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,18 +24,14 @@ class PlaceholderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvPlaceholderTitle.text =
-            arguments?.getString(SCREEN_TITLE) ?: getString(R.string.nav_home)
+        val titleResId = arguments?.getInt(SCREEN_TITLE, 0) ?: 0
+        if (titleResId != 0) {
+            binding.tvPlaceholderTitle.setText(titleResId)
+        } else {
+            binding.tvPlaceholderTitle.text =
+                arguments?.getString(SCREEN_TITLE) ?: getString(R.string.nav_home)
+        }
 
-        binding.btnStateLoading.setOnClickListener {
-            UiStateHelper.showLoading(binding.root)
-        }
-        binding.btnStateEmpty.setOnClickListener {
-            UiStateHelper.showEmpty(binding.root)
-        }
-        binding.btnStateError.setOnClickListener {
-            UiStateHelper.showError(binding.root, getString(R.string.state_error))
-        }
         binding.root.findViewById<View>(R.id.btnRetry)?.setOnClickListener {
             UiStateHelper.showLoading(binding.root)
         }

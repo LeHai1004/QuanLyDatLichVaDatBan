@@ -23,11 +23,11 @@ object UiStateHelper {
     }
 
     private fun setStates(root: View, loading: Boolean = false, empty: Boolean = false, error: Boolean = false) {
-        root.findViewById<View>(R.id.loadingState)?.visibility =
+        root.findViewById<View>(R.id.llLoadingState)?.visibility =
             if (loading) View.VISIBLE else View.GONE
-        root.findViewById<View>(R.id.emptyState)?.visibility =
+        root.findViewById<View>(R.id.llEmptyState)?.visibility =
             if (empty) View.VISIBLE else View.GONE
-        root.findViewById<View>(R.id.errorState)?.visibility =
+        root.findViewById<View>(R.id.llErrorState)?.visibility =
             if (error) View.VISIBLE else View.GONE
     }
 }
