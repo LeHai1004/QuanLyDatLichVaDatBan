@@ -1,4 +1,4 @@
-package com.ute.quanlydatban.ui
+package com.ute.quanlydatban.ui.common
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -24,9 +24,23 @@ class PlaceholderFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+<<<<<<< HEAD:app/src/main/java/com/ute/quanlydatban/ui/PlaceholderFragment.kt
         binding.tvPlaceholderTitle.text =
             arguments?.getString(SCREEN_TITLE) ?: getString(R.string.nav_home)
         UiStateHelper.showLoading(binding.root)
+=======
+        val titleResId = arguments?.getInt(SCREEN_TITLE, 0) ?: 0
+        if (titleResId != 0) {
+            binding.tvPlaceholderTitle.setText(titleResId)
+        } else {
+            binding.tvPlaceholderTitle.text =
+                arguments?.getString(SCREEN_TITLE) ?: getString(R.string.nav_home)
+        }
+
+        binding.root.findViewById<View>(R.id.btnRetry)?.setOnClickListener {
+            UiStateHelper.showLoading(binding.root)
+        }
+>>>>>>> c19a1da6b4a32680d697e87b35e1441edf11f1d3:app/src/main/java/com/ute/quanlydatban/ui/common/PlaceholderFragment.kt
     }
 
     override fun onDestroyView() {

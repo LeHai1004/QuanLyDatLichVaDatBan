@@ -29,15 +29,33 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val role = intent.getStringExtra(EXTRA_ROLE)?.lowercase()
+        if (role != null && role != ROLE_CUSTOMER && role != ROLE_OWNER) {
+            rejectInvalidRole()
+            return
+        }
+
         val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
+        if (navHostFragment == null) {
+            SnackbarHelper.show(binding.root, getString(R.string.state_error))
+            finish()
+            return
+        }
         navController = navHostFragment.navController
 
-        val role = intent.getStringExtra(EXTRA_ROLE)?.lowercase()
+        val graph = navController.navInflater.inflate(R.navigation.nav_graph)
+        val startDest = if (role == ROLE_OWNER) {
+            R.id.ownerOverviewFragment
+        } else {
+            R.id.customerHomeFragment
+        }
+        graph.setStartDestination(startDest)
+        navController.graph = graph
+
         when (role) {
-            null, "customer" -> setCustomerNavigation()
-            "owner" -> setOwnerNavigation()
-            else -> rejectInvalidRole()
+            ROLE_OWNER -> setOwnerNavigation()
+            else -> setCustomerNavigation()
         }
     }
 
@@ -54,11 +72,11 @@ class MainActivity : AppCompatActivity() {
             R.drawable.ic_nav_history,
             R.drawable.ic_nav_profile
         )
-        binding.navBottom.visibility = View.VISIBLE
-        configureTab(binding.navItem1, R.id.customerHomeFragment)
-        configureTab(binding.navItem2, R.id.customerBookingFragment)
-        configureTab(binding.navItem3, R.id.customerHistoryFragment)
-        configureTab(binding.navItem4, R.id.customerProfileFragment)
+        binding.llNavBottom.visibility = View.VISIBLE
+        configureTab(binding.llNavItem1, R.id.customerHomeFragment)
+        configureTab(binding.llNavItem2, R.id.customerBookingFragment)
+        configureTab(binding.llNavItem3, R.id.customerHistoryFragment)
+        configureTab(binding.llNavItem4, R.id.customerProfileFragment)
         selectTab(0)
     }
 
@@ -75,19 +93,18 @@ class MainActivity : AppCompatActivity() {
             R.drawable.ic_nav_history,
             R.drawable.ic_nav_profile
         )
-        binding.navBottom.visibility = View.VISIBLE
-        configureTab(binding.navItem1, R.id.ownerOverviewFragment)
-        configureTab(binding.navItem2, R.id.ownerBookingFragment)
-        configureTab(binding.navItem3, R.id.ownerHistoryFragment)
-        configureTab(binding.navItem4, R.id.ownerProfileFragment)
-        navController.navigate(R.id.ownerOverviewFragment)
+        binding.llNavBottom.visibility = View.VISIBLE
+        configureTab(binding.llNavItem1, R.id.ownerOverviewFragment)
+        configureTab(binding.llNavItem2, R.id.ownerBookingFragment)
+        configureTab(binding.llNavItem3, R.id.ownerHistoryFragment)
+        configureTab(binding.llNavItem4, R.id.ownerProfileFragment)
         selectTab(0)
     }
 
     private fun rejectInvalidRole() {
-        binding.navBottom.visibility = View.GONE
+        binding.llNavBottom.visibility = View.GONE
         SnackbarHelper.show(binding.root, getString(R.string.nav_role_invalid))
-        binding.root.postDelayed({ finish() }, 1800)
+        binding.root.postDelayed({ finish() }, DELAY_REJECT_MS)
     }
 
     private fun configureTab(item: LinearLayout, destinationId: Int) {
@@ -100,9 +117,9 @@ class MainActivity : AppCompatActivity() {
             navController.navigate(destinationId, null, options)
             selectTab(
                 when (item.id) {
-                    R.id.nav_item_1 -> 0
-                    R.id.nav_item_2 -> 1
-                    R.id.nav_item_3 -> 2
+                    R.id.llNavItem1 -> 0
+                    R.id.llNavItem2 -> 1
+                    R.id.llNavItem3 -> 2
                     else -> 3
                 }
             )
@@ -126,7 +143,7 @@ class MainActivity : AppCompatActivity() {
     private fun selectTab(index: Int) {
         val labels = listOf(binding.tvNav1, binding.tvNav2, binding.tvNav3, binding.tvNav4)
         val icons = listOf(binding.ivNav1, binding.ivNav2, binding.ivNav3, binding.ivNav4)
-        val active = getColor(R.color.booktable_active)
+        val active = getColor(R.color.booktable_orange)
         val muted = getColor(R.color.booktable_muted)
         labels.forEachIndexed { i, label ->
             label.setTextColor(if (i == index) active else muted)
@@ -139,5 +156,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_ROLE = "role"
+        const val ROLE_CUSTOMER = "customer"
+        const val ROLE_OWNER = "owner"
+        const val DELAY_REJECT_MS = 1800L
     }
 }
