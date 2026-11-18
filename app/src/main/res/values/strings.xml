@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">QuanLyDatBan</string>
+
+    <string name="nav_home">Trang chủ</string>
+    <string name="nav_booking">Đặt bàn</string>
+    <string name="nav_history">Lịch sử</string>
+    <string name="nav_profile">Hồ sơ</string>
+    <string name="nav_owner_overview">Tổng quan</string>
+    <string name="nav_owner_orders">Đơn đặt</string>
+    <string name="nav_role_invalid">Vai trò không hợp lệ</string>
+    <string name="state_loading">Đang tải dữ liệu…</string>
+    <string name="state_empty">Chưa có dữ liệu</string>
+    <string name="state_error">Không thể tải dữ liệu</string>
+    <string name="state_retry">Thử lại</string>
+    <string name="state_demo_loading">Xem đang tải</string>
+    <string name="state_demo_empty">Xem trống</string>
+    <string name="state_demo_error">Xem lỗi</string>
+    <string name="snackbar_action_close">Đóng</string>
 </resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/booktable_surface" />
+    <stroke android:width="@dimen/nav_bottom_stroke_width" android:color="@color/nav_bottom_border" />
+    <corners android:radius="@dimen/nav_bottom_radius" />
+</shape>
