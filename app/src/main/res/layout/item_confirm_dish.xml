@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:paddingVertical="4dp">
+
+    <TextView
+        android:id="@+id/tvDishNameQty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/be_vietnam_pro"
+        android:textColor="@color/booktable_muted"
+        android:textSize="12sp"
+        tools:text="2 × Gỏi cuốn tôm thịt" />
+
+    <TextView
+        android:id="@+id/tvDishTotalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/be_vietnam_pro"
+        android:textColor="@color/booktable_dark"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        tools:text="138.000đ" />
+</LinearLayout>

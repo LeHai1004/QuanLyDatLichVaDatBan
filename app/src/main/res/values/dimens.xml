@@ -422,4 +422,24 @@
     <dimen name="cart_summary_text_size">12sp</dimen>
     <dimen name="cart_summary_total_size">19sp</dimen>
     <dimen name="cart_skip_btn_size">12sp</dimen>
+
+    <!-- Payment, Confirm, QR (T11) -->
+    <dimen name="booking_back_btn_size">36dp</dimen>
+    <dimen name="payment_header_height">72dp</dimen>
+    <dimen name="payment_header_title_size">21dp</dimen>
+    <dimen name="payment_card_radius">16dp</dimen>
+    <dimen name="payment_card_padding">12dp</dimen>
+    <dimen name="payment_qr_size">176dp</dimen>
+    <dimen name="payment_qr_code_size">220dp</dimen>
+    <dimen name="payment_amount_size">22sp</dimen>
+    <dimen name="payment_btn_height">52dp</dimen>
+    <dimen name="payment_btn_radius">14dp</dimen>
+    <dimen name="confirm_card_radius">18dp</dimen>
+    <dimen name="confirm_card_padding">14dp</dimen>
+    <dimen name="confirm_seal_size">48dp</dimen>
+    <dimen name="confirm_seal_icon_size">26dp</dimen>
+    <dimen name="confirm_btn_height">50dp</dimen>
+    <dimen name="qr_ticket_radius">22dp</dimen>
+    <dimen name="qr_ticket_padding">16dp</dimen>
+    <dimen name="qr_ticket_qr_size">231dp</dimen>
 </resources>

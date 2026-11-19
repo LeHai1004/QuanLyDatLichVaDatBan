@@ -101,16 +101,12 @@ class CartFragment : Fragment() {
             viewModel.submitPreOrder { success ->
                 binding.btnContinueDeposit.isEnabled = true
                 if (success) {
-                    // Chuyển sang màn hình Payment T11 (hiện tại là destination tạm/Placeholder)
-                    val bundle = Bundle().apply {
-                        putString("bookingId", viewModel.bookingId)
-                        putString("restaurantId", viewModel.restaurantId)
-                        putLong("depositAmount", viewModel.getDeposit())
+                    // Chuyển sang PaymentActivity thật (T11)
+                    val intent = android.content.Intent(requireContext(), com.ute.quanlydatban.ui.customer.booking.PaymentActivity::class.java).apply {
+                        putExtra(com.ute.quanlydatban.ui.customer.booking.PaymentActivity.EXTRA_BOOKING_ID, viewModel.bookingId)
+                        putExtra(com.ute.quanlydatban.ui.customer.booking.PaymentActivity.EXTRA_RESTAURANT_ID, viewModel.restaurantId)
                     }
-                    findNavController().navigate(
-                        R.id.action_cartFragment_to_paymentPlaceholderFragment,
-                        bundle
-                    )
+                    startActivity(intent)
                 } else {
                     val error = viewModel.errorMessage.value ?: getString(R.string.cart_error_save)
                     SnackbarHelper.show(binding.root, error)
