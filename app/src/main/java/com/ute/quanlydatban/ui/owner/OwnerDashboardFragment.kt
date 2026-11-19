@@ -88,25 +88,20 @@ class OwnerDashboardFragment : Fragment() {
     private fun observeViewModel() {
         // Kiểm tra quyền chủ quán
         viewModel.isAuthorized.observe(viewLifecycleOwner) { authorized ->
+            updateUiState()
             if (authorized == false) {
                 val errorMsg = viewModel.unauthorizedMessage.value ?: getString(R.string.owner_error_unauthorized)
-                UiStateHelper.showError(binding.layoutStates.root, errorMsg)
-                binding.llDashboardBody.visibility = View.GONE
                 SnackbarHelper.show(binding.root, errorMsg)
             }
         }
 
-        viewModel.isDashboardLoading.observe(viewLifecycleOwner) { loading ->
-            if (loading) {
-                UiStateHelper.showLoading(binding.layoutStates.root)
-                binding.llDashboardBody.visibility = View.GONE
-            }
+        viewModel.isDashboardLoading.observe(viewLifecycleOwner) {
+            updateUiState()
         }
 
         viewModel.dashboardErrorMessage.observe(viewLifecycleOwner) { error ->
+            updateUiState()
             if (error != null) {
-                UiStateHelper.showError(binding.layoutStates.root, error)
-                binding.llDashboardBody.visibility = View.GONE
                 SnackbarHelper.show(binding.root, error) {
                     viewModel.checkAuthorizationAndLoad()
                 }
@@ -114,41 +109,77 @@ class OwnerDashboardFragment : Fragment() {
         }
 
         viewModel.restaurant.observe(viewLifecycleOwner) { restaurant ->
-            if (restaurant != null && viewModel.isDashboardLoading.value == false && viewModel.dashboardErrorMessage.value == null) {
+            updateUiState()
+            if (restaurant != null) {
+                binding.tvRestaurantName.text = restaurant.name
+                updateOpenStatusBadge(viewModel.isOpenNow.value ?: true)
+            }
+        }
+
+        viewModel.isOpenNow.observe(viewLifecycleOwner) { isOpen ->
+            updateOpenStatusBadge(isOpen)
+        }
+
+        viewModel.dashboardCounts.observe(viewLifecycleOwner) { counts ->
+            binding.tvWaitingCount.text = (counts?.waitingCount ?: 0L).toString()
+            binding.tvTodayCount.text = (counts?.todayCount ?: 0L).toString()
+            binding.tvServingCount.text = (counts?.servingCount ?: 0L).toString()
+        }
+    }
+
+    private fun updateUiState() {
+        val isAuthorized = viewModel.isAuthorized.value
+        val isLoading = viewModel.isDashboardLoading.value ?: false
+        val error = viewModel.dashboardErrorMessage.value
+        val restaurant = viewModel.restaurant.value
+
+        when {
+            isAuthorized == false -> {
+                val errorMsg = viewModel.unauthorizedMessage.value ?: getString(R.string.owner_error_unauthorized)
+                UiStateHelper.showError(binding.layoutStates.root, errorMsg)
+                binding.llDashboardBody.visibility = View.GONE
+            }
+            isLoading -> {
+                UiStateHelper.showLoading(binding.layoutStates.root)
+                binding.llDashboardBody.visibility = View.GONE
+            }
+            error != null -> {
+                UiStateHelper.showError(binding.layoutStates.root, error)
+                binding.llDashboardBody.visibility = View.GONE
+            }
+            restaurant == null -> {
+                UiStateHelper.showEmpty(binding.layoutStates.root)
+                binding.llDashboardBody.visibility = View.GONE
+            }
+            else -> {
                 UiStateHelper.hideAll(binding.layoutStates.root)
                 binding.llDashboardBody.visibility = View.VISIBLE
                 binding.tvRestaurantName.text = restaurant.name
             }
         }
+    }
 
-        viewModel.isOpenNow.observe(viewLifecycleOwner) { isOpen ->
-            val res = viewModel.restaurant.value ?: return@observe
-            if (isOpen) {
-                binding.tvRestaurantStatus.text = getString(
-                    R.string.owner_status_open_now,
-                    res.openTime,
-                    res.closeTime
-                )
-                binding.tvRestaurantStatus.setBackgroundResource(R.drawable.bg_owner_status_open)
-                binding.tvRestaurantStatus.setTextColor(
-                    ContextCompat.getColor(requireContext(), R.color.owner_stat_serving)
-                )
-            } else {
-                binding.tvRestaurantStatus.text = getString(
-                    R.string.owner_status_closed_now,
-                    res.openTime
-                )
-                binding.tvRestaurantStatus.setBackgroundResource(R.drawable.bg_owner_status_closed)
-                binding.tvRestaurantStatus.setTextColor(
-                    ContextCompat.getColor(requireContext(), R.color.booktable_error)
-                )
-            }
-        }
-
-        viewModel.dashboardCounts.observe(viewLifecycleOwner) { counts ->
-            binding.tvWaitingCount.text = counts.waitingCount.toString()
-            binding.tvTodayCount.text = counts.todayCount.toString()
-            binding.tvServingCount.text = counts.servingCount.toString()
+    private fun updateOpenStatusBadge(isOpen: Boolean) {
+        val res = viewModel.restaurant.value ?: return
+        if (isOpen) {
+            binding.tvRestaurantStatus.text = getString(
+                R.string.owner_status_open_now,
+                res.openTime,
+                res.closeTime
+            )
+            binding.tvRestaurantStatus.setBackgroundResource(R.drawable.bg_owner_status_open)
+            binding.tvRestaurantStatus.setTextColor(
+                ContextCompat.getColor(requireContext(), R.color.owner_stat_serving)
+            )
+        } else {
+            binding.tvRestaurantStatus.text = getString(
+                R.string.owner_status_closed_now,
+                res.openTime
+            )
+            binding.tvRestaurantStatus.setBackgroundResource(R.drawable.bg_owner_status_closed)
+            binding.tvRestaurantStatus.setTextColor(
+                ContextCompat.getColor(requireContext(), R.color.booktable_error)
+            )
         }
     }
 

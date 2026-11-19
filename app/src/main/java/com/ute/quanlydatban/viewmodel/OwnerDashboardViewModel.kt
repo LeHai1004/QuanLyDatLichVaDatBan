@@ -1,5 +1,6 @@
 package com.ute.quanlydatban.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,7 +36,7 @@ class OwnerDashboardViewModel(
     val isOpenNow: LiveData<Boolean> = _isOpenNow
 
     // Số liệu Dashboard
-    private val _dashboardCounts = MutableLiveData(DashboardCounts())
+    private val _dashboardCounts = MutableLiveData(DashboardCounts(0, 0, 0))
     val dashboardCounts: LiveData<DashboardCounts> = _dashboardCounts
 
     private val _isDashboardLoading = MutableLiveData(false)
@@ -110,6 +111,7 @@ class OwnerDashboardViewModel(
                     loadRestaurantAndData()
                 },
                 onFailure = { error ->
+                    Log.e("OwnerDashboard", "checkOwnerRole thất bại: ${error.message}", error)
                     _isDashboardLoading.value = false
                     _isAuthorized.value = false
                     _unauthorizedMessage.value = error.message ?: "Tài khoản không có quyền chủ quán"
@@ -132,6 +134,7 @@ class OwnerDashboardViewModel(
                     loadStats(res.id)
                 },
                 onFailure = { error ->
+                    Log.e("OwnerDashboard", "getOwnerRestaurant thất bại: ${error.message}", error)
                     _isDashboardLoading.value = false
                     _dashboardErrorMessage.value = error.toViMessage()
                 }
@@ -140,7 +143,14 @@ class OwnerDashboardViewModel(
     }
 
     // Tải số liệu đếm của Dashboard
-    private fun loadDashboardCounts(restaurantId: String) {
+    fun loadDashboardCounts(restaurantId: String) {
+        if (restaurantId.isBlank()) {
+            Log.e("OwnerDashboard", "loadDashboardCounts: restaurantId rỗng")
+            _isDashboardLoading.value = false
+            _dashboardCounts.value = DashboardCounts(0, 0, 0)
+            return
+        }
+
         repository.getDashboardCounts(restaurantId) { result ->
             _isDashboardLoading.value = false
             result.fold(
@@ -148,7 +158,9 @@ class OwnerDashboardViewModel(
                     _dashboardCounts.value = counts
                 },
                 onFailure = { error ->
+                    Log.e("OwnerDashboard", "loadDashboardCounts thất bại: ${error.message}", error)
                     _dashboardErrorMessage.value = error.toViMessage()
+                    _dashboardCounts.value = DashboardCounts(0, 0, 0)
                 }
             )
         }
@@ -156,7 +168,12 @@ class OwnerDashboardViewModel(
 
     // Tải số liệu thống kê
     fun loadStats(restaurantId: String? = _restaurant.value?.id) {
-        val targetId = restaurantId ?: _restaurant.value?.id ?: return
+        val targetId = restaurantId ?: _restaurant.value?.id
+        if (targetId.isNullOrBlank()) {
+            _isStatsLoading.value = false
+            return
+        }
+
         _isStatsLoading.value = true
         _statsErrorMessage.value = null
 
@@ -168,7 +185,10 @@ class OwnerDashboardViewModel(
                     computeStatsForPeriod(_selectedPeriod.value ?: "today")
                 },
                 onFailure = { error ->
+                    Log.e("OwnerDashboard", "getStatsData thất bại: ${error.message}", error)
                     _statsErrorMessage.value = error.toViMessage()
+                    rawStatsData = StatsData()
+                    computeStatsForPeriod(_selectedPeriod.value ?: "today")
                 }
             )
         }
@@ -253,45 +273,41 @@ class OwnerDashboardViewModel(
 
         var hasError = false
 
-        val trimmedName = name.trim()
-        if (trimmedName.isEmpty()) {
-            _nameError.value = "Tên nhà hàng không được để trống"
+        if (name.isBlank()) {
+            _nameError.value = "Tên quán không được để trống"
             hasError = true
         }
 
-        val trimmedAddress = address.trim()
-        if (trimmedAddress.isEmpty()) {
-            _addressError.value = "Địa chỉ không được để trống"
+        if (address.isBlank()) {
+            _addressError.value = "Địa chỉ quán không được để trống"
             hasError = true
         }
 
-        val timeRegex = Regex("^([01]\\d|2[0-3]):[0-5]\\d$")
-        val trimmedOpen = openTime.trim()
-        val trimmedClose = closeTime.trim()
-        if (!timeRegex.matches(trimmedOpen) || !timeRegex.matches(trimmedClose)) {
-            _timeError.value = "Giờ mở/đóng cửa không đúng định dạng (HH:mm, 00:00 - 23:59)"
+        val openClean = openTime.trim()
+        val closeClean = closeTime.trim()
+        if (!isValidTimeFormat(openClean) || !isValidTimeFormat(closeClean)) {
+            _timeError.value = "Giờ mở/đóng cửa phải có định dạng HH:mm (ví dụ: 09:00)"
             hasError = true
         }
 
         val deposit = depositStr.trim().toLongOrNull()
         if (deposit == null || deposit < 0L) {
-            _depositError.value = "Tiền cọc không được là số âm"
+            _depositError.value = "Tiền cọc không hợp lệ (nhập số nguyên không âm)"
             hasError = true
         }
 
         if (hasError) return
 
-        _isProfileSaving.value = true
-
         val updated = current.copy(
-            name = trimmedName,
-            address = trimmedAddress,
-            openTime = trimmedOpen,
-            closeTime = trimmedClose,
-            depositAmount = deposit ?: current.depositAmount,
-            category = category.trim().ifEmpty { current.category }
+            name = name.trim(),
+            address = address.trim(),
+            openTime = openClean,
+            closeTime = closeClean,
+            depositAmount = deposit ?: 0L,
+            category = category.trim()
         )
 
+        _isProfileSaving.value = true
         repository.updateRestaurant(updated) { result ->
             _isProfileSaving.value = false
             result.fold(
@@ -301,12 +317,26 @@ class OwnerDashboardViewModel(
                     _profileSaveSuccess.value = true
                 },
                 onFailure = { error ->
+                    Log.e("OwnerDashboard", "updateRestaurantProfile thất bại: ${error.message}", error)
                     _profileErrorMessage.value = error.toViMessage()
                 }
             )
         }
     }
 
+    fun consumeProfileSuccess() {
+        _profileSaveSuccess.value = false
+    }
+
+    private fun isValidTimeFormat(time: String): Boolean {
+        val parts = time.split(":")
+        if (parts.size != 2) return false
+        val h = parts[0].toIntOrNull() ?: return false
+        val m = parts[1].toIntOrNull() ?: return false
+        return h in 0..23 && m in 0..59
+    }
+
+    // Kiểm tra quán có đang trong khung giờ mở cửa không
     fun isCurrentlyOpen(openTime: String, closeTime: String): Boolean {
         if (openTime.isBlank() || closeTime.isBlank()) return true
         return try {

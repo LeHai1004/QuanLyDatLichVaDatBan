@@ -1,5 +1,6 @@
 package com.ute.quanlydatban.data.repository
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ute.quanlydatban.data.model.Booking
@@ -34,6 +35,7 @@ class OwnerRepository(
     fun checkOwnerRole(onResult: (Result<Boolean>) -> Unit) {
         val uid = currentUserId
         if (uid == null) {
+            Log.e("OwnerDashboard", "checkOwnerRole: currentUserId == null")
             onResult(Result.failure(SecurityException("Chưa đăng nhập tài khoản")))
             return
         }
@@ -44,10 +46,14 @@ class OwnerRepository(
                 if (role == ROLE_OWNER) {
                     onResult(Result.success(true))
                 } else {
+                    Log.e("OwnerDashboard", "checkOwnerRole: role không phải owner (role=$role)")
                     onResult(Result.failure(SecurityException("Tài khoản không có quyền chủ quán (role owner)")))
                 }
             }
-            .addOnFailureListener { onResult(Result.failure(it)) }
+            .addOnFailureListener {
+                Log.e("OwnerDashboard", "checkOwnerRole thất bại: ${it.message}", it)
+                onResult(Result.failure(it))
+            }
     }
 
     // Lấy thông tin nhà hàng của chủ quán (hỗ trợ tài khoản chủ quán demo nạp từ SeedData)
@@ -80,15 +86,22 @@ class OwnerRepository(
                                     if (success) {
                                         getOwnerRestaurant(onResult)
                                     } else {
+                                        Log.e("OwnerDashboard", "SeedData.load thất bại")
                                         onResult(Result.failure(NoSuchElementException("Chưa có dữ liệu nhà hàng")))
                                     }
                                 }
                             }
                         }
-                        .addOnFailureListener { onResult(Result.failure(it)) }
+                        .addOnFailureListener {
+                            Log.e("OwnerDashboard", "Lấy danh sách tất cả nhà hàng thất bại: ${it.message}", it)
+                            onResult(Result.failure(it))
+                        }
                 }
             }
-            .addOnFailureListener { onResult(Result.failure(it)) }
+            .addOnFailureListener {
+                Log.e("OwnerDashboard", "Tìm nhà hàng theo ownerId=$uid thất bại: ${it.message}", it)
+                onResult(Result.failure(it))
+            }
     }
 
     // Cập nhật thông tin quán
@@ -107,11 +120,20 @@ class OwnerRepository(
         firestore.collection(RESTAURANTS_COLLECTION).document(restaurant.id)
             .update(fields)
             .addOnSuccessListener { onResult(Result.success(Unit)) }
-            .addOnFailureListener { onResult(Result.failure(it)) }
+            .addOnFailureListener {
+                Log.e("OwnerDashboard", "updateRestaurant thất bại: ${it.message}", it)
+                onResult(Result.failure(it))
+            }
     }
 
     // Đếm số liệu thống kê cho Dashboard
     fun getDashboardCounts(restaurantId: String, onResult: (Result<DashboardCounts>) -> Unit) {
+        if (restaurantId.isBlank()) {
+            Log.e("OwnerDashboard", "getDashboardCounts: restaurantId rỗng")
+            onResult(Result.success(DashboardCounts(0, 0, 0)))
+            return
+        }
+
         firestore.collection(BOOKINGS_COLLECTION)
             .whereEqualTo("restaurantId", restaurantId)
             .get()
@@ -139,11 +161,20 @@ class OwnerRepository(
 
                 onResult(Result.success(DashboardCounts(waiting, today, serving)))
             }
-            .addOnFailureListener { onResult(Result.failure(it)) }
+            .addOnFailureListener {
+                Log.e("OwnerDashboard", "getDashboardCounts thất bại: ${it.message}", it)
+                onResult(Result.failure(it))
+            }
     }
 
     // Lấy dữ liệu thống kê đơn và thanh toán
     fun getStatsData(restaurantId: String, onResult: (Result<StatsData>) -> Unit) {
+        if (restaurantId.isBlank()) {
+            Log.e("OwnerDashboard", "getStatsData: restaurantId rỗng")
+            onResult(Result.success(StatsData(emptyList(), emptyList())))
+            return
+        }
+
         firestore.collection(BOOKINGS_COLLECTION)
             .whereEqualTo("restaurantId", restaurantId)
             .get()
@@ -156,12 +187,16 @@ class OwnerRepository(
                         val restaurantPayments = payments.filter { it.bookingId in bookingIds }
                         onResult(Result.success(StatsData(bookings, restaurantPayments)))
                     }
-                    .addOnFailureListener {
+                    .addOnFailureListener { err ->
+                        Log.e("OwnerDashboard", "Lấy payments thất bại: ${err.message}", err)
                         // Nếu bảng payments lỗi hoặc chưa có, dùng danh sách bookings
                         onResult(Result.success(StatsData(bookings, emptyList())))
                     }
             }
-            .addOnFailureListener { onResult(Result.failure(it)) }
+            .addOnFailureListener {
+                Log.e("OwnerDashboard", "getStatsData thất bại: ${it.message}", it)
+                onResult(Result.failure(it))
+            }
     }
 
     fun signOut() {
