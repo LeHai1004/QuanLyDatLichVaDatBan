@@ -162,4 +162,32 @@
     <dimen name="auth_forgot_return_height">44dp</dimen>
     <dimen name="auth_toolbar_icon_size">24dp</dimen>
     <dimen name="auth_forgot_return_text_size">14sp</dimen>
+
+    <!-- Notification (T15) -->
+    <dimen name="notification_screen_padding">16dp</dimen>
+    <dimen name="notification_header_margin_top">16dp</dimen>
+    <dimen name="notification_header_gap">8dp</dimen>
+    <dimen name="notification_title_size">20sp</dimen>
+    <dimen name="notification_card_radius">14dp</dimen>
+    <dimen name="notification_card_padding">14dp</dimen>
+    <dimen name="notification_card_margin_bottom">10dp</dimen>
+    <dimen name="notification_icon_size">40dp</dimen>
+    <dimen name="notification_icon_padding">8dp</dimen>
+    <dimen name="notification_icon_radius">12dp</dimen>
+    <dimen name="notification_icon_inner_size">24dp</dimen>
+    <dimen name="notification_item_title_size">15sp</dimen>
+    <dimen name="notification_item_body_size">13sp</dimen>
+    <dimen name="notification_item_time_size">11sp</dimen>
+    <dimen name="notification_item_tag_size">10sp</dimen>
+    <dimen name="notification_dot_size">8dp</dimen>
+    <dimen name="notification_dot_margin">6dp</dimen>
+    <dimen name="notification_chip_height">34dp</dimen>
+    <dimen name="notification_chip_radius">17dp</dimen>
+    <dimen name="notification_chip_padding_h">14dp</dimen>
+    <dimen name="notification_chip_text_size">13sp</dimen>
+    <dimen name="notification_chip_gap">8dp</dimen>
+    <dimen name="notification_action_text_size">13sp</dimen>
+    <dimen name="notification_tag_radius">4dp</dimen>
+    <dimen name="notification_tag_padding_h">6dp</dimen>
+    <dimen name="notification_tag_padding_v">2dp</dimen>
 </resources>

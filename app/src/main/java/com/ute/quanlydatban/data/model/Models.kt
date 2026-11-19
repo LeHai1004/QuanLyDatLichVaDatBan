@@ -109,5 +109,5 @@ data class Review(
 data class AppNotification(
     val id: String = "", val userId: String = "", val type: String = "",
     val title: String = "", val body: String = "", val read: Boolean = false,
-    val createdAt: Long = 0
+    val createdAt: Long = 0, val targetId: String = ""
 )
