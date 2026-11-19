@@ -201,4 +201,5 @@
     <string name="menu_item_unavailable">Tạm hết</string>
     <string name="cd_search_clear">Xóa từ khóa</string>
     <string name="cd_filter_button">Mở bộ lọc</string>
-</resources>
+    <string name="owner_action_notifications_title">Thông báo</string>
+    </resources>
