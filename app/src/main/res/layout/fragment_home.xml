@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nsvHome"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/home_padding_horizontal"
+        android:paddingTop="@dimen/home_padding_top"
+        android:paddingBottom="@dimen/nav_bottom_height">
+
+        <!-- Top Greeting Header -->
+        <TextView
+            android:id="@+id/tvGreeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/home_greeting"
+            android:textColor="@color/booktable_muted"
+            android:textSize="@dimen/home_greeting_size" />
+
+        <TextView
+            android:id="@+id/tvAppTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/auth_brand_inset"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/home_title"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/home_title_size"
+            android:textStyle="bold" />
+
+        <!-- Search Bar Button -->
+        <LinearLayout
+            android:id="@+id/llSearchBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/home_search_bar_height"
+            android:layout_marginTop="@dimen/home_header_gap"
+            android:background="@drawable/bg_search_box"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/home_search_bar_padding">
+
+            <ImageView
+                android:id="@+id/ivSearchIcon"
+                android:layout_width="@dimen/home_search_icon_size"
+                android:layout_height="@dimen/home_search_icon_size"
+                android:contentDescription="@string/home_search_hint"
+                android:src="@drawable/ic_search" />
+
+            <TextView
+                android:id="@+id/tvSearchPlaceholder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/restaurant_card_gap"
+                android:layout_weight="1"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/home_search_hint"
+                android:textColor="@color/booktable_muted"
+                android:textSize="@dimen/home_search_text_size" />
+
+            <ImageView
+                android:id="@+id/ivFilterButton"
+                android:layout_width="@dimen/home_search_icon_size"
+                android:layout_height="@dimen/home_search_icon_size"
+                android:contentDescription="@string/cd_filter_button"
+                android:src="@drawable/ic_filter" />
+        </LinearLayout>
+
+        <!-- Categories Section -->
+        <TextView
+            android:id="@+id/tvCategoryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/home_section_margin_top"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/home_category_title"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/home_section_title_size"
+            android:textStyle="bold" />
+
+        <HorizontalScrollView
+            android:id="@+id/hsvCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/restaurant_card_gap"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvCategoryAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_chip_height"
+                    android:background="@drawable/bg_filter_chip"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/home_chip_padding_horizontal"
+                    android:text="@string/home_category_all"
+                    android:textColor="@color/color_filter_chip_text"
+                    android:textSize="@dimen/home_chip_text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvCategoryVietnamese"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_chip_height"
+                    android:layout_marginStart="@dimen/home_chip_gap"
+                    android:background="@drawable/bg_filter_chip"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/home_chip_padding_horizontal"
+                    android:text="@string/home_category_vietnamese"
+                    android:textColor="@color/color_filter_chip_text"
+                    android:textSize="@dimen/home_chip_text_size" />
+
+                <TextView
+                    android:id="@+id/tvCategoryCoffee"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_chip_height"
+                    android:layout_marginStart="@dimen/home_chip_gap"
+                    android:background="@drawable/bg_filter_chip"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/home_chip_padding_horizontal"
+                    android:text="@string/home_category_coffee"
+                    android:textColor="@color/color_filter_chip_text"
+                    android:textSize="@dimen/home_chip_text_size" />
+
+                <TextView
+                    android:id="@+id/tvCategoryHotpot"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/home_chip_height"
+                    android:layout_marginStart="@dimen/home_chip_gap"
+                    android:background="@drawable/bg_filter_chip"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:gravity="center"
+                    android:paddingHorizontal="@dimen/home_chip_padding_horizontal"
+                    android:text="@string/home_category_hotpot"
+                    android:textColor="@color/color_filter_chip_text"
+                    android:textSize="@dimen/home_chip_text_size" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <!-- Featured Section Title -->
+        <TextView
+            android:id="@+id/tvFeaturedTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/home_section_margin_top"
+            android:layout_marginBottom="@dimen/home_header_gap"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/home_featured_title"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/home_section_title_size"
+            android:textStyle="bold" />
+
+        <!-- 3 States: Loading, Empty, Error -->
+        <include
+            android:id="@+id/layoutStates"
+            layout="@layout/layout_shared_states"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Restaurants List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvRestaurants"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:nestedScrollingEnabled="false"
+            tools:listitem="@layout/item_restaurant" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

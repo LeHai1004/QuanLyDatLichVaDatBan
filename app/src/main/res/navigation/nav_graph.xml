@@ -6,9 +6,12 @@
 
     <fragment
         android:id="@+id/customerHomeFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.customer.HomeFragment"
         android:label="@string/nav_home">
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_home" />
+        <action
+            android:id="@+id/action_customerHomeFragment_to_searchFilterFragment"
+            app:destination="@id/searchFilterFragment" />
     </fragment>
     <fragment
         android:id="@+id/customerBookingFragment"
@@ -30,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/ownerOverviewFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.owner.OwnerDashboardFragment"
         android:label="@string/nav_owner_overview">
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_owner_overview" />
     </fragment>
@@ -42,14 +45,18 @@
     </fragment>
     <fragment
         android:id="@+id/ownerHistoryFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.owner.OwnerStatsFragment"
         android:label="@string/nav_history">
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_history" />
     </fragment>
     <fragment
         android:id="@+id/ownerProfileFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.owner.OwnerProfileFragment"
         android:label="@string/nav_profile">
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_profile" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFilterFragment"
+        android:name="com.ute.quanlydatban.ui.customer.SearchFilterFragment"
+        android:label="@string/search_filter_title" />
 </navigation>

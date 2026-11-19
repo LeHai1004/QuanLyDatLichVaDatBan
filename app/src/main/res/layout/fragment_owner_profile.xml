@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nsvOwnerProfile"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/owner_screen_padding"
+        android:paddingTop="@dimen/owner_header_margin_top"
+        android:paddingBottom="@dimen/nav_bottom_height">
+
+        <!-- Top Header Info -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/ivStoreAvatar"
+                android:layout_width="@dimen/owner_avatar_size"
+                android:layout_height="@dimen/owner_avatar_size"
+                android:background="@drawable/bg_owner_stat_today"
+                android:contentDescription="@string/owner_profile_title"
+                android:padding="@dimen/owner_stat_gap"
+                android:src="@drawable/ic_owner_store"
+                app:tint="@color/booktable_orange" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/owner_stat_gap"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvProfileTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/owner_profile_title"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="@dimen/owner_title_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvRestaurantStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_owner_status_open"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:paddingHorizontal="@dimen/owner_badge_padding_h"
+                    android:paddingVertical="@dimen/owner_badge_padding_v"
+                    android:textColor="@color/owner_stat_serving"
+                    android:textSize="@dimen/owner_badge_text_size"
+                    android:textStyle="bold"
+                    tools:text="@string/owner_status_open_now" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvProfileSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/owner_header_gap"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_profile_subtitle"
+            android:textColor="@color/booktable_muted"
+            android:textSize="@dimen/owner_subtitle_size" />
+
+        <!-- 3 States: Loading, Empty, Error -->
+        <include
+            android:id="@+id/layoutStates"
+            layout="@layout/layout_shared_states"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Profile Form Body -->
+        <LinearLayout
+            android:id="@+id/llProfileBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/owner_section_margin_top"
+            android:orientation="vertical">
+
+            <!-- Name Field -->
+            <TextView
+                android:id="@+id/tvNameLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/owner_field_name_label"
+                android:textColor="@color/booktable_dark"
+                android:textSize="@dimen/owner_field_label_size"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etRestaurantName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/owner_field_height"
+                android:layout_marginTop="@dimen/auth_brand_inset"
+                android:background="@drawable/bg_owner_input_field"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:hint="@string/owner_field_name_hint"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:paddingHorizontal="@dimen/owner_field_padding"
+                android:textColor="@color/booktable_dark"
+                android:textColorHint="@color/booktable_muted"
+                android:textSize="@dimen/owner_field_text_size" />
+
+            <TextView
+                android:id="@+id/tvNameError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_error"
+                android:textSize="@dimen/owner_field_error_size"
+                android:visibility="gone"
+                tools:text="@string/owner_error_name_empty"
+                tools:visibility="visible" />
+
+            <!-- Address Field -->
+            <TextView
+                android:id="@+id/tvAddressLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/owner_form_gap"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/owner_field_address_label"
+                android:textColor="@color/booktable_dark"
+                android:textSize="@dimen/owner_field_label_size"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etRestaurantAddress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/owner_field_height"
+                android:layout_marginTop="@dimen/auth_brand_inset"
+                android:background="@drawable/bg_owner_input_field"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:hint="@string/owner_field_address_hint"
+                android:inputType="textPostalAddress"
+                android:maxLines="1"
+                android:paddingHorizontal="@dimen/owner_field_padding"
+                android:textColor="@color/booktable_dark"
+                android:textColorHint="@color/booktable_muted"
+                android:textSize="@dimen/owner_field_text_size" />
+
+            <TextView
+                android:id="@+id/tvAddressError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_error"
+                android:textSize="@dimen/owner_field_error_size"
+                android:visibility="gone"
+                tools:text="@string/owner_error_address_empty"
+                tools:visibility="visible" />
+
+            <!-- Operating Hours Row (Open Time & Close Time) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/owner_form_gap"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/owner_stat_gap"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvOpenTimeLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/owner_field_open_time_label"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/owner_field_label_size"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etOpenTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/owner_field_height"
+                        android:layout_marginTop="@dimen/auth_brand_inset"
+                        android:background="@drawable/bg_owner_input_field"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:gravity="center"
+                        android:hint="@string/owner_field_open_time_hint"
+                        android:inputType="text"
+                        android:maxLength="5"
+                        android:maxLines="1"
+                        android:textColor="@color/booktable_dark"
+                        android:textColorHint="@color/booktable_muted"
+                        android:textSize="@dimen/owner_field_text_size" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvCloseTimeLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/owner_field_close_time_label"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/owner_field_label_size"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/etCloseTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/owner_field_height"
+                        android:layout_marginTop="@dimen/auth_brand_inset"
+                        android:background="@drawable/bg_owner_input_field"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:gravity="center"
+                        android:hint="@string/owner_field_close_time_hint"
+                        android:inputType="text"
+                        android:maxLength="5"
+                        android:maxLines="1"
+                        android:textColor="@color/booktable_dark"
+                        android:textColorHint="@color/booktable_muted"
+                        android:textSize="@dimen/owner_field_text_size" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvTimeError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_error"
+                android:textSize="@dimen/owner_field_error_size"
+                android:visibility="gone"
+                tools:text="@string/owner_error_time_invalid"
+                tools:visibility="visible" />
+
+            <!-- Deposit Amount Field -->
+            <TextView
+                android:id="@+id/tvDepositLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/owner_form_gap"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/owner_field_deposit_label"
+                android:textColor="@color/booktable_dark"
+                android:textSize="@dimen/owner_field_label_size"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etDepositAmount"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/owner_field_height"
+                android:layout_marginTop="@dimen/auth_brand_inset"
+                android:background="@drawable/bg_owner_input_field"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:hint="@string/owner_field_deposit_hint"
+                android:inputType="number"
+                android:maxLines="1"
+                android:paddingHorizontal="@dimen/owner_field_padding"
+                android:textColor="@color/booktable_dark"
+                android:textColorHint="@color/booktable_muted"
+                android:textSize="@dimen/owner_field_text_size" />
+
+            <TextView
+                android:id="@+id/tvDepositError"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_error"
+                android:textSize="@dimen/owner_field_error_size"
+                android:visibility="gone"
+                tools:text="@string/owner_error_deposit_negative"
+                tools:visibility="visible" />
+
+            <!-- Category Field -->
+            <TextView
+                android:id="@+id/tvCategoryLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/owner_form_gap"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/owner_field_category_label"
+                android:textColor="@color/booktable_dark"
+                android:textSize="@dimen/owner_field_label_size"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/etCategory"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/owner_field_height"
+                android:layout_marginTop="@dimen/auth_brand_inset"
+                android:background="@drawable/bg_owner_input_field"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:hint="@string/owner_field_category_hint"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:paddingHorizontal="@dimen/owner_field_padding"
+                android:textColor="@color/booktable_dark"
+                android:textColorHint="@color/booktable_muted"
+                android:textSize="@dimen/owner_field_text_size" />
+
+            <!-- Save Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSaveProfile"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/owner_button_height"
+                android:layout_marginTop="@dimen/owner_section_margin_top"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/owner_btn_save"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/owner_button_text_size"
+                android:textStyle="bold"
+                app:backgroundTint="@color/booktable_orange"
+                app:cornerRadius="@dimen/owner_button_radius" />
+
+            <!-- Logout Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/owner_button_height"
+                android:layout_marginTop="@dimen/owner_header_gap"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/owner_btn_logout"
+                android:textAllCaps="false"
+                android:textColor="@color/booktable_error"
+                android:textSize="@dimen/owner_button_text_size"
+                android:textStyle="bold"
+                app:backgroundTint="@color/booktable_surface"
+                app:cornerRadius="@dimen/owner_button_radius"
+                app:strokeColor="@color/booktable_error"
+                app:strokeWidth="1dp" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

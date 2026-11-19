@@ -36,4 +36,23 @@
     <color name="notification_type_tag_bg">#F5EDE8</color>
     <color name="notification_chip_selected_bg">#FFE5D6</color>
     <color name="notification_chip_selected_border">#E8622C</color>
+    <!-- Owner Dashboard, Stats, Profile (T12) -->
+    <color name="owner_stat_waiting">#D97706</color>
+    <color name="owner_stat_waiting_bg">#FEF3C7</color>
+    <color name="owner_stat_today">#E8622C</color>
+    <color name="owner_stat_today_bg">#FFE5D6</color>
+    <color name="owner_stat_serving">#258C63</color>
+    <color name="owner_stat_serving_bg">#E8F8F0</color>
+    <color name="owner_badge_closed_bg">#FDECEB</color>
+    <color name="owner_chip_selected_bg">#FFE5D6</color>
+    <color name="owner_chip_selected_border">#E8622C</color>
+    <!-- Home, Search, Detail (T7) -->
+    <color name="badge_open_bg">#E8F8F0</color>
+    <color name="badge_closed_bg">#FDECEB</color>
+    <color name="star_gold">#F59E0B</color>
+    <color name="banner_overlay">#33000000</color>
+    <color name="restaurant_card_bg">#FFFFFF</color>
+    <color name="chip_bg_selected">#FFE5D6</color>
+    <color name="chip_border_selected">#E8622C</color>
+    <color name="placeholder_image_bg">#F2E5DC</color>
 </resources>

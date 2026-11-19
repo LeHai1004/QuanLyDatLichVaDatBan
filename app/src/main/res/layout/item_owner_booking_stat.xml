@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardBookingStat"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/owner_action_card_margin_bottom"
+    app:cardBackgroundColor="@color/booktable_surface"
+    app:cardCornerRadius="@dimen/owner_booking_item_radius"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/booktable_border"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/owner_booking_item_padding">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvBookingCustomer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:maxLines="1"
+                android:textColor="@color/booktable_dark"
+                android:textSize="@dimen/owner_action_title_size"
+                android:textStyle="bold"
+                tools:text="Đơn đặt #r1_b01" />
+
+            <TextView
+                android:id="@+id/tvBookingStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_owner_status_open"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:paddingHorizontal="@dimen/owner_badge_padding_h"
+                android:paddingVertical="@dimen/owner_badge_padding_v"
+                android:textColor="@color/owner_stat_serving"
+                android:textSize="@dimen/owner_badge_text_size"
+                tools:text="Đang phục vụ" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/owner_header_gap"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvBookingDateTime"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_muted"
+                android:textSize="@dimen/owner_action_desc_size"
+                tools:text="Hôm nay · 19:00" />
+
+            <TextView
+                android:id="@+id/tvBookingGuests"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/owner_stat_gap"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_muted"
+                android:textSize="@dimen/owner_action_desc_size"
+                tools:text="4 khách" />
+
+            <TextView
+                android:id="@+id/tvBookingAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_orange"
+                android:textSize="@dimen/owner_action_desc_size"
+                android:textStyle="bold"
+                tools:text="100.000đ" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
