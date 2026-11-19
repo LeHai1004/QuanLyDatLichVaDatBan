@@ -52,6 +52,12 @@
         <activity
             android:name=".ui.customer.booking.BookingQRActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.owner.OwnerBookingDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.owner.OwnerPreOrderActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

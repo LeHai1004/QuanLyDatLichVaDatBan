@@ -198,4 +198,107 @@ class BookingRepository(
             onResult(Result.failure(error))
         }
     }
+
+    /**
+     * Xác nhận đơn đặt bàn (WAITING -> CONFIRMED) dùng transaction chống race condition
+     */
+    fun confirmBookingByOwner(
+        bookingId: String,
+        onResult: (Result<Unit>) -> Unit
+    ) {
+        if (bookingId.isBlank()) {
+            onResult(Result.failure(IllegalArgumentException("bookingId rỗng")))
+            return
+        }
+
+        val bookingRef = collection.document(bookingId)
+
+        firestore.runTransaction { transaction ->
+            val snapshot = transaction.get(bookingRef)
+            if (!snapshot.exists()) {
+                throw IllegalStateException("Không tìm thấy đơn đặt bàn #$bookingId")
+            }
+
+            val currentStatusStr = snapshot.getString("status") ?: BookingStatus.PENDING.name
+            val currentStatus = BookingStatus.from(currentStatusStr)
+
+            if (!currentStatus.canTransitionTo(BookingStatus.CONFIRMED)) {
+                throw IllegalStateException("STATUS_CONFLICT:$currentStatusStr")
+            }
+
+            transaction.update(bookingRef, "status", BookingStatus.CONFIRMED.name)
+            null
+        }.addOnSuccessListener {
+            onResult(Result.success(Unit))
+        }.addOnFailureListener { error ->
+            Log.e(TAG, "Lỗi confirmBookingByOwner: ${error.message}", error)
+            onResult(Result.failure(error))
+        }
+    }
+
+    /**
+     * Từ chối đơn đặt bàn (WAITING -> REJECTED)
+     * Trả bàn về available và tạo bản ghi hoàn cọc (refund) trong collection payments
+     */
+    fun rejectBookingByOwner(
+        bookingId: String,
+        onResult: (Result<Unit>) -> Unit
+    ) {
+        if (bookingId.isBlank()) {
+            onResult(Result.failure(IllegalArgumentException("bookingId rỗng")))
+            return
+        }
+
+        val bookingRef = collection.document(bookingId)
+
+        firestore.runTransaction { transaction ->
+            val snapshot = transaction.get(bookingRef)
+            if (!snapshot.exists()) {
+                throw IllegalStateException("Không tìm thấy đơn đặt bàn #$bookingId")
+            }
+
+            val currentStatusStr = snapshot.getString("status") ?: BookingStatus.PENDING.name
+            val currentStatus = BookingStatus.from(currentStatusStr)
+
+            if (!currentStatus.canTransitionTo(BookingStatus.REJECTED)) {
+                throw IllegalStateException("STATUS_CONFLICT:$currentStatusStr")
+            }
+
+            val restaurantId = snapshot.getString("restaurantId").orEmpty()
+            val tableId = snapshot.getString("tableId").orEmpty()
+            val userId = snapshot.getString("userId").orEmpty()
+            val depositAmount = snapshot.getLong("depositAmount") ?: 100_000L
+
+            // 1. Đổi trạng thái booking thành REJECTED
+            transaction.update(bookingRef, "status", BookingStatus.REJECTED.name)
+
+            // 2. Trả bàn về trạng thái available
+            if (restaurantId.isNotBlank() && tableId.isNotBlank()) {
+                val tableRef = firestore.collection("restaurants").document(restaurantId)
+                    .collection("tables").document(tableId)
+                transaction.update(tableRef, "status", "available")
+            }
+
+            // 3. Tạo bản ghi hoàn cọc (refund)
+            val refundPaymentId = "PAY_${bookingId}_REFUND"
+            val refundRef = firestore.collection("payments").document(refundPaymentId)
+            val refundPayment = com.ute.quanlydatban.data.model.Payment(
+                id = refundPaymentId,
+                bookingId = bookingId,
+                userId = userId,
+                type = "refund",
+                amount = depositAmount,
+                method = "vietqr",
+                status = "completed",
+                paidAt = System.currentTimeMillis()
+            )
+            transaction.set(refundRef, refundPayment)
+            null
+        }.addOnSuccessListener {
+            onResult(Result.success(Unit))
+        }.addOnFailureListener { error ->
+            Log.e(TAG, "Lỗi rejectBookingByOwner: ${error.message}", error)
+            onResult(Result.failure(error))
+        }
+    }
 }

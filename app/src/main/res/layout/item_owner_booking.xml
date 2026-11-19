@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llBookingCardRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/bg_payment_card"
+    android:orientation="vertical"
+    android:padding="@dimen/owner_booking_card_padding">
+
+    <!-- Customer Identity Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:layout_width="@dimen/owner_booking_avatar_size"
+            android:layout_height="@dimen/owner_booking_avatar_size"
+            android:background="@drawable/bg_icon_circle"
+            android:backgroundTint="@color/booktable_primary_light">
+
+            <TextView
+                android:id="@+id/tvCustomerAvatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_active"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="HA" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvCustomerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_dark"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="Nguyễn Hoàng Anh" />
+
+            <TextView
+                android:id="@+id/tvBookingCodeStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_muted"
+                android:textSize="11sp"
+                tools:text="BT-1028 · Chờ duyệt" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:contentDescription="@string/cd_filter_button"
+            android:src="@drawable/ic_chevron_right_orange"
+            app:tint="@color/booktable_muted" />
+    </LinearLayout>
+
+    <!-- Booking Info Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:contentDescription="@string/owner_booking_arrival_time_label"
+                android:src="@drawable/ic_clock"
+                app:tint="@color/booktable_muted" />
+
+            <TextView
+                android:id="@+id/tvBookingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_dark"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                tools:text="18:30" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvBookingGuests"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:gravity="center"
+            android:textColor="@color/booktable_muted"
+            android:textSize="12sp"
+            tools:text="4 khách" />
+
+        <TextView
+            android:id="@+id/tvBookingTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:textColor="@color/booktable_active"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            tools:text="Bàn VIP 2" />
+    </LinearLayout>
+
+    <!-- Action Buttons for Pending/Waiting bookings -->
+    <LinearLayout
+        android:id="@+id/llCardActions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCardReject"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/owner_booking_btn_action_height"
+            android:layout_marginEnd="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_booking_btn_reject"
+            android:textAllCaps="false"
+            android:textColor="@color/booktable_dark"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:cornerRadius="14dp"
+            app:strokeColor="@color/payment_card_border"
+            app:strokeWidth="1dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCardConfirm"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/owner_booking_btn_action_height"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/booktable_orange"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_booking_btn_confirm"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:cornerRadius="14dp" />
+    </LinearLayout>
+</LinearLayout>

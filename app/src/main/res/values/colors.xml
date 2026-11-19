@@ -67,4 +67,11 @@
     <color name="payment_divider">#EBDDD2</color>
     <color name="payment_card_border">#EBDDD2</color>
     <color name="payment_badge_expire_bg">#FFE3D4</color>
+
+    <!-- Owner Booking (T14) -->
+    <color name="owner_booking_tab_unselected">#EBDDD2</color>
+    <color name="owner_status_marker_waiting">#C94A1A</color>
+    <color name="owner_status_marker_done">#2E9E6B</color>
+    <color name="owner_status_marker_cooking">#E8622C</color>
+    <color name="owner_status_marker_pending">#F2A93B</color>
 </resources>
