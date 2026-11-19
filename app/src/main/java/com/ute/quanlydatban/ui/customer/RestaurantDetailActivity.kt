@@ -99,19 +99,21 @@ class RestaurantDetailActivity : AppCompatActivity() {
 
     private fun setupBookingButton() {
         binding.btnBooking.setOnClickListener {
-            // Chuyển sang màn hình Đặt bàn (T9)
-            val bookingIntent = try {
-                Intent(this, Class.forName("com.ute.quanlydatban.ui.customer.booking.BookingActivity"))
-            } catch (e: Exception) {
-                try {
-                    Intent(this, Class.forName("com.ute.quanlydatban.ui.customer.BookingActivity"))
-                } catch (e2: Exception) {
-                    Intent(this, MainActivity::class.java).apply {
-                        putExtra(MainActivity.EXTRA_ROLE, MainActivity.ROLE_CUSTOMER)
-                    }
+            if (restaurantId.isBlank()) {
+                SnackbarHelper.show(binding.root, getString(R.string.restaurant_not_found))
+                return@setOnClickListener
+            }
+            val res = viewModel.currentRestaurant.value
+            val bookingIntent = Intent(this, com.ute.quanlydatban.ui.customer.booking.BookingActivity::class.java).apply {
+                putExtra(EXTRA_RESTAURANT_ID, restaurantId)
+                if (res != null) {
+                    putExtra(com.ute.quanlydatban.ui.customer.booking.BookingActivity.EXTRA_RESTAURANT_NAME, res.name)
+                    putExtra(com.ute.quanlydatban.ui.customer.booking.BookingActivity.EXTRA_RESTAURANT_ADDRESS, res.address)
+                    putExtra(com.ute.quanlydatban.ui.customer.booking.BookingActivity.EXTRA_RESTAURANT_OPEN_TIME, res.openTime)
+                    putExtra(com.ute.quanlydatban.ui.customer.booking.BookingActivity.EXTRA_RESTAURANT_CLOSE_TIME, res.closeTime)
+                    putExtra(com.ute.quanlydatban.ui.customer.booking.BookingActivity.EXTRA_DEPOSIT_AMOUNT, res.depositAmount)
                 }
             }
-            bookingIntent.putExtra(EXTRA_RESTAURANT_ID, restaurantId)
             startActivity(bookingIntent)
         }
     }
