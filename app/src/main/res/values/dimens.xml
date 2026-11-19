@@ -392,4 +392,34 @@
     <dimen name="table_item_capacity_size">9sp</dimen>
     <dimen name="table_floor_tabs_gap">8dp</dimen>
     <dimen name="table_legend_row_gap">8dp</dimen>
+
+    <!-- Menu & Cart (T10) -->
+    <dimen name="menu_item_height">94dp</dimen>
+    <dimen name="menu_item_card_padding">9dp</dimen>
+    <dimen name="menu_dish_img_size">76dp</dimen>
+    <dimen name="menu_dish_img_radius">12dp</dimen>
+    <dimen name="menu_dish_name_size">12sp</dimen>
+    <dimen name="menu_dish_desc_size">9sp</dimen>
+    <dimen name="menu_dish_price_size">12sp</dimen>
+    <dimen name="menu_btn_add_height">27dp</dimen>
+    <dimen name="menu_btn_add_min_width">29dp</dimen>
+    <dimen name="menu_btn_add_radius">8dp</dimen>
+    <dimen name="menu_btn_add_icon_size">13dp</dimen>
+    <dimen name="menu_btn_add_text_size">10sp</dimen>
+    <dimen name="menu_cart_bar_height">50dp</dimen>
+    <dimen name="menu_cart_bar_radius">12dp</dimen>
+    <dimen name="menu_cart_bar_padding_h">14dp</dimen>
+    <dimen name="menu_cart_bar_icon_size">21dp</dimen>
+    <dimen name="cart_item_height">90dp</dimen>
+    <dimen name="cart_item_card_radius">18dp</dimen>
+    <dimen name="cart_item_card_padding">7dp</dimen>
+    <dimen name="cart_qty_box_height">30dp</dimen>
+    <dimen name="cart_qty_box_radius">9dp</dimen>
+    <dimen name="cart_qty_btn_size">13dp</dimen>
+    <dimen name="cart_qty_text_size">12sp</dimen>
+    <dimen name="cart_summary_radius">18dp</dimen>
+    <dimen name="cart_summary_padding">14dp</dimen>
+    <dimen name="cart_summary_text_size">12sp</dimen>
+    <dimen name="cart_summary_total_size">19sp</dimen>
+    <dimen name="cart_skip_btn_size">12sp</dimen>
 </resources>

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llMenuRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream"
+    android:orientation="vertical">
+
+    <!-- Page Header -->
+    <LinearLayout
+        android:id="@+id/llMenuHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/booking_header_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/booking_screen_padding">
+
+        <FrameLayout
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/booking_back_width"
+            android:layout_height="@dimen/booking_back_height"
+            android:background="@drawable/bg_booking_back_btn"
+            android:contentDescription="@string/booking_cd_back">
+
+            <ImageView
+                android:layout_width="@dimen/booking_back_icon_size"
+                android:layout_height="@dimen/booking_back_icon_size"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_auth_back"
+                app:tint="@color/booktable_dark" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvBreadcrumb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/menu_breadcrumb"
+                android:textColor="@color/booktable_active"
+                android:textSize="@dimen/booking_breadcrumb_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvMenuTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/menu_title"
+                android:textColor="@color/booktable_dark"
+                android:textSize="@dimen/booking_title_size"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/btnSkip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:padding="8dp"
+            android:text="@string/menu_skip"
+            android:textColor="@color/booktable_orange"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- States: loading / empty / error -->
+    <include
+        android:id="@+id/layoutStates"
+        layout="@layout/layout_shared_states"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Main Content Area -->
+    <LinearLayout
+        android:id="@+id/llMenuContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Table Context Banner -->
+        <LinearLayout
+            android:id="@+id/llTableContext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/booking_screen_padding"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_nav_calendar"
+                app:tint="@color/booktable_muted" />
+
+            <TextView
+                android:id="@+id/tvTableContext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_muted"
+                android:textSize="11sp"
+                tools:text="Phòng VIP 2 · Tầng 2 · 18:30" />
+        </LinearLayout>
+
+        <!-- Categories Horizontal Scroll -->
+        <HorizontalScrollView
+            android:id="@+id/hsvCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:clipToPadding="false"
+            android:paddingHorizontal="@dimen/booking_screen_padding"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/llCategories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
+        </HorizontalScrollView>
+
+        <!-- Menu Section Heading -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/booking_screen_padding"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvHeading"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/menu_heading"
+                android:textColor="@color/booktable_dark"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvSubheading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/menu_subheading"
+                android:textColor="@color/booktable_active"
+                android:textSize="10sp" />
+        </LinearLayout>
+
+        <!-- Empty text if category has no dishes -->
+        <TextView
+            android:id="@+id/tvMenuEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/booking_screen_padding"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:gravity="center"
+            android:text="@string/menu_empty"
+            android:textColor="@color/booktable_muted"
+            android:textSize="13sp"
+            android:visibility="gone"
+            tools:visibility="visible" />
+
+        <!-- Dish List -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvMenu"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"
+            tools:listitem="@layout/item_menu" />
+    </LinearLayout>
+
+    <!-- Bottom Sticky Cart Action Bar -->
+    <LinearLayout
+        android:id="@+id/llBottomAction"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/booking_bottom_height"
+        android:background="@drawable/bg_booking_bottom_bar"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/booking_bottom_padding_h"
+        android:paddingVertical="@dimen/booking_bottom_padding_v">
+
+        <LinearLayout
+            android:id="@+id/llStickyCartBar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/menu_cart_bar_height"
+            android:background="@drawable/bg_booking_btn_primary"
+            android:clickable="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/menu_cart_bar_padding_h">
+
+            <ImageView
+                android:layout_width="@dimen/menu_cart_bar_icon_size"
+                android:layout_height="@dimen/menu_cart_bar_icon_size"
+                android:src="@drawable/ic_cart"
+                app:tint="@color/white" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvCartCount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/menu_cart_items_format"
+                    android:textColor="@color/white"
+                    android:textSize="10sp"
+                    tools:text="5 món đã chọn" />
+
+                <TextView
+                    android:id="@+id/tvCartTotal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    tools:text="357.000đ" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/menu_view_cart"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="17dp"
+                android:layout_height="17dp"
+                android:layout_marginStart="4dp"
+                android:src="@drawable/ic_auth_arrow"
+                app:tint="@color/white" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:gravity="center"
+            android:text="@string/menu_bottom_hint"
+            android:textColor="@color/booktable_muted"
+            android:textSize="@dimen/booking_bottom_hint_size" />
+    </LinearLayout>
+
+</LinearLayout>

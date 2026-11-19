@@ -180,13 +180,29 @@ class TableSelectFragment : Fragment() {
             }
 
             viewModel.confirmBooking { booking ->
-                SnackbarHelper.show(
-                    binding.root,
-                    "Đặt bàn thành công (#${booking.id})! Bàn đã được giữ chỗ 10 phút."
-                )
-                binding.btnConfirmTable.postDelayed({
-                    activity?.finish()
-                }, 1500)
+                // Hiện dialog Đặt bàn thành công, không cho đóng bằng bấm ra ngoài (setCancelable(false))
+                com.google.android.material.dialog.MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(getString(R.string.booking_success_dialog_title))
+                    .setMessage(getString(R.string.booking_success_dialog_message))
+                    .setCancelable(false)
+                    .setPositiveButton(getString(R.string.booking_success_dialog_btn_confirm)) { dialog, _ ->
+                        dialog.dismiss()
+                        val bundle = Bundle().apply {
+                            putString("bookingId", booking.id)
+                            putString("restaurantId", booking.restaurantId)
+                            putString("restaurantName", viewModel.restaurant.value?.name)
+                            putString("tableName", selectedTable.name)
+                            putString("bookingDate", booking.date)
+                            putString("bookingTime", booking.time)
+                            putLong("bookingGuests", booking.guests)
+                            putLong("depositAmount", booking.depositAmount)
+                        }
+                        findNavController().navigate(
+                            R.id.action_tableSelectFragment_to_menuFragment,
+                            bundle
+                        )
+                    }
+                    .show()
             }
         }
     }

@@ -108,5 +108,69 @@
             android:name="restaurantId"
             app:argType="string"
             android:defaultValue="" />
+        <action
+            android:id="@+id/action_tableSelectFragment_to_menuFragment"
+            app:destination="@id/menuFragment" />
+    </fragment>
+
+    <!-- Menu & Cart Flow (T10) -->
+    <fragment
+        android:id="@+id/menuFragment"
+        android:name="com.ute.quanlydatban.ui.customer.menu.MenuFragment"
+        android:label="@string/menu_title">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/menu_title" />
+        <argument
+            android:name="bookingId"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="restaurantId"
+            app:argType="string"
+            android:defaultValue="" />
+        <action
+            android:id="@+id/action_menuFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_paymentPlaceholderFragment"
+            app:destination="@id/paymentPlaceholderFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.ute.quanlydatban.ui.customer.menu.CartFragment"
+        android:label="@string/cart_title">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/cart_title" />
+        <argument
+            android:name="bookingId"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="restaurantId"
+            app:argType="string"
+            android:defaultValue="" />
+        <action
+            android:id="@+id/action_cartFragment_to_paymentPlaceholderFragment"
+            app:destination="@id/paymentPlaceholderFragment" />
+    </fragment>
+
+    <!-- Destination tạm cho Payment T11 -->
+    <fragment
+        android:id="@+id/paymentPlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:label="@string/payment_title">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/payment_title" />
+        <argument
+            android:name="bookingId"
+            app:argType="string"
+            android:defaultValue="" />
     </fragment>
 </navigation>
