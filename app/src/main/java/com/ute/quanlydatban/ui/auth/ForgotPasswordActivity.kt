@@ -1,7 +1,9 @@
 package com.ute.quanlydatban.ui.auth
 
 import android.os.Bundle
+import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.ViewModelProvider
 import com.ute.quanlydatban.R
 import com.ute.quanlydatban.databinding.ActivityForgotPasswordBinding
@@ -19,10 +21,18 @@ class ForgotPasswordActivity : AppCompatActivity() {
         setContentView(binding.root)
         configureAuthWindow(binding.forgotPasswordRoot, R.color.white)
 
+        binding.etForgotEmail.doAfterTextChanged { binding.tilForgotEmail.error = null }
+
         binding.btnForgotBack.setOnClickListener { finish() }
         binding.tvForgotBackToLogin.setOnClickListener { finish() }
+
         binding.btnSendReset.setOnClickListener {
-            viewModel.sendPasswordReset(binding.etForgotEmail.text?.toString().orEmpty())
+            val email = binding.etForgotEmail.text?.toString().orEmpty().trim()
+            if (email.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                binding.tilForgotEmail.error = getString(R.string.auth_error_email)
+                return@setOnClickListener
+            }
+            viewModel.sendPasswordReset(email)
         }
 
         viewModel.state.observe(this) { state ->

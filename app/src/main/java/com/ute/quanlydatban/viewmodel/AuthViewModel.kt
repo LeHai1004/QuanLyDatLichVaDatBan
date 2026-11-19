@@ -25,54 +25,22 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
     val state: LiveData<AuthViewState> = _state
 
     fun signIn(email: String, password: String) {
+        if (_state.value?.loading == true) return
         val normalizedEmail = email.trim()
-        if (!isEmailValid(normalizedEmail)) {
-            showMessage(R.string.auth_error_email)
-            return
-        }
-        if (password.isBlank()) {
-            showMessage(R.string.auth_error_password_required)
-            return
-        }
-
         _state.value = AuthViewState(loading = true)
         repository.signIn(normalizedEmail, password, ::handleResult)
     }
 
     fun register(name: String, email: String, phone: String, password: String, role: String) {
+        if (_state.value?.loading == true) return
         val normalizedEmail = email.trim()
-        if (name.isBlank()) {
-            showMessage(R.string.auth_error_name)
-            return
-        }
-        if (!isEmailValid(normalizedEmail)) {
-            showMessage(R.string.auth_error_email)
-            return
-        }
-        if (phone.isBlank()) {
-            showMessage(R.string.auth_error_phone)
-            return
-        }
-        if (password.length < MIN_PASSWORD_LENGTH) {
-            showMessage(R.string.auth_error_weak_password)
-            return
-        }
-        if (role != ROLE_CUSTOMER && role != ROLE_OWNER) {
-            showMessage(R.string.auth_error_role)
-            return
-        }
-
         _state.value = AuthViewState(loading = true)
         repository.register(name.trim(), normalizedEmail, phone.trim(), password, role, ::handleResult)
     }
 
     fun sendPasswordReset(email: String) {
+        if (_state.value?.loading == true) return
         val normalizedEmail = email.trim()
-        if (!isEmailValid(normalizedEmail)) {
-            showMessage(R.string.auth_error_email)
-            return
-        }
-
         _state.value = AuthViewState(loading = true)
         repository.sendPasswordReset(normalizedEmail) { result ->
             _state.value = result.fold(
@@ -83,6 +51,7 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
     }
 
     fun restoreSession() {
+        if (_state.value?.loading == true) return
         _state.value = AuthViewState(loading = true)
         repository.restoreSession { result ->
             _state.value = AuthViewState(
@@ -104,13 +73,6 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
         )
     }
 
-    private fun showMessage(messageRes: Int) {
-        _state.value = AuthViewState(messageRes = messageRes)
-    }
-
-    private fun isEmailValid(email: String): Boolean =
-        email.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-
     private fun Throwable.toAuthMessage(): Int = when (this) {
         is FirebaseAuthWeakPasswordException -> R.string.auth_error_weak_password
         is FirebaseAuthUserCollisionException -> R.string.auth_error_account_exists
@@ -121,10 +83,6 @@ class AuthViewModel(private val repository: AuthRepository) : ViewModel() {
     }
 
     companion object {
-        private const val MIN_PASSWORD_LENGTH = 6
-        private const val ROLE_CUSTOMER = "customer"
-        private const val ROLE_OWNER = "owner"
-
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 if (!modelClass.isAssignableFrom(AuthViewModel::class.java)) {

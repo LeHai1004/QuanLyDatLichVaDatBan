@@ -1,4 +1,4 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/auth_icon_surface" />
-    <corners android:radius="@dimen/auth_card_radius" />
+    <solid android:color="@color/booktable_primary_light" />
+    <corners android:radius="@dimen/auth_forgot_icon_radius" />
 </shape>

@@ -23,4 +23,5 @@
     <color name="auth_icon_surface">#FFE5D6</color>
     <color name="auth_input_background">#FFFFFFFF</color>
     <color name="auth_success">#258C63</color>
+    <color name="booktable_primary_light">#FFE3D4</color>
 </resources>

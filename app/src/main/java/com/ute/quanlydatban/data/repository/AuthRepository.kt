@@ -45,7 +45,10 @@ class AuthRepository(
                     name = name,
                     email = email,
                     phone = phone,
-                    role = role
+                    role = role,
+                    points = 0L,
+                    rank = DEFAULT_RANK,
+                    avatarUrl = ""
                 )
                 users.document(userId).set(profile)
                     .addOnSuccessListener { onResult(Result.success(role)) }
@@ -105,9 +108,10 @@ class AuthRepository(
     private class AuthProfileException : Exception()
 
     companion object {
-        private const val USERS_COLLECTION = "users"
-        private const val FIELD_ROLE = "role"
-        private const val ROLE_CUSTOMER = "customer"
-        private const val ROLE_OWNER = "owner"
+        const val USERS_COLLECTION = "users"
+        const val FIELD_ROLE = "role"
+        const val ROLE_CUSTOMER = "customer"
+        const val ROLE_OWNER = "owner"
+        const val DEFAULT_RANK = "Đồng"
     }
 }
