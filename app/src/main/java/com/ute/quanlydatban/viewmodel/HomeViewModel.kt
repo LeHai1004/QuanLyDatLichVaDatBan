@@ -1,5 +1,6 @@
 package com.ute.quanlydatban.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -84,6 +85,7 @@ class HomeViewModel(
                     applySearchAndFilter()
                 },
                 onFailure = { error ->
+                    Log.e("RestaurantDetail", "loadRestaurants thất bại: ${error.message}", error)
                     _errorMessage.value = error.toViMessage()
                     _isEmpty.value = false
                 }
@@ -129,6 +131,13 @@ class HomeViewModel(
 
     // Tải chi tiết một quán theo id
     fun loadRestaurantDetail(restaurantId: String) {
+        if (restaurantId.isBlank()) {
+            Log.e("RestaurantDetail", "loadRestaurantDetail: restaurantId rỗng hoặc null")
+            _isDetailLoading.value = false
+            _detailErrorMessage.value = "Không tìm thấy mã nhà hàng"
+            return
+        }
+
         _isDetailLoading.value = true
         _detailErrorMessage.value = null
 
@@ -140,11 +149,13 @@ class HomeViewModel(
                         _isOpenNow.value = isCurrentlyOpen(restaurant.openTime, restaurant.closeTime)
                         loadMenuItems(restaurant.id)
                     } else {
+                        Log.e("RestaurantDetail", "loadRestaurantDetail: Không tìm thấy quán id=$restaurantId")
                         _isDetailLoading.value = false
-                        _detailErrorMessage.value = "Không tìm thấy quán"
+                        _detailErrorMessage.value = "Không tìm thấy thông tin quán"
                     }
                 },
                 onFailure = { error ->
+                    Log.e("RestaurantDetail", "loadRestaurantDetail thất bại: ${error.message}", error)
                     _isDetailLoading.value = false
                     _detailErrorMessage.value = error.toViMessage()
                 }
@@ -161,7 +172,8 @@ class HomeViewModel(
                     _menuItems.value = items
                 },
                 onFailure = { error ->
-                    _detailErrorMessage.value = error.toViMessage()
+                    Log.e("RestaurantDetail", "loadMenuItems thất bại: ${error.message}", error)
+                    _menuItems.value = emptyList()
                 }
             )
         }

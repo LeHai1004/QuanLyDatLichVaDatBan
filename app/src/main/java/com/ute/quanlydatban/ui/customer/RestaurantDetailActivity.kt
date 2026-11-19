@@ -2,6 +2,7 @@ package com.ute.quanlydatban.ui.customer
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -48,19 +49,25 @@ class RestaurantDetailActivity : AppCompatActivity() {
             insets
         }
 
-        restaurantId = intent.getStringExtra(EXTRA_RESTAURANT_ID).orEmpty()
-        if (restaurantId.isEmpty()) {
-            SnackbarHelper.show(binding.root, getString(R.string.restaurant_not_found))
-            finish()
-            return
-        }
-
         setupToolbar()
         setupPlaceholders()
         setupRecyclerView()
         setupBookingButton()
         setupRetryButton()
         observeViewModel()
+
+        restaurantId = intent.getStringExtra(EXTRA_RESTAURANT_ID)
+            ?: intent.getStringExtra("restaurant_id")
+            ?: intent.getStringExtra("id").orEmpty()
+
+        if (restaurantId.isEmpty()) {
+            Log.e("RestaurantDetail", "RestaurantDetailActivity: restaurantId rỗng hoặc không có trong Intent")
+            val notFoundMessage = getString(R.string.restaurant_not_found)
+            UiStateHelper.showError(binding.layoutStates.root, notFoundMessage)
+            binding.llDetailBody.visibility = View.GONE
+            SnackbarHelper.show(binding.root, notFoundMessage)
+            return
+        }
 
         viewModel.loadRestaurantDetail(restaurantId)
     }
@@ -111,22 +118,22 @@ class RestaurantDetailActivity : AppCompatActivity() {
 
     private fun setupRetryButton() {
         binding.layoutStates.btnRetry.setOnClickListener {
-            viewModel.loadRestaurantDetail(restaurantId)
+            if (restaurantId.isNotEmpty()) {
+                viewModel.loadRestaurantDetail(restaurantId)
+            } else {
+                finish()
+            }
         }
     }
 
     private fun observeViewModel() {
-        viewModel.isDetailLoading.observe(this) { loading ->
-            if (loading) {
-                UiStateHelper.showLoading(binding.layoutStates.root)
-                binding.llDetailBody.visibility = View.GONE
-            }
+        viewModel.isDetailLoading.observe(this) {
+            updateUiState()
         }
 
         viewModel.detailErrorMessage.observe(this) { error ->
+            updateUiState()
             if (error != null) {
-                UiStateHelper.showError(binding.layoutStates.root, error)
-                binding.llDetailBody.visibility = View.GONE
                 SnackbarHelper.show(binding.root, error) {
                     viewModel.loadRestaurantDetail(restaurantId)
                 }
@@ -134,34 +141,14 @@ class RestaurantDetailActivity : AppCompatActivity() {
         }
 
         viewModel.currentRestaurant.observe(this) { restaurant ->
-            if (restaurant != null && viewModel.isDetailLoading.value == false && viewModel.detailErrorMessage.value == null) {
-                UiStateHelper.hideAll(binding.layoutStates.root)
-                binding.llDetailBody.visibility = View.VISIBLE
+            updateUiState()
+            if (restaurant != null) {
                 bindRestaurantData(restaurant)
             }
         }
 
         viewModel.isOpenNow.observe(this) { isOpen ->
-            val restaurant = viewModel.currentRestaurant.value ?: return@observe
-            if (isOpen) {
-                binding.tvOpenStatus.text = getString(
-                    R.string.detail_hours_open_now,
-                    restaurant.openTime,
-                    restaurant.closeTime
-                )
-                binding.tvOpenStatus.setBackgroundResource(R.drawable.bg_status_badge_open)
-                binding.tvOpenStatus.setTextColor(ContextCompat.getColor(this, R.color.auth_success))
-                binding.llClosedNotice.visibility = View.GONE
-            } else {
-                binding.tvOpenStatus.text = getString(
-                    R.string.detail_hours_closed_now,
-                    restaurant.openTime
-                )
-                binding.tvOpenStatus.setBackgroundResource(R.drawable.bg_status_badge_closed)
-                binding.tvOpenStatus.setTextColor(ContextCompat.getColor(this, R.color.booktable_error))
-                // Quán ngoài giờ mở cửa: báo rõ trên Detail
-                binding.llClosedNotice.visibility = View.VISIBLE
-            }
+            updateOpenStatusBadge(isOpen)
         }
 
         viewModel.menuItems.observe(this) { items ->
@@ -173,6 +160,53 @@ class RestaurantDetailActivity : AppCompatActivity() {
                 binding.rvMenuItems.visibility = View.VISIBLE
                 menuAdapter.submitList(items)
             }
+        }
+    }
+
+    private fun updateUiState() {
+        val isLoading = viewModel.isDetailLoading.value ?: false
+        val error = viewModel.detailErrorMessage.value
+        val restaurant = viewModel.currentRestaurant.value
+
+        when {
+            isLoading -> {
+                UiStateHelper.showLoading(binding.layoutStates.root)
+                binding.llDetailBody.visibility = View.GONE
+            }
+            error != null -> {
+                UiStateHelper.showError(binding.layoutStates.root, error)
+                binding.llDetailBody.visibility = View.GONE
+            }
+            restaurant == null -> {
+                UiStateHelper.showEmpty(binding.layoutStates.root)
+                binding.llDetailBody.visibility = View.GONE
+            }
+            else -> {
+                UiStateHelper.hideAll(binding.layoutStates.root)
+                binding.llDetailBody.visibility = View.VISIBLE
+            }
+        }
+    }
+
+    private fun updateOpenStatusBadge(isOpen: Boolean) {
+        val restaurant = viewModel.currentRestaurant.value ?: return
+        if (isOpen) {
+            binding.tvOpenStatus.text = getString(
+                R.string.detail_hours_open_now,
+                restaurant.openTime,
+                restaurant.closeTime
+            )
+            binding.tvOpenStatus.setBackgroundResource(R.drawable.bg_status_badge_open)
+            binding.tvOpenStatus.setTextColor(ContextCompat.getColor(this, R.color.auth_success))
+            binding.llClosedNotice.visibility = View.GONE
+        } else {
+            binding.tvOpenStatus.text = getString(
+                R.string.detail_hours_closed_now,
+                restaurant.openTime
+            )
+            binding.tvOpenStatus.setBackgroundResource(R.drawable.bg_status_badge_closed)
+            binding.tvOpenStatus.setTextColor(ContextCompat.getColor(this, R.color.booktable_error))
+            binding.llClosedNotice.visibility = View.VISIBLE
         }
     }
 
@@ -188,6 +222,7 @@ class RestaurantDetailActivity : AppCompatActivity() {
         )
         binding.tvDepositAmount.text = formatMoney(restaurant.depositAmount)
         binding.tvBottomDepositAmount.text = formatMoney(restaurant.depositAmount)
+        updateOpenStatusBadge(viewModel.isOpenNow.value ?: true)
     }
 
     companion object {
