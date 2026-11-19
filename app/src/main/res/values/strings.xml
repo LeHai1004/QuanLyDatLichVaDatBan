@@ -16,4 +16,61 @@
     <string name="state_demo_empty">Xem trống</string>
     <string name="state_demo_error">Xem lỗi</string>
     <string name="snackbar_action_close">Đóng</string>
+
+    <!-- Splash -->
+    <string name="splash_name">BookTable</string>
+    <string name="splash_tagline">Bàn ngon đã sẵn.\nChỉ chờ bạn đến.</string>
+    <string name="splash_meal_prompt">Hẹn nhau một bữa ngon</string>
+    <string name="splash_meal">Ảnh món ăn</string>
+    <string name="splash_caption">Chọn quán yêu thích • Đặt bàn thật dễ</string>
+
+    <!-- Authentication -->
+    <string name="auth_welcome_title">Chào bạn trở lại!</string>
+    <string name="auth_login_subtitle">Đăng nhập để giữ chỗ cho những bữa ăn đáng nhớ.</string>
+    <string name="auth_email_label">Email</string>
+    <string name="auth_email_hint">Nhập địa chỉ email</string>
+    <string name="auth_password_label">Mật khẩu</string>
+    <string name="auth_password_hint">Nhập mật khẩu</string>
+    <string name="auth_forgot_password">Quên mật khẩu?</string>
+    <string name="auth_login">Đăng nhập</string>
+    <string name="auth_no_account">Chưa có tài khoản?</string>
+    <string name="auth_register">Đăng ký</string>
+    <string name="auth_security_note">An tâm đặt bàn, trọn vẹn cuộc vui.</string>
+    <string name="auth_register_welcome">CHÀO MỪNG BẠN</string>
+    <string name="auth_register_title">Thêm bạn, thêm vui.</string>
+    <string name="auth_register_subtitle">Tạo tài khoản để mỗi cuộc hẹn ngon lành đều có một chỗ dành riêng cho bạn.</string>
+    <string name="auth_name_label">Họ và tên</string>
+    <string name="auth_name_hint">Nguyễn Minh Anh</string>
+    <string name="auth_phone_label">Số điện thoại</string>
+    <string name="auth_phone_hint">0912 345 678</string>
+    <string name="auth_role_label">Bạn tham gia với vai trò</string>
+    <string name="auth_role_customer">Khách hàng</string>
+    <string name="auth_role_owner">Chủ quán</string>
+    <string name="auth_terms_prefix">Tiếp tục đồng nghĩa bạn đồng ý với</string>
+    <string name="auth_terms_link">Điều khoản sử dụng.</string>
+    <string name="auth_create_account">Tạo tài khoản</string>
+    <string name="auth_has_account">Đã có tài khoản?</string>
+    <string name="auth_create_progress">Đang tạo tài khoản…</string>
+    <string name="auth_login_progress">Đang đăng nhập…</string>
+    <string name="auth_reset_progress">Đang gửi liên kết…</string>
+    <string name="auth_forgot_title">Quên mật khẩu?</string>
+    <string name="auth_account_breadcrumb">BookTable · Tài khoản</string>
+    <string name="auth_reset_description">Nhập email đã đăng ký. Chúng tôi sẽ gửi liên kết để bạn đặt lại mật khẩu.</string>
+    <string name="auth_check_email_title">Kiểm tra hộp thư của bạn</string>
+    <string name="auth_check_email_body">Nếu chưa thấy email, hãy kiểm tra mục thư rác hoặc thử lại với email đã đăng ký.</string>
+    <string name="auth_send_reset">Gửi liên kết đặt lại</string>
+    <string name="auth_back_to_login">Quay lại đăng nhập</string>
+    <string name="auth_error_name">Vui lòng nhập họ và tên.</string>
+    <string name="auth_error_email">Vui lòng nhập địa chỉ email hợp lệ.</string>
+    <string name="auth_error_password_required">Vui lòng nhập mật khẩu.</string>
+    <string name="auth_error_phone">Vui lòng nhập số điện thoại.</string>
+    <string name="auth_error_weak_password">Mật khẩu cần có ít nhất 6 ký tự.</string>
+    <string name="auth_error_role">Vui lòng chọn vai trò tài khoản.</string>
+    <string name="auth_error_account_exists">Email này đã được đăng ký.</string>
+    <string name="auth_error_credentials">Email hoặc mật khẩu không chính xác.</string>
+    <string name="auth_error_network">Không có kết nối mạng. Vui lòng thử lại.</string>
+    <string name="auth_error_generic">Không thể hoàn tất yêu cầu. Vui lòng thử lại.</string>
+    <string name="auth_reset_sent">Nếu email đã đăng ký, liên kết đặt lại mật khẩu sẽ được gửi đến hộp thư của bạn.</string>
+    <string name="auth_notifications">Thông báo</string>
+    <string name="auth_login_header_description">Mâm cơm BookTable</string>
 </resources>

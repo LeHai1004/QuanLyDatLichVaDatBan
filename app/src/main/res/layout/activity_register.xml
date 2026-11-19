@@ -1,0 +1,532 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/registerRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvRegister"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/llRegisterBottomNav"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/auth_screen_padding_horizontal"
+            android:paddingTop="@dimen/auth_register_content_padding_vertical"
+            android:paddingEnd="@dimen/auth_screen_padding_horizontal"
+            android:paddingBottom="@dimen/auth_register_content_padding_vertical">
+
+            <LinearLayout
+                android:id="@+id/llRegisterToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/auth_register_toolbar_height"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnRegisterBack"
+                    android:layout_width="@dimen/auth_toolbar_button_size"
+                    android:layout_height="@dimen/auth_toolbar_button_size"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/auth_back_to_login"
+                    android:src="@drawable/ic_auth_back"
+                    app:tint="@color/booktable_dark" />
+
+                <LinearLayout
+                    android:id="@+id/llRegisterBrand"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/ivRegisterBrandMark"
+                        android:layout_width="@dimen/auth_brand_mark_size"
+                        android:layout_height="@dimen/auth_brand_mark_size"
+                        android:contentDescription="@null"
+                        android:src="@drawable/ic_splash_logo" />
+
+                    <TextView
+                        android:id="@+id/tvRegisterBrand"
+                        style="@style/BookTableAuthText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/auth_horizontal_gap"
+                        android:text="@string/splash_name"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/auth_brand_text_size"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <FrameLayout
+                    android:layout_width="@dimen/auth_toolbar_button_size"
+                    android:layout_height="@dimen/auth_toolbar_button_size">
+
+                    <ImageButton
+                        android:id="@+id/btnRegisterNotifications"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/auth_notifications"
+                        android:src="@drawable/ic_auth_bell"
+                        app:tint="@color/booktable_dark" />
+
+                    <View
+                        android:layout_width="@dimen/auth_notification_dot_size"
+                        android:layout_height="@dimen/auth_notification_dot_size"
+                        android:layout_gravity="top|end"
+                        android:layout_marginTop="@dimen/auth_notification_dot_margin"
+                        android:layout_marginEnd="@dimen/auth_notification_dot_margin"
+                        android:background="@drawable/bg_auth_notification_dot" />
+                </FrameLayout>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterWelcome"
+                style="@style/BookTableAuthText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_register_intro_margin_top"
+                android:text="@string/auth_register_welcome"
+                android:textColor="@color/booktable_active"
+                android:textSize="@dimen/auth_label_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvRegisterTitle"
+                style="@style/BookTableAuthHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_register_title_margin_top"
+                android:text="@string/auth_register_title" />
+
+            <TextView
+                android:id="@+id/tvRegisterSubtitle"
+                style="@style/BookTableAuthText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_register_description_margin_top"
+                android:text="@string/auth_register_subtitle"
+                android:textColor="@color/booktable_muted"
+                android:textSize="@dimen/auth_description_text_size" />
+
+            <TextView
+                android:id="@+id/tvRegisterNameLabel"
+                style="@style/BookTableAuthLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_register_group_gap"
+                android:text="@string/auth_name_label" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRegisterName"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/auth_register_field_height"
+                android:layout_marginTop="@dimen/auth_register_field_gap"
+                app:boxBackgroundColor="@color/auth_input_background"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="@dimen/auth_card_radius"
+                app:boxCornerRadiusBottomStart="@dimen/auth_card_radius"
+                app:boxCornerRadiusTopEnd="@dimen/auth_card_radius"
+                app:boxCornerRadiusTopStart="@dimen/auth_card_radius"
+                app:boxStrokeColor="@color/booktable_border"
+                app:boxStrokeWidth="@dimen/nav_bottom_stroke_width"
+                app:hintEnabled="false"
+                app:startIconDrawable="@drawable/ic_auth_person"
+                app:startIconTint="@color/booktable_muted">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegisterName"
+                    style="@style/BookTableAuthText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/auth_name_hint"
+                    android:inputType="textPersonName|textCapWords"
+                    android:singleLine="true"
+                    android:textColor="@color/booktable_dark"
+                    android:textColorHint="@color/booktable_muted"
+                    android:textSize="@dimen/auth_body_text_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterEmailLabel"
+                style="@style/BookTableAuthLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_register_group_gap"
+                android:text="@string/auth_email_label" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRegisterEmail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/auth_register_field_height"
+                android:layout_marginTop="@dimen/auth_register_field_gap"
+                app:boxBackgroundColor="@color/auth_input_background"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="@dimen/auth_card_radius"
+                app:boxCornerRadiusBottomStart="@dimen/auth_card_radius"
+                app:boxCornerRadiusTopEnd="@dimen/auth_card_radius"
+                app:boxCornerRadiusTopStart="@dimen/auth_card_radius"
+                app:boxStrokeColor="@color/booktable_border"
+                app:boxStrokeWidth="@dimen/nav_bottom_stroke_width"
+                app:hintEnabled="false"
+                app:startIconDrawable="@drawable/ic_auth_email"
+                app:startIconTint="@color/booktable_muted">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegisterEmail"
+                    style="@style/BookTableAuthText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/auth_email_hint"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:textColor="@color/booktable_dark"
+                    android:textColorHint="@color/booktable_muted"
+                    android:textSize="@dimen/auth_body_text_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterPhoneLabel"
+                style="@style/BookTableAuthLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_register_group_gap"
+                android:text="@string/auth_phone_label" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRegisterPhone"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/auth_register_field_height"
+                android:layout_marginTop="@dimen/auth_register_field_gap"
+                app:boxBackgroundColor="@color/auth_input_background"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="@dimen/auth_card_radius"
+                app:boxCornerRadiusBottomStart="@dimen/auth_card_radius"
+                app:boxCornerRadiusTopEnd="@dimen/auth_card_radius"
+                app:boxCornerRadiusTopStart="@dimen/auth_card_radius"
+                app:boxStrokeColor="@color/booktable_border"
+                app:boxStrokeWidth="@dimen/nav_bottom_stroke_width"
+                app:hintEnabled="false"
+                app:startIconDrawable="@drawable/ic_auth_phone"
+                app:startIconTint="@color/booktable_muted">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegisterPhone"
+                    style="@style/BookTableAuthText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/auth_phone_hint"
+                    android:inputType="phone"
+                    android:singleLine="true"
+                    android:textColor="@color/booktable_dark"
+                    android:textColorHint="@color/booktable_muted"
+                    android:textSize="@dimen/auth_body_text_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterPasswordLabel"
+                style="@style/BookTableAuthLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_register_group_gap"
+                android:text="@string/auth_password_label" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRegisterPassword"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/auth_register_field_height"
+                android:layout_marginTop="@dimen/auth_register_field_gap"
+                app:boxBackgroundColor="@color/auth_input_background"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="@dimen/auth_card_radius"
+                app:boxCornerRadiusBottomStart="@dimen/auth_card_radius"
+                app:boxCornerRadiusTopEnd="@dimen/auth_card_radius"
+                app:boxCornerRadiusTopStart="@dimen/auth_card_radius"
+                app:boxStrokeColor="@color/booktable_border"
+                app:boxStrokeWidth="@dimen/nav_bottom_stroke_width"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/booktable_muted"
+                app:hintEnabled="false"
+                app:startIconDrawable="@drawable/ic_auth_lock"
+                app:startIconTint="@color/booktable_muted">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegisterPassword"
+                    style="@style/BookTableAuthText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/auth_password_hint"
+                    android:inputType="textPassword"
+                    android:singleLine="true"
+                    android:textColor="@color/booktable_dark"
+                    android:textColorHint="@color/booktable_muted"
+                    android:textSize="@dimen/auth_body_text_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterRoleLabel"
+                style="@style/BookTableAuthLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_register_role_margin_top"
+                android:text="@string/auth_role_label" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/tgRegisterRole"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_register_field_gap"
+                app:checkedButton="@id/btnRoleCustomer"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRoleCustomer"
+                    style="@style/BookTableAuthText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/auth_register_role_button_height"
+                    android:checkable="true"
+                    android:paddingStart="@dimen/auth_horizontal_gap"
+                    android:paddingEnd="@dimen/auth_horizontal_gap"
+                    android:text="@string/auth_role_customer"
+                    android:textColor="@color/auth_role_text"
+                    android:textSize="@dimen/auth_link_text_size"
+                    app:backgroundTint="@color/auth_role_background"
+                    app:cornerRadius="@dimen/auth_role_button_radius"
+                    app:icon="@drawable/ic_auth_customer"
+                    app:iconGravity="textStart"
+                    app:iconPadding="@dimen/auth_horizontal_gap"
+                    app:iconTint="@color/auth_role_text"
+                    app:strokeColor="@color/auth_role_stroke"
+                    app:strokeWidth="@dimen/nav_bottom_stroke_width" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRoleOwner"
+                    style="@style/BookTableAuthText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/auth_register_role_button_height"
+                    android:checkable="true"
+                    android:layout_marginStart="@dimen/auth_horizontal_gap"
+                    android:paddingStart="@dimen/auth_horizontal_gap"
+                    android:paddingEnd="@dimen/auth_horizontal_gap"
+                    android:text="@string/auth_role_owner"
+                    android:textColor="@color/auth_role_text"
+                    android:textSize="@dimen/auth_link_text_size"
+                    app:backgroundTint="@color/auth_role_background"
+                    app:cornerRadius="@dimen/auth_role_button_radius"
+                    app:icon="@drawable/ic_auth_owner"
+                    app:iconGravity="textStart"
+                    app:iconPadding="@dimen/auth_horizontal_gap"
+                    app:iconTint="@color/auth_role_text"
+                    app:strokeColor="@color/auth_role_stroke"
+                    app:strokeWidth="@dimen/nav_bottom_stroke_width" />
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <LinearLayout
+                android:id="@+id/llRegisterTerms"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_register_terms_margin_top"
+                android:gravity="end|center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvRegisterTermsPrefix"
+                    style="@style/BookTableAuthText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auth_terms_prefix"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="@dimen/auth_small_text_size" />
+
+                <TextView
+                    android:id="@+id/tvRegisterTermsLink"
+                    style="@style/BookTableAuthText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/auth_horizontal_gap"
+                    android:text="@string/auth_terms_link"
+                    android:textColor="@color/booktable_active"
+                    android:textSize="@dimen/auth_small_text_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCreateAccount"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/auth_register_button_height"
+                android:layout_marginTop="@dimen/auth_register_action_margin_top"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/auth_create_account"
+                android:textColor="@color/white"
+                android:textSize="@dimen/auth_button_text_size"
+                android:textStyle="bold"
+                app:backgroundTint="@color/booktable_orange"
+                app:cornerRadius="@dimen/auth_button_radius"
+                app:icon="@drawable/ic_auth_arrow"
+                app:iconGravity="textStart"
+                app:iconPadding="@dimen/auth_horizontal_gap"
+                app:iconTint="@color/white" />
+
+            <LinearLayout
+                android:id="@+id/llRegisterLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/auth_register_bottom_link_margin_top"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvRegisterHasAccount"
+                    style="@style/BookTableAuthText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auth_has_account"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="@dimen/auth_body_text_size" />
+
+                <TextView
+                    android:id="@+id/tvRegisterLogin"
+                    style="@style/BookTableAuthText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/auth_horizontal_gap"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/auth_login"
+                    android:textColor="@color/booktable_active"
+                    android:textSize="@dimen/auth_body_text_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/llRegisterBottomNav"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/auth_register_nav_height"
+        android:layout_marginStart="@dimen/nav_bottom_margin_horizontal"
+        android:layout_marginEnd="@dimen/nav_bottom_margin_horizontal"
+        android:layout_marginBottom="@dimen/nav_bottom_margin_bottom"
+        android:background="@drawable/bg_bottom_navigation"
+        android:elevation="@dimen/nav_bottom_elevation"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="@dimen/nav_bottom_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:id="@+id/llRegisterNavHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/ivRegisterNavHome"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:contentDescription="@string/nav_home"
+                android:src="@drawable/ic_nav_home"
+                app:tint="@color/booktable_muted" />
+            <TextView
+                android:id="@+id/tvRegisterNavHome"
+                style="@style/BookTableAuthText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/nav_label_margin_top"
+                android:text="@string/nav_home"
+                android:textColor="@color/booktable_muted"
+                android:textSize="@dimen/nav_label_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llRegisterNavBooking"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/ivRegisterNavBooking"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:contentDescription="@string/nav_booking"
+                android:src="@drawable/ic_nav_calendar"
+                app:tint="@color/booktable_muted" />
+            <TextView
+                android:id="@+id/tvRegisterNavBooking"
+                style="@style/BookTableAuthText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/nav_label_margin_top"
+                android:text="@string/nav_booking"
+                android:textColor="@color/booktable_muted"
+                android:textSize="@dimen/nav_label_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llRegisterNavHistory"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/ivRegisterNavHistory"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:contentDescription="@string/nav_history"
+                android:src="@drawable/ic_nav_history"
+                app:tint="@color/booktable_muted" />
+            <TextView
+                android:id="@+id/tvRegisterNavHistory"
+                style="@style/BookTableAuthText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/nav_label_margin_top"
+                android:text="@string/nav_history"
+                android:textColor="@color/booktable_muted"
+                android:textSize="@dimen/nav_label_text_size" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/llRegisterNavProfile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/ivRegisterNavProfile"
+                android:layout_width="@dimen/nav_icon_size"
+                android:layout_height="@dimen/nav_icon_size"
+                android:contentDescription="@string/nav_profile"
+                android:src="@drawable/ic_nav_profile"
+                app:tint="@color/booktable_orange" />
+            <TextView
+                android:id="@+id/tvRegisterNavProfile"
+                style="@style/BookTableAuthText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/nav_label_margin_top"
+                android:text="@string/nav_profile"
+                android:textColor="@color/booktable_orange"
+                android:textSize="@dimen/nav_label_text_size"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

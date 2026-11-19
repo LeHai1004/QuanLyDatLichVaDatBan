@@ -1,0 +1,13 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/auth_field_icon_size"
+    android:height="@dimen/auth_field_icon_size"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M12,22a10,10 0,1 0,0 -20a10,10 0,0 0,0 20zM8,12l2.5,2.5L16,9"
+        android:strokeColor="@color/booktable_active"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="2" />
+</vector>

@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/loginRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvLogin"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/llLoginFooter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/auth_screen_padding_horizontal"
+            android:paddingTop="@dimen/auth_screen_padding_vertical"
+            android:paddingEnd="@dimen/auth_screen_padding_horizontal"
+            android:paddingBottom="@dimen/auth_screen_padding_vertical">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvLoginHeader"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/auth_header_height"
+                app:cardCornerRadius="@dimen/auth_header_radius"
+                app:cardElevation="0dp"
+                app:strokeWidth="0dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/ivLoginHeader"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/auth_login_header_description"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/img_auth_header" />
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cvLoginBrand"
+                        android:layout_width="@dimen/auth_brand_pill_width"
+                        android:layout_height="@dimen/auth_brand_pill_height"
+                        android:layout_gravity="bottom|start"
+                        android:layout_margin="@dimen/auth_brand_margin"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="@dimen/auth_card_radius"
+                        app:cardElevation="0dp"
+                        app:strokeWidth="0dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="@dimen/auth_horizontal_gap"
+                            android:paddingEnd="@dimen/auth_horizontal_gap">
+
+                            <ImageView
+                                android:id="@+id/ivLoginBrandMark"
+                                android:layout_width="@dimen/auth_brand_icon_size"
+                                android:layout_height="@dimen/auth_brand_icon_size"
+                                android:contentDescription="@null"
+                                android:src="@drawable/ic_splash_logo" />
+
+                            <TextView
+                                android:id="@+id/tvLoginBrand"
+                                style="@style/BookTableAuthText"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/auth_horizontal_gap"
+                                android:text="@string/splash_name"
+                                android:textColor="@color/booktable_splash_name"
+                                android:textSize="@dimen/auth_brand_text_size"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
+                </FrameLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <TextView
+                android:id="@+id/tvLoginTitle"
+                style="@style/BookTableAuthHeading"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_group_margin_top"
+                android:text="@string/auth_welcome_title" />
+
+            <TextView
+                android:id="@+id/tvLoginSubtitle"
+                style="@style/BookTableAuthText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_field_margin_top"
+                android:text="@string/auth_login_subtitle"
+                android:textColor="@color/booktable_muted"
+                android:textSize="@dimen/auth_description_text_size" />
+
+            <TextView
+                android:id="@+id/tvLoginEmailLabel"
+                style="@style/BookTableAuthLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_group_margin_top"
+                android:text="@string/auth_email_label" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilLoginEmail"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/auth_field_height"
+                android:layout_marginTop="@dimen/auth_field_margin_top"
+                app:boxBackgroundColor="@color/auth_input_background"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="@dimen/auth_card_radius"
+                app:boxCornerRadiusBottomStart="@dimen/auth_card_radius"
+                app:boxCornerRadiusTopEnd="@dimen/auth_card_radius"
+                app:boxCornerRadiusTopStart="@dimen/auth_card_radius"
+                app:boxStrokeColor="@color/booktable_border"
+                app:boxStrokeWidth="@dimen/nav_bottom_stroke_width"
+                app:hintEnabled="false"
+                app:startIconDrawable="@drawable/ic_auth_email"
+                app:startIconTint="@color/booktable_muted">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLoginEmail"
+                    style="@style/BookTableAuthText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/auth_email_hint"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    android:textColor="@color/booktable_dark"
+                    android:textColorHint="@color/booktable_muted"
+                    android:textSize="@dimen/auth_body_text_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvLoginPasswordLabel"
+                style="@style/BookTableAuthLabel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_group_margin_top"
+                android:text="@string/auth_password_label" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilLoginPassword"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/auth_field_height"
+                android:layout_marginTop="@dimen/auth_field_margin_top"
+                app:boxBackgroundColor="@color/auth_input_background"
+                app:boxBackgroundMode="outline"
+                app:boxCornerRadiusBottomEnd="@dimen/auth_card_radius"
+                app:boxCornerRadiusBottomStart="@dimen/auth_card_radius"
+                app:boxCornerRadiusTopEnd="@dimen/auth_card_radius"
+                app:boxCornerRadiusTopStart="@dimen/auth_card_radius"
+                app:boxStrokeColor="@color/booktable_border"
+                app:boxStrokeWidth="@dimen/nav_bottom_stroke_width"
+                app:endIconMode="password_toggle"
+                app:endIconTint="@color/booktable_muted"
+                app:hintEnabled="false"
+                app:startIconDrawable="@drawable/ic_auth_lock"
+                app:startIconTint="@color/booktable_muted">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLoginPassword"
+                    style="@style/BookTableAuthText"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/auth_password_hint"
+                    android:inputType="textPassword"
+                    android:singleLine="true"
+                    android:textColor="@color/booktable_dark"
+                    android:textColorHint="@color/booktable_muted"
+                    android:textSize="@dimen/auth_body_text_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvLoginForgotPassword"
+                style="@style/BookTableAuthText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/auth_field_margin_top"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:paddingTop="@dimen/auth_horizontal_gap"
+                android:paddingBottom="@dimen/auth_horizontal_gap"
+                android:text="@string/auth_forgot_password"
+                android:textColor="@color/booktable_active"
+                android:textSize="@dimen/auth_link_text_size"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogin"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/auth_button_height"
+                android:layout_marginTop="@dimen/auth_action_margin_top"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/auth_login"
+                android:textColor="@color/white"
+                android:textSize="@dimen/auth_button_text_size"
+                android:textStyle="bold"
+                app:backgroundTint="@color/booktable_orange"
+                app:cornerRadius="@dimen/auth_button_radius"
+                app:icon="@drawable/ic_auth_arrow"
+                app:iconGravity="textEnd"
+                app:iconPadding="@dimen/auth_horizontal_gap"
+                app:iconTint="@color/white" />
+
+            <LinearLayout
+                android:id="@+id/llLoginRegister"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/auth_bottom_link_margin_top"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tvLoginNoAccount"
+                    style="@style/BookTableAuthText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/auth_no_account"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="@dimen/auth_body_text_size" />
+
+                <TextView
+                    android:id="@+id/tvLoginRegister"
+                    style="@style/BookTableAuthText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/auth_horizontal_gap"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:text="@string/auth_register"
+                    android:textColor="@color/booktable_active"
+                    android:textSize="@dimen/auth_body_text_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/llLoginFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/auth_footer_padding_vertical"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="@dimen/auth_footer_padding_vertical"
+        android:paddingBottom="@dimen/auth_footer_padding_vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+            android:id="@+id/ivLoginSecurity"
+            android:layout_width="@dimen/auth_footer_icon_size"
+            android:layout_height="@dimen/auth_footer_icon_size"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_auth_shield" />
+
+        <TextView
+            android:id="@+id/tvLoginSecurity"
+            style="@style/BookTableAuthText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/auth_horizontal_gap"
+            android:text="@string/auth_security_note"
+            android:textColor="@color/booktable_muted"
+            android:textSize="@dimen/auth_footer_text_size" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
