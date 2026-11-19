@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nsvOwnerStats"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/owner_screen_padding"
+        android:paddingTop="@dimen/owner_header_margin_top"
+        android:paddingBottom="@dimen/nav_bottom_height">
+
+        <!-- Title & Subtitle -->
+        <TextView
+            android:id="@+id/tvStatsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_stats_title"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/owner_title_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvStatsSubtitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/auth_brand_inset"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_stats_subtitle"
+            android:textColor="@color/booktable_muted"
+            android:textSize="@dimen/owner_subtitle_size" />
+
+        <!-- Period Filter Chips (Hôm nay, 7 ngày qua, Tất cả) -->
+        <LinearLayout
+            android:id="@+id/llPeriodFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/owner_section_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvPeriodToday"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/owner_chip_height"
+                android:background="@drawable/bg_owner_chip"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/owner_chip_padding_h"
+                android:text="@string/owner_period_today"
+                android:textColor="@color/color_owner_chip_text"
+                android:textSize="@dimen/owner_chip_text_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPeriodWeek"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/owner_chip_height"
+                android:layout_marginStart="@dimen/owner_chip_gap"
+                android:background="@drawable/bg_owner_chip"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/owner_chip_padding_h"
+                android:text="@string/owner_period_week"
+                android:textColor="@color/color_owner_chip_text"
+                android:textSize="@dimen/owner_chip_text_size" />
+
+            <TextView
+                android:id="@+id/tvPeriodAll"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/owner_chip_height"
+                android:layout_marginStart="@dimen/owner_chip_gap"
+                android:background="@drawable/bg_owner_chip"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:gravity="center"
+                android:paddingHorizontal="@dimen/owner_chip_padding_h"
+                android:text="@string/owner_period_all"
+                android:textColor="@color/color_owner_chip_text"
+                android:textSize="@dimen/owner_chip_text_size" />
+        </LinearLayout>
+
+        <!-- 3 States: Loading, Empty, Error -->
+        <include
+            android:id="@+id/layoutStates"
+            layout="@layout/layout_shared_states"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Stats Content Body -->
+        <LinearLayout
+            android:id="@+id/llStatsBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Revenue Overview Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardRevenueOverview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/owner_header_gap"
+                app:cardBackgroundColor="@color/booktable_surface"
+                app:cardCornerRadius="@dimen/owner_stat_summary_radius"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/booktable_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/owner_stat_summary_padding">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/owner_stat_icon_size"
+                            android:layout_height="@dimen/owner_stat_icon_size"
+                            android:contentDescription="@string/owner_revenue_label"
+                            android:src="@drawable/ic_owner_wallet"
+                            app:tint="@color/booktable_orange" />
+
+                        <TextView
+                            android:id="@+id/tvRevenueLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/owner_header_gap"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/owner_revenue_label"
+                            android:textColor="@color/booktable_muted"
+                            android:textSize="@dimen/owner_action_desc_size" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvRevenueValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/owner_header_gap"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_orange"
+                        android:textSize="@dimen/owner_revenue_size"
+                        android:textStyle="bold"
+                        tools:text="1.250.000đ" />
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="@dimen/owner_stat_gap"
+                        android:background="@color/booktable_border" />
+
+                    <!-- Sub Metrics Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <!-- Total Orders -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvTotalOrdersLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:text="@string/owner_total_orders_label"
+                                android:textColor="@color/booktable_muted"
+                                android:textSize="@dimen/owner_stat_label_size" />
+
+                            <TextView
+                                android:id="@+id/tvTotalOrdersValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:textColor="@color/booktable_dark"
+                                android:textSize="@dimen/owner_action_title_size"
+                                android:textStyle="bold"
+                                tools:text="0 đơn" />
+                        </LinearLayout>
+
+                        <!-- Completed Orders -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvCompletedOrdersLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:text="@string/owner_completed_orders_label"
+                                android:textColor="@color/booktable_muted"
+                                android:textSize="@dimen/owner_stat_label_size" />
+
+                            <TextView
+                                android:id="@+id/tvCompletedOrdersValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:textColor="@color/owner_stat_serving"
+                                android:textSize="@dimen/owner_action_title_size"
+                                android:textStyle="bold"
+                                tools:text="0 đơn" />
+                        </LinearLayout>
+
+                        <!-- Cancelled Orders -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tvCancelledOrdersLabel"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:text="@string/owner_cancelled_orders_label"
+                                android:textColor="@color/booktable_muted"
+                                android:textSize="@dimen/owner_stat_label_size" />
+
+                            <TextView
+                                android:id="@+id/tvCancelledOrdersValue"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:textColor="@color/booktable_error"
+                                android:textSize="@dimen/owner_action_title_size"
+                                android:textStyle="bold"
+                                tools:text="0 đơn" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Recent Bookings Section -->
+            <TextView
+                android:id="@+id/tvRecentBookingsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/owner_section_margin_top"
+                android:layout_marginBottom="@dimen/owner_action_card_margin_bottom"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/owner_recent_bookings_title"
+                android:textColor="@color/booktable_dark"
+                android:textSize="@dimen/owner_section_title_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvEmptyBookings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/owner_section_margin_top"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:gravity="center"
+                android:text="@string/owner_no_bookings"
+                android:textColor="@color/booktable_muted"
+                android:textSize="@dimen/owner_subtitle_size"
+                android:visibility="gone" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvRecentBookings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_owner_booking_stat" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

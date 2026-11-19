@@ -30,7 +30,7 @@
     </fragment>
     <fragment
         android:id="@+id/ownerOverviewFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.owner.OwnerDashboardFragment"
         android:label="@string/nav_owner_overview">
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_owner_overview" />
     </fragment>
@@ -42,13 +42,13 @@
     </fragment>
     <fragment
         android:id="@+id/ownerHistoryFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.owner.OwnerStatsFragment"
         android:label="@string/nav_history">
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_history" />
     </fragment>
     <fragment
         android:id="@+id/ownerProfileFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.owner.OwnerProfileFragment"
         android:label="@string/nav_profile">
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_profile" />
     </fragment>
