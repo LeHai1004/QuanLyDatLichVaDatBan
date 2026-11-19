@@ -74,6 +74,31 @@
     <string name="auth_notifications">Thông báo</string>
     <string name="auth_login_header_description">Mâm cơm BookTable</string>
 
+    <!-- Notification (T15) -->
+    <string name="owner_notification_title">Thông báo</string>
+    <string name="owner_notification_mark_all_read">Đọc tất cả</string>
+    <string name="owner_notification_filter_all">Tất cả</string>
+    <string name="owner_notification_filter_unread">Chưa đọc</string>
+    <string name="owner_notification_empty">Chưa có thông báo nào</string>
+    <string name="owner_notification_empty_unread">Bạn đã đọc hết mọi thông báo!</string>
+    <string name="owner_notification_all_read_success">Đã đánh dấu đọc tất cả thông báo</string>
+    <string name="owner_notification_booking_deleted">Đơn đặt bàn này không tồn tại hoặc đã bị xóa.</string>
+    <string name="owner_notification_type_booking">Đơn mới</string>
+    <string name="owner_notification_type_cancel">Hủy bàn</string>
+    <string name="owner_notification_type_arrival">Khách đến</string>
+    <string name="owner_notification_type_general">Hệ thống</string>
+    <string name="owner_notification_time_just_now">Vừa xong</string>
+    <string name="owner_notification_time_minutes_ago">%d phút trước</string>
+    <string name="owner_notification_time_hours_ago">%d giờ trước</string>
+    <string name="owner_notification_time_days_ago">%d ngày trước</string>
+    <string name="owner_notification_error_load">Không thể tải thông báo. Vui lòng thử lại.</string>
+    <string name="owner_notification_btn_back">Quay lại</string>
+    <string name="owner_notification_seed_title_1">Đơn đặt bàn mới #BK101</string>
+    <string name="owner_notification_seed_body_1">Khách hàng Nguyễn Văn An vừa đặt bàn 4 người vào 19:00 hôm nay.</string>
+    <string name="owner_notification_seed_title_2">Khách đã đến quán - Bàn 2</string>
+    <string name="owner_notification_seed_body_2">Khách hàng Trần Thị Mai đã check-in tại Bàn 2 (Tầng 1).</string>
+    <string name="owner_notification_seed_title_3">Khách hủy đặt bàn #BK098</string>
+    <string name="owner_notification_seed_body_3">Khách hàng Lê Minh Tuấn đã hủy lịch hẹn lúc 18:30 do có việc bận.</string>
     <!-- Owner Dashboard, Stats, Profile (T12) -->
     <string name="owner_dashboard_title">Tổng quan quán</string>
     <string name="owner_dashboard_greeting">Xin chào, Chủ quán!</string>
@@ -176,4 +201,5 @@
     <string name="menu_item_unavailable">Tạm hết</string>
     <string name="cd_search_clear">Xóa từ khóa</string>
     <string name="cd_filter_button">Mở bộ lọc</string>
-</resources>
+    <string name="owner_action_notifications_title">Thông báo</string>
+    </resources>

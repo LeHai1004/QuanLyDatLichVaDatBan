@@ -25,6 +25,17 @@
     <color name="auth_success">#258C63</color>
     <color name="booktable_primary_light">#FFE3D4</color>
 
+    <!-- Notification (T15) -->
+    <color name="notification_unread_bg">#FFF3EC</color>
+    <color name="notification_unread_border">#F5A882</color>
+    <color name="notification_icon_booking_bg">#FFE5D6</color>
+    <color name="notification_icon_cancel_bg">#FDECEB</color>
+    <color name="notification_icon_arrival_bg">#E8F8F0</color>
+    <color name="notification_icon_cancel_tint">#B93825</color>
+    <color name="notification_icon_arrival_tint">#258C63</color>
+    <color name="notification_type_tag_bg">#F5EDE8</color>
+    <color name="notification_chip_selected_bg">#FFE5D6</color>
+    <color name="notification_chip_selected_border">#E8622C</color>
     <!-- Owner Dashboard, Stats, Profile (T12) -->
     <color name="owner_stat_waiting">#D97706</color>
     <color name="owner_stat_waiting_bg">#FEF3C7</color>

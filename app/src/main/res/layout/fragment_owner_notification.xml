@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llOwnerNotificationRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream"
+    android:orientation="vertical">
+
+    <!-- Top Toolbar -->
+    <LinearLayout
+        android:id="@+id/llNotificationToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/notification_screen_padding"
+        android:paddingTop="@dimen/notification_header_margin_top"
+        android:paddingBottom="@dimen/notification_header_gap">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="@dimen/auth_toolbar_icon_size"
+            android:layout_height="@dimen/auth_toolbar_icon_size"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/owner_notification_btn_back"
+            android:src="@drawable/ic_auth_back"
+            app:tint="@color/booktable_dark" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/notification_header_gap"
+            android:layout_weight="1"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_notification_title"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/notification_title_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvMarkAllRead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:paddingHorizontal="@dimen/notification_tag_padding_h"
+            android:paddingVertical="@dimen/notification_tag_padding_v"
+            android:text="@string/owner_notification_mark_all_read"
+            android:textColor="@color/booktable_orange"
+            android:textSize="@dimen/notification_action_text_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Filter Chips Row (Tất cả / Chưa đọc) -->
+    <LinearLayout
+        android:id="@+id/llFilterChips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/notification_screen_padding"
+        android:layout_marginTop="@dimen/notification_header_gap"
+        android:layout_marginBottom="@dimen/notification_header_gap"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvFilterAll"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/notification_chip_height"
+            android:background="@drawable/bg_notification_filter_chip"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/notification_chip_padding_h"
+            android:text="@string/owner_notification_filter_all"
+            android:textColor="@color/color_notification_chip_text"
+            android:textSize="@dimen/notification_chip_text_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvFilterUnread"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/notification_chip_height"
+            android:layout_marginStart="@dimen/notification_chip_gap"
+            android:background="@drawable/bg_notification_filter_chip"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/notification_chip_padding_h"
+            android:text="@string/owner_notification_filter_unread"
+            android:textColor="@color/color_notification_chip_text"
+            android:textSize="@dimen/notification_chip_text_size" />
+    </LinearLayout>
+
+    <!-- 3 States: Loading, Empty, Error -->
+    <include
+        android:id="@+id/layoutStates"
+        layout="@layout/layout_shared_states"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- Empty State Text (when list empty after loaded) -->
+    <TextView
+        android:id="@+id/tvEmptyNotifications"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/notification_screen_padding"
+        android:layout_marginTop="@dimen/auth_form_gap_top"
+        android:fontFamily="@font/be_vietnam_pro"
+        android:gravity="center"
+        android:text="@string/owner_notification_empty"
+        android:textColor="@color/booktable_muted"
+        android:textSize="@dimen/auth_description_text_size"
+        android:visibility="gone"
+        tools:visibility="visible" />
+
+    <!-- Notification List -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvNotifications"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingHorizontal="@dimen/notification_screen_padding"
+        android:paddingBottom="@dimen/nav_bottom_height"
+        tools:listitem="@layout/item_notification" />
+</LinearLayout>

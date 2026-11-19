@@ -51,6 +51,16 @@
             android:textStyle="bold"
             tools:text="@string/owner_status_open_now" />
 
+            <ImageView
+                android:id="@+id/ivNotifications"
+                android:layout_width="@dimen/auth_toolbar_icon_size"
+                android:layout_height="@dimen/auth_toolbar_icon_size"
+                android:src="@drawable/ic_auth_bell"
+                android:background="@drawable/bg_icon_circle"
+                android:layout_gravity="end"
+                android:layout_marginTop="@dimen/owner_header_gap"
+                android:contentDescription="@string/owner_action_notifications_title" />
+
         <!-- 3 States: Loading, Empty, Error -->
         <include
             android:id="@+id/layoutStates"

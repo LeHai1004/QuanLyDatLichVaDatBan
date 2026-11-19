@@ -36,6 +36,14 @@ class OwnerDashboardFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupQuickActions()
+        // Thêm nút thông báo
+        binding.ivNotifications.setOnClickListener {
+            try {
+                findNavController().navigate(R.id.action_ownerOverviewFragment_to_ownerNotificationFragment)
+            } catch (e: Exception) {
+                SnackbarHelper.show(binding.root, getString(R.string.owner_action_notifications_title))
+            }
+        }
         setupRetryButton()
         observeViewModel()
     }
