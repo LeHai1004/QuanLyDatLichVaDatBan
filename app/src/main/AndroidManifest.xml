@@ -36,6 +36,9 @@
             android:name=".ui.auth.ForgotPasswordActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.customer.RestaurantDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

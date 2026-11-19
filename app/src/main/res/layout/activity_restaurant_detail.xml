@@ -1,0 +1,466 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorDetailRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nsvDetailContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/detail_bottom_bar_height"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Banner Header Area -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_banner_height">
+
+                <ImageView
+                    android:id="@+id/ivRestaurantBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/placeholder_image_bg"
+                    android:contentDescription="@string/app_name"
+                    android:padding="@dimen/splash_gap_large"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_restaurant_placeholder" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_detail_banner_overlay" />
+
+                <!-- Floating Top Actions -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="@dimen/detail_content_padding"
+                    android:paddingTop="@dimen/home_padding_top">
+
+                    <ImageView
+                        android:id="@+id/ivBack"
+                        android:layout_width="@dimen/detail_back_button_size"
+                        android:layout_height="@dimen/detail_back_button_size"
+                        android:background="@drawable/bg_icon_circle"
+                        android:contentDescription="@string/detail_btn_back"
+                        android:padding="@dimen/auth_toolbar_icon_size"
+                        android:src="@drawable/ic_auth_back"
+                        app:tint="@color/booktable_dark" />
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="1dp"
+                        android:layout_weight="1" />
+
+                    <!-- Placeholder for Waitlist (T32) -->
+                    <ImageView
+                        android:id="@+id/ivWaitlist"
+                        android:layout_width="@dimen/detail_back_button_size"
+                        android:layout_height="@dimen/detail_back_button_size"
+                        android:background="@drawable/bg_icon_circle"
+                        android:contentDescription="@string/detail_waitlist_desc"
+                        android:padding="@dimen/auth_brand_pill_margin"
+                        android:src="@drawable/ic_waitlist"
+                        app:tint="@color/booktable_dark" />
+
+                    <!-- Placeholder for Heart / Favorite (T29) -->
+                    <ImageView
+                        android:id="@+id/ivFavorite"
+                        android:layout_width="@dimen/detail_back_button_size"
+                        android:layout_height="@dimen/detail_back_button_size"
+                        android:layout_marginStart="@dimen/detail_header_action_gap"
+                        android:background="@drawable/bg_icon_circle"
+                        android:contentDescription="@string/detail_favorite_desc"
+                        android:padding="@dimen/auth_brand_pill_margin"
+                        android:src="@drawable/ic_heart_outline"
+                        app:tint="@color/booktable_dark" />
+                </LinearLayout>
+            </FrameLayout>
+
+            <!-- Sheet Content -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/detail_content_margin_top"
+                android:background="@drawable/bg_detail_sheet"
+                android:orientation="vertical"
+                android:padding="@dimen/detail_content_padding">
+
+                <!-- 3 States: Loading, Empty, Error -->
+                <include
+                    android:id="@+id/layoutStates"
+                    layout="@layout/layout_shared_states"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <!-- Detail Body (hidden when loading/error) -->
+                <LinearLayout
+                    android:id="@+id/llDetailBody"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Status & Category Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvOpenStatus"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_status_badge_open"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:paddingHorizontal="@dimen/detail_status_padding_h"
+                            android:paddingVertical="@dimen/detail_status_padding_v"
+                            android:textColor="@color/auth_success"
+                            android:textSize="@dimen/detail_status_text_size"
+                            android:textStyle="bold"
+                            tools:text="@string/detail_hours_open_now" />
+
+                        <TextView
+                            android:id="@+id/tvCategory"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/home_chip_gap"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:textColor="@color/booktable_orange"
+                            android:textSize="@dimen/detail_category_size"
+                            android:textStyle="bold"
+                            tools:text="Món Việt" />
+                    </LinearLayout>
+
+                    <!-- Restaurant Name -->
+                    <TextView
+                        android:id="@+id/tvRestaurantName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/restaurant_card_gap"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/detail_name_size"
+                        android:textStyle="bold"
+                        tools:text="Bếp Nhà · Thảo Điền" />
+
+                    <!-- Rating Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/auth_brand_inset"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/detail_info_icon_size"
+                            android:layout_height="@dimen/detail_info_icon_size"
+                            android:contentDescription="@string/search_rating_label"
+                            android:src="@drawable/ic_star" />
+
+                        <TextView
+                            android:id="@+id/tvRating"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/auth_brand_inset"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:textColor="@color/booktable_dark"
+                            android:textSize="@dimen/detail_rating_size"
+                            android:textStyle="bold"
+                            tools:text="★ 4.7 (Đánh giá chất lượng)" />
+                    </LinearLayout>
+
+                    <!-- Closed Notice (visible when restaurant is closed) -->
+                    <LinearLayout
+                        android:id="@+id/llClosedNotice"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/detail_info_gap"
+                        android:background="@drawable/bg_status_badge_closed"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="@dimen/auth_brand_pill_margin"
+                        android:visibility="gone"
+                        tools:visibility="visible">
+
+                        <ImageView
+                            android:layout_width="@dimen/detail_info_icon_size"
+                            android:layout_height="@dimen/detail_info_icon_size"
+                            android:contentDescription="@string/restaurant_status_closed"
+                            android:src="@drawable/ic_clock"
+                            app:tint="@color/booktable_error" />
+
+                        <TextView
+                            android:id="@+id/tvClosedNotice"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/restaurant_card_gap"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/detail_closed_notice"
+                            android:textColor="@color/booktable_error"
+                            android:textSize="@dimen/detail_status_text_size" />
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="@dimen/detail_section_margin_top"
+                        android:background="@color/booktable_border" />
+
+                    <!-- Address Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/detail_info_icon_size"
+                            android:layout_height="@dimen/detail_info_icon_size"
+                            android:layout_marginTop="2dp"
+                            android:contentDescription="@string/detail_address_label"
+                            android:src="@drawable/ic_location_pin" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/restaurant_card_gap"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:text="@string/detail_address_label"
+                                android:textColor="@color/booktable_muted"
+                                android:textSize="@dimen/detail_status_text_size" />
+
+                            <TextView
+                                android:id="@+id/tvAddress"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:textColor="@color/booktable_dark"
+                                android:textSize="@dimen/detail_info_text_size"
+                                tools:text="12 Nguyễn Văn Hưởng, TP. Hồ Chí Minh" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Operating Hours Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/detail_info_gap"
+                        android:gravity="top"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/detail_info_icon_size"
+                            android:layout_height="@dimen/detail_info_icon_size"
+                            android:layout_marginTop="2dp"
+                            android:contentDescription="@string/detail_hours_label"
+                            android:src="@drawable/ic_clock" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/restaurant_card_gap"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:text="@string/detail_hours_label"
+                                android:textColor="@color/booktable_muted"
+                                android:textSize="@dimen/detail_status_text_size" />
+
+                            <TextView
+                                android:id="@+id/tvHours"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:textColor="@color/booktable_dark"
+                                android:textSize="@dimen/detail_info_text_size"
+                                tools:text="09:00 - 22:00 hàng ngày" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Deposit Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/detail_info_gap"
+                        android:gravity="top"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="@dimen/detail_info_icon_size"
+                            android:layout_height="@dimen/detail_info_icon_size"
+                            android:layout_marginTop="2dp"
+                            android:contentDescription="@string/detail_deposit_label"
+                            android:src="@drawable/ic_auth_shield"
+                            app:tint="@color/booktable_orange" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/restaurant_card_gap"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:text="@string/detail_deposit_label"
+                                android:textColor="@color/booktable_muted"
+                                android:textSize="@dimen/detail_status_text_size" />
+
+                            <TextView
+                                android:id="@+id/tvDepositAmount"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:textColor="@color/booktable_orange"
+                                android:textSize="@dimen/detail_info_text_size"
+                                android:textStyle="bold"
+                                tools:text="100.000đ / lần đặt" />
+
+                            <TextView
+                                android:id="@+id/tvDepositNote"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:text="@string/detail_deposit_note"
+                                android:textColor="@color/booktable_muted"
+                                android:textSize="@dimen/nav_label_text_size" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Divider -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="@dimen/detail_section_margin_top"
+                        android:background="@color/booktable_border" />
+
+                    <!-- Menu Preview Section -->
+                    <TextView
+                        android:id="@+id/tvMenuTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/detail_menu_preview_title"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/detail_section_title_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvMenuSubtitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/auth_brand_inset"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/detail_menu_preview_subtitle"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="@dimen/detail_status_text_size" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvMenuItems"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/home_header_gap"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false"
+                        tools:listitem="@layout/item_menu_preview" />
+
+                    <TextView
+                        android:id="@+id/tvMenuEmpty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginVertical="@dimen/home_section_margin_top"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:gravity="center"
+                        android:text="@string/detail_menu_empty"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="@dimen/detail_status_text_size"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Bottom Sticky CTA Bar -->
+    <LinearLayout
+        android:id="@+id/llBottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/detail_bottom_bar_height"
+        android:layout_gravity="bottom"
+        android:background="@color/booktable_surface"
+        android:elevation="@dimen/detail_bottom_bar_elevation"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/detail_content_padding">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvBottomDepositLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/detail_deposit_label"
+                android:textColor="@color/booktable_muted"
+                android:textSize="@dimen/nav_label_text_size" />
+
+            <TextView
+                android:id="@+id/tvBottomDepositAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_orange"
+                android:textSize="@dimen/home_section_title_size"
+                android:textStyle="bold"
+                tools:text="100.000đ" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnBooking"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/detail_bottom_btn_height"
+            android:background="@drawable/bg_button_orange"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:paddingHorizontal="@dimen/placeholder_state_margin_top"
+            android:text="@string/detail_btn_booking"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/detail_bottom_btn_text_size"
+            android:textStyle="bold"
+            app:backgroundTint="@color/booktable_orange"
+            app:cornerRadius="@dimen/detail_bottom_btn_radius" />
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
