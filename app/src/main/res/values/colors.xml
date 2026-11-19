@@ -24,4 +24,14 @@
     <color name="auth_input_background">#FFFFFFFF</color>
     <color name="auth_success">#258C63</color>
     <color name="booktable_primary_light">#FFE3D4</color>
+
+    <!-- Home, Search, Detail (T7) -->
+    <color name="badge_open_bg">#E8F8F0</color>
+    <color name="badge_closed_bg">#FDECEB</color>
+    <color name="star_gold">#F59E0B</color>
+    <color name="banner_overlay">#33000000</color>
+    <color name="restaurant_card_bg">#FFFFFF</color>
+    <color name="chip_bg_selected">#FFE5D6</color>
+    <color name="chip_border_selected">#E8622C</color>
+    <color name="placeholder_image_bg">#F2E5DC</color>
 </resources>

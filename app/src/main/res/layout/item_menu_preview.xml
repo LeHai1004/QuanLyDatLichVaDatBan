@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardMenuItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/menu_item_margin_bottom"
+    app:cardBackgroundColor="@color/booktable_surface"
+    app:cardCornerRadius="@dimen/menu_item_card_radius"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/booktable_border"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/menu_item_padding">
+
+        <ImageView
+            android:id="@+id/ivMenuItemImage"
+            android:layout_width="@dimen/menu_item_image_size"
+            android:layout_height="@dimen/menu_item_image_size"
+            android:background="@drawable/bg_thumb_rounded"
+            android:contentDescription="@string/detail_menu_preview_title"
+            android:padding="@dimen/auth_brand_pill_margin"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_food_placeholder" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/menu_item_gap"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvMenuItemName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:maxLines="1"
+                android:textColor="@color/booktable_dark"
+                android:textSize="@dimen/menu_item_name_size"
+                android:textStyle="bold"
+                tools:text="Gỏi cuốn tôm thịt" />
+
+            <TextView
+                android:id="@+id/tvMenuItemCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_brand_inset"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_muted"
+                android:textSize="@dimen/menu_item_category_size"
+                tools:text="Khai vị" />
+
+            <TextView
+                android:id="@+id/tvMenuItemPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/auth_brand_inset"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_orange"
+                android:textSize="@dimen/menu_item_price_size"
+                android:textStyle="bold"
+                tools:text="69.000đ" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvMenuItemStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_status_badge_open"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:paddingHorizontal="@dimen/detail_status_padding_h"
+            android:paddingVertical="@dimen/detail_status_padding_v"
+            android:textColor="@color/auth_success"
+            android:textSize="@dimen/detail_status_text_size"
+            tools:text="@string/menu_item_available" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
