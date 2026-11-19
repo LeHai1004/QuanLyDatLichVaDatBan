@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llOwnerPreOrderCardRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_payment_card"
+    android:orientation="vertical"
+    android:padding="@dimen/owner_booking_card_padding">
+
+    <!-- Booking Identity Row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvBookingCode"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:textColor="@color/booktable_dark"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            tools:text="#BT-1028" />
+
+        <TextView
+            android:id="@+id/tvTimeTable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:textColor="@color/booktable_active"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            tools:text="18:30 · Bàn VIP 2" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvCustomerSummary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:fontFamily="@font/be_vietnam_pro"
+        android:textColor="@color/booktable_muted"
+        android:textSize="11sp"
+        tools:text="Nguyễn Hoàng Anh · 4 khách" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="8dp"
+        android:background="@color/payment_divider" />
+
+    <!-- Container for dynamic pre-order dishes in this booking -->
+    <LinearLayout
+        android:id="@+id/llDishesList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="8dp"
+        android:background="@color/payment_divider" />
+
+    <!-- Subtotal -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_booking_preorder_subtotal"
+            android:textColor="@color/booktable_muted"
+            android:textSize="11sp" />
+
+        <TextView
+            android:id="@+id/tvSubtotalPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:textColor="@color/booktable_active"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="780.000đ" />
+    </LinearLayout>
+
+    <!-- Mark Prepared Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnDonePreparing"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/owner_booking_btn_action_height"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@color/booktable_orange"
+        android:fontFamily="@font/be_vietnam_pro"
+        android:text="@string/owner_preorder_btn_done"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:cornerRadius="14dp" />
+</LinearLayout>

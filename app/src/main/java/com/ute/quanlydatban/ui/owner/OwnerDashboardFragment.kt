@@ -49,6 +49,15 @@ class OwnerDashboardFragment : Fragment() {
     }
 
     private fun setupQuickActions() {
+        // Thẻ "Chờ xác nhận" (thống kê) chuyển sang màn Lượt đặt bàn
+        binding.cardWaitingOrders.setOnClickListener {
+            try {
+                findNavController().navigate(R.id.ownerBookingFragment)
+            } catch (e: Exception) {
+                SnackbarHelper.show(binding.root, getString(R.string.owner_action_bookings_title))
+            }
+        }
+
         // Lối vào danh sách đơn đặt bàn
         binding.cardActionBookings.setOnClickListener {
             try {

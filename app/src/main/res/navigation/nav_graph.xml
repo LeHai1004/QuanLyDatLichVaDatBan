@@ -54,9 +54,12 @@
 
     <fragment
         android:id="@+id/ownerBookingFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.owner.OwnerBookingListFragment"
         android:label="@string/nav_owner_orders">
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_owner_orders" />
+        <action
+            android:id="@+id/action_ownerBookingListFragment_to_ownerPreOrderFragment"
+            app:destination="@id/ownerPreOrderFragment" />
     </fragment>
 
     <fragment
@@ -172,5 +175,16 @@
             android:name="bookingId"
             app:argType="string"
             android:defaultValue="" />
+    </fragment>
+
+    <!-- Owner PreOrder (T14) -->
+    <fragment
+        android:id="@+id/ownerPreOrderFragment"
+        android:name="com.ute.quanlydatban.ui.owner.OwnerPreOrderFragment"
+        android:label="@string/owner_preorder_title">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/owner_preorder_title" />
     </fragment>
 </navigation>

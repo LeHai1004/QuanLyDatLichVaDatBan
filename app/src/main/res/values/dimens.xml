@@ -442,4 +442,13 @@
     <dimen name="qr_ticket_radius">22dp</dimen>
     <dimen name="qr_ticket_padding">16dp</dimen>
     <dimen name="qr_ticket_qr_size">231dp</dimen>
+
+    <!-- Owner Booking (T14) -->
+    <dimen name="owner_booking_topbar_height">60dp</dimen>
+    <dimen name="owner_booking_filter_height">36dp</dimen>
+    <dimen name="owner_booking_card_radius">16dp</dimen>
+    <dimen name="owner_booking_card_padding">16dp</dimen>
+    <dimen name="owner_booking_btn_action_height">52dp</dimen>
+    <dimen name="owner_booking_avatar_size">36dp</dimen>
+    <dimen name="owner_detail_avatar_size">42dp</dimen>
 </resources>

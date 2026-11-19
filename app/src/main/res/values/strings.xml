@@ -346,4 +346,44 @@
     <string name="qr_manual_dialog_message">Vui lòng cung cấp mã này cho nhân viên nhà hàng khi đến nhận bàn: %s</string>
     <string name="qr_manual_dialog_btn_close">Đóng</string>
     <string name="cd_back_button">Quay lại</string>
+
+    <!-- Owner Booking (T14) -->
+    <string name="owner_booking_list_title">Lượt đặt bàn</string>
+    <string name="owner_booking_detail_title">Chi tiết lượt đặt</string>
+    <string name="owner_preorder_title">Món đặt trước</string>
+    <string name="owner_booking_tab_waiting">Chờ duyệt</string>
+    <string name="owner_booking_tab_confirmed">Đã xác nhận</string>
+    <string name="owner_booking_tab_arrived">Đã đến</string>
+    <string name="owner_booking_tab_cancelled">Đã hủy</string>
+    <string name="owner_booking_count_format">%d lượt đang %s</string>
+    <string name="owner_booking_sort_earliest">Giờ đến sớm nhất</string>
+    <string name="owner_booking_btn_reject">Từ chối</string>
+    <string name="owner_booking_btn_confirm">Xác nhận</string>
+    <string name="owner_booking_empty">Không có đơn đặt bàn nào trong danh mục này.</string>
+    <string name="owner_booking_reject_dialog_title">Từ chối đơn đặt bàn</string>
+    <string name="owner_booking_reject_dialog_message">Bạn có chắc chắn muốn từ chối đơn đặt bàn này không? Tiền đặt cọc của khách sẽ được hoàn lại.</string>
+    <string name="owner_booking_reject_dialog_btn_confirm">Từ chối đơn</string>
+    <string name="owner_booking_reject_dialog_btn_cancel">Quay lại</string>
+    <string name="owner_booking_confirm_success">Đã xác nhận đơn đặt bàn thành công.</string>
+    <string name="owner_booking_reject_success">Đã từ chối đơn đặt bàn và tạo lệnh hoàn cọc.</string>
+    <string name="owner_booking_status_conflict">Trạng thái đơn đã thay đổi bởi khách hoặc hệ thống. Đang làm mới dữ liệu.</string>
+    <string name="owner_booking_customer_regular">Khách quen</string>
+    <string name="owner_booking_deposit_paid_format">Đã đặt cọc %s</string>
+    <string name="owner_booking_deposit_method_note">· Thanh toán qua VietQR</string>
+    <string name="owner_booking_arrival_time_label">Thời gian đến</string>
+    <string name="owner_booking_table_guest_label">Bàn &amp; số khách</string>
+    <string name="owner_booking_note_label">Ghi chú của khách</string>
+    <string name="owner_booking_note_empty">Không có ghi chú nào từ khách.</string>
+    <string name="owner_booking_preorder_section">Món đặt trước</string>
+    <string name="owner_booking_preorder_count_format">%d món</string>
+    <string name="owner_booking_preorder_empty">Khách chưa đặt món trước cho đơn này.</string>
+    <string name="owner_booking_preorder_subtotal">Tạm tính món ăn</string>
+    <string name="owner_preorder_summary_format">%d lượt đặt · %d phần món</string>
+    <string name="owner_preorder_sort_time">Theo giờ đến</string>
+    <string name="owner_preorder_btn_done">Đã chuẩn bị xong</string>
+    <string name="owner_preorder_status_done">Xong</string>
+    <string name="owner_preorder_status_cooking">Đang làm</string>
+    <string name="owner_preorder_status_waiting">Chờ làm</string>
+    <string name="owner_booking_today_format">Hôm nay, %s</string>
+    <string name="cd_filter_options">Bộ lọc</string>
 </resources>
