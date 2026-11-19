@@ -160,4 +160,6 @@
     <dimen name="auth_forgot_button_radius">14dp</dimen>
     <dimen name="auth_forgot_button_text_size">14sp</dimen>
     <dimen name="auth_forgot_return_height">44dp</dimen>
+    <dimen name="auth_toolbar_icon_size">24dp</dimen>
+    <dimen name="auth_forgot_return_text_size">14sp</dimen>
 </resources>
