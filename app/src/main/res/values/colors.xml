@@ -61,4 +61,10 @@
     <color name="booking_table_booked_alpha">@color/booktable_cream</color>
     <color name="booking_table_selected_bg">#FFE3D4</color>
     <color name="booking_success_green">#2E9E6B</color>
+
+    <!-- Payment, Confirm, QR (T11) -->
+    <color name="payment_qr_code_bg">#FFFFFF</color>
+    <color name="payment_divider">#EBDDD2</color>
+    <color name="payment_card_border">#EBDDD2</color>
+    <color name="payment_badge_expire_bg">#FFE3D4</color>
 </resources>

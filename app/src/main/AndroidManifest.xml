@@ -43,6 +43,15 @@
             android:name=".ui.customer.booking.BookingActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.customer.booking.PaymentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.customer.booking.BookingConfirmActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.customer.booking.BookingQRActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

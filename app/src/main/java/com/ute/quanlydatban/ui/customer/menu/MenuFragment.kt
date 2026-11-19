@@ -95,15 +95,12 @@ class MenuFragment : Fragment() {
         }
 
         binding.btnSkip.setOnClickListener {
-            // Bỏ qua chọn món: điều hướng tới màn thanh toán cọc T11 (tạm thời là Placeholder)
-            val bundle = Bundle().apply {
-                putString("bookingId", viewModel.bookingId)
-                putString("restaurantId", viewModel.restaurantId)
+            // Bỏ qua chọn món: điều hướng thẳng tới PaymentActivity (T11)
+            val intent = android.content.Intent(requireContext(), com.ute.quanlydatban.ui.customer.booking.PaymentActivity::class.java).apply {
+                putExtra(com.ute.quanlydatban.ui.customer.booking.PaymentActivity.EXTRA_BOOKING_ID, viewModel.bookingId)
+                putExtra(com.ute.quanlydatban.ui.customer.booking.PaymentActivity.EXTRA_RESTAURANT_ID, viewModel.restaurantId)
             }
-            findNavController().navigate(
-                R.id.action_menuFragment_to_paymentPlaceholderFragment,
-                bundle
-            )
+            startActivity(intent)
         }
     }
 
