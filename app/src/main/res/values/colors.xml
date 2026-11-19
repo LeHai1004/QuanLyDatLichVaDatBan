@@ -55,4 +55,10 @@
     <color name="chip_bg_selected">#FFE5D6</color>
     <color name="chip_border_selected">#E8622C</color>
     <color name="placeholder_image_bg">#F2E5DC</color>
+
+    <!-- Booking, TableSelect (T9) -->
+    <color name="booking_table_available_bg">#FFF8F2</color>
+    <color name="booking_table_booked_alpha">@color/booktable_cream</color>
+    <color name="booking_table_selected_bg">#FFE3D4</color>
+    <color name="booking_success_green">#2E9E6B</color>
 </resources>

@@ -77,4 +77,36 @@
         android:id="@+id/ownerNotificationFragment"
         android:name="com.ute.quanlydatban.ui.owner.OwnerNotificationFragment"
         android:label="@string/owner_notification_title" />
+
+    <!-- Customer Booking Flow (T9) -->
+    <fragment
+        android:id="@+id/bookingFragment"
+        android:name="com.ute.quanlydatban.ui.customer.booking.BookingFragment"
+        android:label="@string/booking_title">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/booking_title" />
+        <argument
+            android:name="restaurantId"
+            app:argType="string"
+            android:defaultValue="" />
+        <action
+            android:id="@+id/action_bookingFragment_to_tableSelectFragment"
+            app:destination="@id/tableSelectFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tableSelectFragment"
+        android:name="com.ute.quanlydatban.ui.customer.booking.TableSelectFragment"
+        android:label="@string/table_select_title">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/table_select_title" />
+        <argument
+            android:name="restaurantId"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
 </navigation>

@@ -1,0 +1,384 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nsvBookingRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Page header -->
+        <LinearLayout
+            android:id="@+id/llBookingHeader"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/booking_header_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="@dimen/booking_screen_padding">
+
+            <!-- Back button -->
+            <FrameLayout
+                android:id="@+id/btnBack"
+                android:layout_width="@dimen/booking_back_width"
+                android:layout_height="@dimen/booking_back_height"
+                android:background="@drawable/bg_booking_back_btn"
+                android:contentDescription="@string/booking_cd_back">
+
+                <ImageView
+                    android:layout_width="@dimen/booking_back_icon_size"
+                    android:layout_height="@dimen/booking_back_icon_size"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_auth_back"
+                    app:tint="@color/booktable_dark"
+                    xmlns:app="http://schemas.android.com/apk/res-auto" />
+            </FrameLayout>
+
+            <!-- Title block -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvBreadcrumb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/booking_breadcrumb"
+                    android:textColor="@color/booktable_active"
+                    android:textSize="@dimen/booking_breadcrumb_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvBookingTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/booking_title"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="@dimen/booking_title_size"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Content area -->
+        <LinearLayout
+            android:id="@+id/llBookingContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/booking_screen_padding"
+            android:paddingTop="@dimen/booking_content_padding_top"
+            android:paddingBottom="16dp">
+
+            <!-- Restaurant card -->
+            <LinearLayout
+                android:id="@+id/llRestaurantCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_booking_restaurant_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/booking_restaurant_card_padding">
+
+                <FrameLayout
+                    android:layout_width="@dimen/booking_emblem_width"
+                    android:layout_height="@dimen/booking_emblem_size"
+                    android:background="@drawable/bg_booking_restaurant_emblem">
+
+                    <ImageView
+                        android:layout_width="@dimen/booking_emblem_icon_size"
+                        android:layout_height="@dimen/booking_emblem_icon_size"
+                        android:layout_gravity="center"
+                        android:contentDescription="@string/booking_cd_restaurant_icon"
+                        android:src="@drawable/ic_owner_store"
+                        app:tint="@color/booktable_orange"
+                        xmlns:app="http://schemas.android.com/apk/res-auto" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvRestaurantName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/booking_restaurant_name_size"
+                        android:textStyle="bold"
+                        tools:text="Bếp Nhà · Thảo Điền" />
+
+                    <TextView
+                        android:id="@+id/tvRestaurantAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="@dimen/booking_restaurant_address_size"
+                        tools:text="12 Nguyễn Văn Hưởng, TP. Hồ Chí Minh" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Date selection -->
+            <LinearLayout
+                android:id="@+id/llDateSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/booking_content_gap"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/booking_section_date"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/booking_section_label_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvMonthYear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="@dimen/booking_time_secondary_size"
+                        tools:text="Tháng 11, 2026" />
+                </LinearLayout>
+
+                <!-- 7 date cells (dynamic, populated from code) -->
+                <LinearLayout
+                    android:id="@+id/llDateOptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/booking_section_gap"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+
+            <!-- Time selection -->
+            <LinearLayout
+                android:id="@+id/llTimeSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/booking_content_gap"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/booking_section_time"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/booking_section_label_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/booking_section_time_zone"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="@dimen/booking_time_secondary_size" />
+                </LinearLayout>
+
+                <!-- Time chips (dynamic) -->
+                <HorizontalScrollView
+                    android:id="@+id/hsvTimeOptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/booking_section_gap"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:id="@+id/flTimeOptions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal" />
+                </HorizontalScrollView>
+            </LinearLayout>
+
+            <!-- Guests selection -->
+            <LinearLayout
+                android:id="@+id/llGuestsSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/booking_content_gap"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/booking_section_guests"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="@dimen/booking_section_label_size"
+                    android:textStyle="bold" />
+
+                <!-- Guest chips (dynamic) -->
+                <LinearLayout
+                    android:id="@+id/llGuestOptions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/booking_section_gap"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+
+            <!-- Note -->
+            <LinearLayout
+                android:id="@+id/llNoteSection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/booking_content_gap"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/booking_section_note"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/booking_section_label_size"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/booking_section_note_optional"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="@dimen/booking_time_secondary_size" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/etNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/booking_note_height"
+                    android:layout_marginTop="@dimen/booking_section_gap"
+                    android:background="@drawable/bg_booking_note_field"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:gravity="top|start"
+                    android:hint="@string/booking_note_hint"
+                    android:inputType="textMultiLine|textCapSentences"
+                    android:maxLines="3"
+                    android:padding="@dimen/booking_note_padding"
+                    android:textColor="@color/booktable_dark"
+                    android:textColorHint="@color/booktable_muted"
+                    android:textSize="@dimen/booking_note_text_size" />
+            </LinearLayout>
+
+            <!-- Hospitality note -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/booking_section_gap"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/booking_note_icon_size"
+                    android:layout_height="@dimen/booking_note_icon_size"
+                    android:src="@drawable/ic_heart_outline"
+                    app:tint="@color/booktable_muted"
+                    xmlns:app="http://schemas.android.com/apk/res-auto" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/booking_hospitality_gap"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/booking_hospitality_msg"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="@dimen/booking_hospitality_text_size" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- Bottom action bar -->
+        <LinearLayout
+            android:id="@+id/llBookingBottom"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/booking_bottom_height"
+            android:background="@drawable/bg_booking_bottom_bar"
+            android:orientation="vertical"
+            android:paddingHorizontal="@dimen/booking_bottom_padding_h"
+            android:paddingVertical="@dimen/booking_bottom_padding_v">
+
+            <FrameLayout
+                android:id="@+id/btnContinue"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/booking_btn_height"
+                android:background="@drawable/bg_booking_btn_primary"
+                android:contentDescription="@string/booking_cd_next">
+
+                <TextView
+                    android:id="@+id/tvBtnContinue"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|start"
+                    android:layout_marginStart="@dimen/booking_btn_padding_h"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/booking_btn_continue"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/booking_btn_text_size"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:layout_width="@dimen/booking_btn_icon_size"
+                    android:layout_height="@dimen/booking_btn_icon_size"
+                    android:layout_gravity="center_vertical|end"
+                    android:layout_marginEnd="@dimen/booking_btn_padding_h"
+                    android:src="@drawable/ic_auth_arrow"
+                    app:tint="@color/white"
+                    xmlns:app="http://schemas.android.com/apk/res-auto" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:gravity="center"
+                android:text="@string/booking_bottom_hint"
+                android:textColor="@color/booktable_muted"
+                android:textSize="@dimen/booking_bottom_hint_size" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>
