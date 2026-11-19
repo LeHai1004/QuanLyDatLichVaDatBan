@@ -1,0 +1,13 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="@dimen/auth_footer_icon_size"
+    android:height="@dimen/auth_footer_icon_size"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <path
+        android:fillColor="@android:color/transparent"
+        android:pathData="M12,22s8,-4 8,-11V5l-8,-3 -8,3v6c0,7 8,11 8,11zM9,12l2,2 4,-4"
+        android:strokeColor="@color/auth_success"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:strokeWidth="2" />
+</vector>

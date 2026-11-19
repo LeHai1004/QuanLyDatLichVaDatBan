@@ -1,0 +1,17 @@
+<resources>
+    <style name="BookTableAuthText">
+        <item name="android:fontFamily">@font/be_vietnam_pro</item>
+    </style>
+
+    <style name="BookTableAuthHeading" parent="BookTableAuthText">
+        <item name="android:textColor">@color/booktable_dark</item>
+        <item name="android:textSize">@dimen/auth_heading_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="BookTableAuthLabel" parent="BookTableAuthText">
+        <item name="android:textColor">@color/booktable_dark</item>
+        <item name="android:textSize">@dimen/auth_label_text_size</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>
