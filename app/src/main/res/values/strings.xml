@@ -250,4 +250,46 @@
     <string name="booking_cd_restaurant_icon">Biểu tượng nhà hàng</string>
     <string name="booking_no_selection">Chưa chọn bàn</string>
     <string name="booking_time_expired">Thời gian giữ chỗ đã hết. Vui lòng đặt lại.</string>
-    </resources>
+
+    <!-- Dialog sau khi đặt bàn T9 -->
+    <string name="booking_success_dialog_title">Đặt bàn thành công!</string>
+    <string name="booking_success_dialog_message">Bàn của bạn đã được giữ chỗ trong 10 phút. Bạn có muốn chọn món trước để quán chuẩn bị chu đáo hơn không?</string>
+    <string name="booking_success_dialog_btn_confirm">Chọn món ngay</string>
+
+    <!-- Menu & Cart (T10) -->
+    <string name="menu_breadcrumb">BookTable · Đặt bàn · 3/4</string>
+    <string name="menu_title">Chọn vị ngon quen</string>
+    <string name="menu_heading">Món ngon nhà Bếp</string>
+    <string name="menu_subheading">Được yêu thích</string>
+    <string name="menu_category_all">Tất cả</string>
+    <string name="menu_category_appetizer">Khai vị</string>
+    <string name="menu_category_main">Món chính</string>
+    <string name="menu_category_drink">Đồ uống</string>
+    <string name="menu_category_dessert">Tráng miệng</string>
+    <string name="menu_skip">Bỏ qua</string>
+    <string name="menu_cart_items_format">%d món đã chọn</string>
+    <string name="menu_view_cart">Xem giỏ</string>
+    <string name="menu_bottom_hint">Đặt trước để Bếp chuẩn bị chu đáo hơn</string>
+    <string name="menu_empty">Quán chưa cập nhật thực đơn hoặc danh mục này chưa có món.</string>
+    <string name="menu_error_load">Không thể tải thực đơn. Vui lòng thử lại.</string>
+    <string name="menu_item_unavailable_label">Tạm hết món</string>
+
+    <string name="cart_breadcrumb">BookTable · Đặt bàn · 4/4</string>
+    <string name="cart_title">Bữa ngon của bạn</string>
+    <string name="cart_heading_selected">Món đã chọn</string>
+    <string name="cart_add_more">Thêm món</string>
+    <string name="cart_subtotal_format">Tạm tính (%d món)</string>
+    <string name="cart_room_surcharge">Phụ thu phòng VIP</string>
+    <string name="cart_free">Miễn phí</string>
+    <string name="cart_total">Tổng cộng</string>
+    <string name="cart_deposit_label">Đặt cọc giữ bàn</string>
+    <string name="cart_booking_ready_format">%s đã sẵn sàng cho bạn.</string>
+    <string name="cart_booking_ready_default">Bàn đã sẵn sàng cho bạn.</string>
+    <string name="cart_btn_checkout">Tiếp tục đặt cọc</string>
+    <string name="cart_bottom_hint_format">Đặt cọc %s để giữ bàn · Còn lại trả tại nhà hàng</string>
+    <string name="cart_empty">Chưa có món nào trong giỏ hàng. Bạn vẫn có thể tiếp tục đặt bàn và gọi món tại quán.</string>
+    <string name="cart_error_save">Không thể lưu món ăn đặt trước. Vui lòng thử lại.</string>
+    <string name="cart_error_missing_data">Thiếu thông tin đơn đặt bàn hoặc nhà hàng.</string>
+    <string name="payment_title">Thanh toán cọc</string>
+    <string name="cart_item_unit_price_format">%s / phần</string>
+</resources>

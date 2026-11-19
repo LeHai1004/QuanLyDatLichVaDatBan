@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llCartItemRoot"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/screen_padding"
+    android:layout_marginVertical="4dp"
+    android:background="@drawable/bg_menu_dish_card"
+    android:gravity="center_vertical"
+    android:minHeight="@dimen/cart_item_height"
+    android:orientation="horizontal"
+    android:padding="@dimen/cart_item_card_padding">
+
+    <!-- Dish Image -->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivDishImage"
+        android:layout_width="@dimen/menu_dish_img_size"
+        android:layout_height="@dimen/menu_dish_img_size"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_food_placeholder"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.Corner.Medium" />
+
+    <!-- Details -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvDishName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:maxLines="1"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/menu_dish_name_size"
+            android:textStyle="bold"
+            tools:text="Gỏi cuốn tôm thịt" />
+
+        <TextView
+            android:id="@+id/tvUnitPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:textColor="@color/booktable_muted"
+            android:textSize="10sp"
+            tools:text="69.000đ / phần" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Stepper Box -->
+            <LinearLayout
+                android:id="@+id/llQuantityControl"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/cart_qty_box_height"
+                android:background="@drawable/bg_cart_qty_box"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingHorizontal="8dp">
+
+                <ImageView
+                    android:id="@+id/btnMinus"
+                    android:layout_width="@dimen/cart_qty_btn_size"
+                    android:layout_height="@dimen/cart_qty_btn_size"
+                    android:src="@drawable/ic_minus"
+                    app:tint="@color/booktable_dark" />
+
+                <TextView
+                    android:id="@+id/tvQuantity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="13dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="@dimen/cart_qty_text_size"
+                    android:textStyle="bold"
+                    tools:text="2" />
+
+                <ImageView
+                    android:id="@+id/btnPlus"
+                    android:layout_width="@dimen/cart_qty_btn_size"
+                    android:layout_height="@dimen/cart_qty_btn_size"
+                    android:src="@drawable/ic_plus"
+                    app:tint="@color/booktable_dark" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <!-- Item Total Price -->
+            <TextView
+                android:id="@+id/tvItemTotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_dark"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                tools:text="138.000đ" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
