@@ -25,6 +25,16 @@
     <color name="auth_success">#258C63</color>
     <color name="booktable_primary_light">#FFE3D4</color>
 
+    <!-- Owner Dashboard, Stats, Profile (T12) -->
+    <color name="owner_stat_waiting">#D97706</color>
+    <color name="owner_stat_waiting_bg">#FEF3C7</color>
+    <color name="owner_stat_today">#E8622C</color>
+    <color name="owner_stat_today_bg">#FFE5D6</color>
+    <color name="owner_stat_serving">#258C63</color>
+    <color name="owner_stat_serving_bg">#E8F8F0</color>
+    <color name="owner_badge_closed_bg">#FDECEB</color>
+    <color name="owner_chip_selected_bg">#FFE5D6</color>
+    <color name="owner_chip_selected_border">#E8622C</color>
     <!-- Home, Search, Detail (T7) -->
     <color name="badge_open_bg">#E8F8F0</color>
     <color name="badge_closed_bg">#FDECEB</color>

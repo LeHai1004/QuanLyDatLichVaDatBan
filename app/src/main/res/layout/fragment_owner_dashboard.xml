@@ -1,0 +1,557 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nsvOwnerDashboard"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="@dimen/owner_screen_padding"
+        android:paddingTop="@dimen/owner_header_margin_top"
+        android:paddingBottom="@dimen/nav_bottom_height">
+
+        <!-- Header: Restaurant Name & Status -->
+        <TextView
+            android:id="@+id/tvDashboardGreeting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_dashboard_greeting"
+            android:textColor="@color/booktable_muted"
+            android:textSize="@dimen/owner_subtitle_size" />
+
+        <TextView
+            android:id="@+id/tvRestaurantName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/auth_brand_inset"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/owner_title_size"
+            android:textStyle="bold"
+            tools:text="Bếp Nhà · Thảo Điền" />
+
+        <TextView
+            android:id="@+id/tvRestaurantStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/owner_header_gap"
+            android:background="@drawable/bg_owner_status_open"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:paddingHorizontal="@dimen/owner_badge_padding_h"
+            android:paddingVertical="@dimen/owner_badge_padding_v"
+            android:textColor="@color/owner_stat_serving"
+            android:textSize="@dimen/owner_badge_text_size"
+            android:textStyle="bold"
+            tools:text="@string/owner_status_open_now" />
+
+        <!-- 3 States: Loading, Empty, Error -->
+        <include
+            android:id="@+id/layoutStates"
+            layout="@layout/layout_shared_states"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- Dashboard Content Body -->
+        <LinearLayout
+            android:id="@+id/llDashboardBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Metrics Row (3 Cards: Waiting, Today, Serving) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/owner_section_margin_top"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <!-- Waiting Orders Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardWaitingOrders"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/owner_stat_card_height"
+                    android:layout_marginEnd="@dimen/owner_stat_gap"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/owner_stat_waiting_bg"
+                    app:cardCornerRadius="@dimen/owner_stat_card_radius"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/owner_stat_waiting"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/owner_stat_card_padding">
+
+                        <TextView
+                            android:id="@+id/tvWaitingCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:textColor="@color/owner_stat_waiting"
+                            android:textSize="@dimen/owner_stat_value_size"
+                            android:textStyle="bold"
+                            tools:text="0" />
+
+                        <TextView
+                            android:id="@+id/tvWaitingLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/auth_brand_inset"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:gravity="center"
+                            android:text="@string/owner_stat_waiting_title"
+                            android:textColor="@color/owner_stat_waiting"
+                            android:textSize="@dimen/owner_stat_label_size"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Today Orders Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardTodayOrders"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/owner_stat_card_height"
+                    android:layout_marginEnd="@dimen/owner_stat_gap"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/owner_stat_today_bg"
+                    app:cardCornerRadius="@dimen/owner_stat_card_radius"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/owner_stat_today"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/owner_stat_card_padding">
+
+                        <TextView
+                            android:id="@+id/tvTodayCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:textColor="@color/owner_stat_today"
+                            android:textSize="@dimen/owner_stat_value_size"
+                            android:textStyle="bold"
+                            tools:text="0" />
+
+                        <TextView
+                            android:id="@+id/tvTodayLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/auth_brand_inset"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:gravity="center"
+                            android:text="@string/owner_stat_today_title"
+                            android:textColor="@color/owner_stat_today"
+                            android:textSize="@dimen/owner_stat_label_size"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Serving Guests Card -->
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/cardServingGuests"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/owner_stat_card_height"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@color/owner_stat_serving_bg"
+                    app:cardCornerRadius="@dimen/owner_stat_card_radius"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/owner_stat_serving"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="@dimen/owner_stat_card_padding">
+
+                        <TextView
+                            android:id="@+id/tvServingCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:textColor="@color/owner_stat_serving"
+                            android:textSize="@dimen/owner_stat_value_size"
+                            android:textStyle="bold"
+                            tools:text="0" />
+
+                        <TextView
+                            android:id="@+id/tvServingLabel"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/auth_brand_inset"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:gravity="center"
+                            android:text="@string/owner_stat_serving_title"
+                            android:textColor="@color/owner_stat_serving"
+                            android:textSize="@dimen/owner_stat_label_size"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+
+            <!-- Quick Management Section -->
+            <TextView
+                android:id="@+id/tvQuickActionsTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/owner_section_margin_top"
+                android:layout_marginBottom="@dimen/owner_action_card_margin_bottom"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/owner_quick_actions_title"
+                android:textColor="@color/booktable_dark"
+                android:textSize="@dimen/owner_section_title_size"
+                android:textStyle="bold" />
+
+            <!-- Action 1: Booking List -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardActionBookings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/owner_action_card_margin_bottom"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/booktable_surface"
+                app:cardCornerRadius="@dimen/owner_action_card_radius"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/booktable_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/owner_action_card_padding">
+
+                    <ImageView
+                        android:layout_width="@dimen/owner_action_icon_container_size"
+                        android:layout_height="@dimen/owner_action_icon_container_size"
+                        android:background="@drawable/bg_owner_stat_today"
+                        android:contentDescription="@string/owner_action_bookings_title"
+                        android:padding="@dimen/owner_action_icon_padding"
+                        android:src="@drawable/ic_nav_calendar"
+                        app:tint="@color/booktable_orange" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/owner_stat_gap"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvActionBookingsTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/owner_action_bookings_title"
+                            android:textColor="@color/booktable_dark"
+                            android:textSize="@dimen/owner_action_title_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvActionBookingsDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/owner_action_bookings_desc"
+                            android:textColor="@color/booktable_muted"
+                            android:textSize="@dimen/owner_action_desc_size" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/auth_field_icon_size"
+                        android:layout_height="@dimen/auth_field_icon_size"
+                        android:contentDescription="@string/owner_action_bookings_title"
+                        android:src="@drawable/ic_auth_arrow"
+                        app:tint="@color/booktable_muted" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Action 2: Kitchen & Prep -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardActionKitchen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/owner_action_card_margin_bottom"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/booktable_surface"
+                app:cardCornerRadius="@dimen/owner_action_card_radius"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/booktable_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/owner_action_card_padding">
+
+                    <ImageView
+                        android:layout_width="@dimen/owner_action_icon_container_size"
+                        android:layout_height="@dimen/owner_action_icon_container_size"
+                        android:background="@drawable/bg_owner_stat_today"
+                        android:contentDescription="@string/owner_action_kitchen_title"
+                        android:padding="@dimen/owner_action_icon_padding"
+                        android:src="@drawable/ic_owner_cooking"
+                        app:tint="@color/booktable_orange" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/owner_stat_gap"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvActionKitchenTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/owner_action_kitchen_title"
+                            android:textColor="@color/booktable_dark"
+                            android:textSize="@dimen/owner_action_title_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvActionKitchenDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/owner_action_kitchen_desc"
+                            android:textColor="@color/booktable_muted"
+                            android:textSize="@dimen/owner_action_desc_size" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/auth_field_icon_size"
+                        android:layout_height="@dimen/auth_field_icon_size"
+                        android:contentDescription="@string/owner_action_kitchen_title"
+                        android:src="@drawable/ic_auth_arrow"
+                        app:tint="@color/booktable_muted" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Action 3: Service Request -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardActionService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/owner_action_card_margin_bottom"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/booktable_surface"
+                app:cardCornerRadius="@dimen/owner_action_card_radius"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/booktable_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/owner_action_card_padding">
+
+                    <ImageView
+                        android:layout_width="@dimen/owner_action_icon_container_size"
+                        android:layout_height="@dimen/owner_action_icon_container_size"
+                        android:background="@drawable/bg_owner_stat_today"
+                        android:contentDescription="@string/owner_action_service_title"
+                        android:padding="@dimen/owner_action_icon_padding"
+                        android:src="@drawable/ic_owner_service"
+                        app:tint="@color/booktable_orange" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/owner_stat_gap"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvActionServiceTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/owner_action_service_title"
+                            android:textColor="@color/booktable_dark"
+                            android:textSize="@dimen/owner_action_title_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvActionServiceDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/owner_action_service_desc"
+                            android:textColor="@color/booktable_muted"
+                            android:textSize="@dimen/owner_action_desc_size" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/auth_field_icon_size"
+                        android:layout_height="@dimen/auth_field_icon_size"
+                        android:contentDescription="@string/owner_action_service_title"
+                        android:src="@drawable/ic_auth_arrow"
+                        app:tint="@color/booktable_muted" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Action 4: Stats & Revenue -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardActionStats"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/owner_action_card_margin_bottom"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/booktable_surface"
+                app:cardCornerRadius="@dimen/owner_action_card_radius"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/booktable_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/owner_action_card_padding">
+
+                    <ImageView
+                        android:layout_width="@dimen/owner_action_icon_container_size"
+                        android:layout_height="@dimen/owner_action_icon_container_size"
+                        android:background="@drawable/bg_owner_stat_today"
+                        android:contentDescription="@string/owner_action_stats_title"
+                        android:padding="@dimen/owner_action_icon_padding"
+                        android:src="@drawable/ic_owner_chart"
+                        app:tint="@color/booktable_orange" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/owner_stat_gap"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvActionStatsTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/owner_action_stats_title"
+                            android:textColor="@color/booktable_dark"
+                            android:textSize="@dimen/owner_action_title_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvActionStatsDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/owner_action_stats_desc"
+                            android:textColor="@color/booktable_muted"
+                            android:textSize="@dimen/owner_action_desc_size" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/auth_field_icon_size"
+                        android:layout_height="@dimen/auth_field_icon_size"
+                        android:contentDescription="@string/owner_action_stats_title"
+                        android:src="@drawable/ic_auth_arrow"
+                        app:tint="@color/booktable_muted" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Action 5: Restaurant Profile -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardActionProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/owner_action_card_margin_bottom"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/booktable_surface"
+                app:cardCornerRadius="@dimen/owner_action_card_radius"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/booktable_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/owner_action_card_padding">
+
+                    <ImageView
+                        android:layout_width="@dimen/owner_action_icon_container_size"
+                        android:layout_height="@dimen/owner_action_icon_container_size"
+                        android:background="@drawable/bg_owner_stat_today"
+                        android:contentDescription="@string/owner_action_profile_title"
+                        android:padding="@dimen/owner_action_icon_padding"
+                        android:src="@drawable/ic_owner_store"
+                        app:tint="@color/booktable_orange" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/owner_stat_gap"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvActionProfileTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/owner_action_profile_title"
+                            android:textColor="@color/booktable_dark"
+                            android:textSize="@dimen/owner_action_title_size"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvActionProfileDesc"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/owner_action_profile_desc"
+                            android:textColor="@color/booktable_muted"
+                            android:textSize="@dimen/owner_action_desc_size" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="@dimen/auth_field_icon_size"
+                        android:layout_height="@dimen/auth_field_icon_size"
+                        android:contentDescription="@string/owner_action_profile_title"
+                        android:src="@drawable/ic_auth_arrow"
+                        app:tint="@color/booktable_muted" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
