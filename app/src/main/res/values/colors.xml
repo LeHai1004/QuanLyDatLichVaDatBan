@@ -125,4 +125,14 @@
     <color name="owner_table_serving">#D97706</color>
     <color name="owner_table_room_tag_text">#D97706</color>
     <color name="owner_table_room_tag_bg">#FEF3C7</color>
+
+    <!-- Waitlist (T32) -->
+    <color name="waitlist_badge_waiting_text">#D97706</color>
+    <color name="waitlist_badge_waiting_bg">#FEF3C7</color>
+    <color name="waitlist_badge_notified_text">#258C63</color>
+    <color name="waitlist_badge_notified_bg">#E8F8F0</color>
+    <color name="waitlist_badge_expired_text">#8A7468</color>
+    <color name="waitlist_badge_expired_bg">#F5EDE8</color>
+    <color name="waitlist_badge_handled_text">#1D4ED8</color>
+    <color name="waitlist_badge_handled_bg">#EFF6FF</color>
 </resources>

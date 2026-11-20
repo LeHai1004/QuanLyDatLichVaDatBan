@@ -61,6 +61,9 @@
         <action
             android:id="@+id/action_ownerOverviewFragment_to_ownerReviewFragment"
             app:destination="@id/ownerReviewFragment" />
+        <action
+            android:id="@+id/action_ownerOverviewFragment_to_ownerWaitlistFragment"
+            app:destination="@id/ownerWaitlistFragment" />
     </fragment>
 
     <fragment
@@ -281,6 +284,21 @@
             android:name="screenTitle"
             app:argType="reference"
             android:defaultValue="@string/owner_review_title" />
+        <argument
+            android:name="restaurantId"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <!-- Owner Waitlist (T32) -->
+    <fragment
+        android:id="@+id/ownerWaitlistFragment"
+        android:name="com.ute.quanlydatban.ui.owner.waitlist.OwnerWaitlistFragment"
+        android:label="@string/waitlist_owner_title">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/waitlist_owner_title" />
         <argument
             android:name="restaurantId"
             app:argType="string"

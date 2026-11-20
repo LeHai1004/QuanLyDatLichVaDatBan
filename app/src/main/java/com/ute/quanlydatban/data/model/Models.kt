@@ -104,8 +104,13 @@ data class Favorite(
 
 data class WaitlistEntry(
     val id: String = "", val userId: String = "", val restaurantId: String = "",
+    val restaurantName: String = "",
     val date: String = "", val time: String = "", val guests: Long = 1,
-    val status: String = "waiting"
+    val status: String = "waiting", // "waiting" | "notified" | "expired"
+    val createdAt: Long = 0,
+    val handled: Boolean = false,
+    val customerName: String = "",
+    val customerPhone: String = ""
 )
 
 data class QrLocation(
