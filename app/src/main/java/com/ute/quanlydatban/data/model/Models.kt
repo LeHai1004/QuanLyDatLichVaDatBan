@@ -40,7 +40,8 @@ data class Booking(
 
 data class BookingGuest(
     val id: String = "", val bookingId: String = "", val userId: String = "",
-    val status: String = "invited", val shareAmount: Long = 0, val paid: Boolean = false
+    val status: String = "invited", val shareAmount: Long = 0, val paid: Boolean = false,
+    val userName: String = "", val avatarUrl: String = ""
 )
 
 data class OrderItem(
@@ -48,7 +49,9 @@ data class OrderItem(
     val name: String = "", val qty: Long = 1,
     val unitPrice: Long = 0,            // giá chụp tại lúc gọi, đổi menu không làm sai hóa đơn cũ
     val source: String = "pre",         // pre | table
-    val status: String = OrderItemStatus.WAITING.name
+    val status: String = OrderItemStatus.WAITING.name,
+    val userId: String = "",
+    val userName: String = ""
 )
 
 data class ServiceRequest(

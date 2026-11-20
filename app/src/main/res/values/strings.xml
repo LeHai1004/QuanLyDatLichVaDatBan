@@ -759,6 +759,40 @@
     <string name="split_bill_all_completed_success">Toàn bộ hóa đơn đã được thanh toán hoàn tất!</string>
     <string name="split_bill_btn_finish">Hoàn tất chia hóa đơn</string>
     <string name="split_bill_paid_summary_format">Đã thanh toán: %1$d/%2$d người</string>
+
+    <!-- Invite Friends (T31) -->
+    <string name="invite_friends_title">Mời bạn bè vào đơn</string>
+    <string name="invite_friends_subtitle">Cùng đặt bàn, chọn món và chia sẻ bữa ăn</string>
+    <string name="invite_friends_code_label">Mã mời của đơn đặt bàn</string>
+    <string name="invite_friends_btn_copy">Sao chép mã</string>
+    <string name="invite_friends_copied_toast">Đã sao chép mã mời vào bộ nhớ tạm!</string>
+    <string name="invite_friends_btn_share">Chia sẻ lời mời</string>
+    <string name="invite_friends_share_content_format">Mình mời bạn tham gia bữa ăn tại %1$s vào lúc %2$s ngày %3$s! Nhập mã mời: %4$s trong ứng dụng BookTable nhé!</string>
+    <string name="invite_friends_share_chooser_title">Chia sẻ lời mời ăn uống</string>
+    <string name="invite_friends_participants_title">Những người tham gia (%1$d/%2$d)</string>
+    <string name="invite_friends_status_accepted">Đã tham gia</string>
+    <string name="invite_friends_status_invited">Chờ xác nhận</string>
+    <string name="invite_friends_status_declined">Đã từ chối</string>
+    <string name="invite_friends_status_host">Chủ đơn</string>
+    <string name="invite_friends_dishes_ordered_format">Món đã chọn: %s</string>
+    <string name="invite_friends_no_dishes_yet">Chưa chọn món nào</string>
+    <string name="invite_friends_btn_enter_code">Nhập mã tham gia đơn khác</string>
+    <string name="invite_friends_btn_add_my_dishes">Chọn thêm món cho bạn</string>
+    <string name="invite_join_dialog_title">Nhập mã mời tham gia</string>
+    <string name="invite_join_dialog_hint">Nhập mã mời (ví dụ: BT-123456)</string>
+    <string name="invite_join_dialog_btn_join">Tìm &amp; Xác nhận</string>
+    <string name="invite_join_confirm_title">Lời mời tham gia bữa ăn</string>
+    <string name="invite_join_confirm_info_format">Quán: %1$s\nThời gian: %2$s - %3$s\nChủ đơn: %4$s\nSố chỗ trống: %5$d/%6$d</string>
+    <string name="invite_join_btn_accept">Chấp nhận tham gia</string>
+    <string name="invite_join_btn_decline">Từ chối</string>
+    <string name="invite_join_error_invalid_code">Mã mời không tồn tại hoặc không hợp lệ.</string>
+    <string name="invite_join_error_not_open">Đơn đặt bàn này hiện không còn nhận khách mời.</string>
+    <string name="invite_join_error_full">Đơn đặt bàn đã đủ số lượng khách.</string>
+    <string name="invite_join_error_already_joined">Bạn đã tham gia đơn đặt bàn này rồi.</string>
+    <string name="invite_join_error_self_invite">Bạn là chủ của đơn đặt bàn này.</string>
+    <string name="invite_join_error_not_logged_in">Vui lòng đăng nhập để tham gia đơn đặt bàn.</string>
+    <string name="invite_join_success">Đã tham gia đơn đặt bàn thành công!</string>
+    <string name="invite_decline_success">Đã từ chối lời mời.</string>
     <!-- Active Bookings Tab -->
     <string name="active_bookings_title">Lượt đặt bàn của bạn</string>
     <string name="active_bookings_empty_title">Chưa có lượt đặt bàn nào</string>
