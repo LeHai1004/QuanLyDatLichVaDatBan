@@ -56,18 +56,18 @@ class WaitlistRepository(
                     return@addOnSuccessListener
                 }
 
-                // Kiểm tra các booking đã đặt cho ngày & giờ này
+                // Kiểm tra các booking đã đặt cho nhà hàng này
                 firestore.collection("bookings")
                     .whereEqualTo("restaurantId", restaurantId)
-                    .whereEqualTo("date", date.trim())
-                    .whereEqualTo("time", time.trim())
                     .get()
                     .addOnSuccessListener { bookingSnapshot ->
                         val activeBookings = bookingSnapshot.documents.mapNotNull { doc ->
                             doc.toObject(Booking::class.java)
                         }.filter { booking ->
                             val status = BookingStatus.from(booking.status)
-                            status != BookingStatus.CANCELLED &&
+                            booking.date.trim() == date.trim() &&
+                                    booking.time.trim() == time.trim() &&
+                                    status != BookingStatus.CANCELLED &&
                                     status != BookingStatus.EXPIRED &&
                                     status != BookingStatus.REJECTED
                         }
@@ -105,13 +105,17 @@ class WaitlistRepository(
         // Kiểm tra xem đã có lượt chờ trùng chưa
         waitlistCollection
             .whereEqualTo("userId", entry.userId)
-            .whereEqualTo("restaurantId", entry.restaurantId)
-            .whereEqualTo("date", entry.date.trim())
-            .whereEqualTo("time", entry.time.trim())
-            .whereEqualTo("status", "waiting")
             .get()
             .addOnSuccessListener { snapshot ->
-                if (!snapshot.isEmpty) {
+                val entries = snapshot.documents.mapNotNull { doc ->
+                    doc.toObject(WaitlistEntry::class.java)?.copy(id = doc.id)
+                }
+
+                val hasDuplicate = WaitlistValidator.hasDuplicateWaiting(
+                    entries, entry.userId, entry.restaurantId, entry.date, entry.time
+                )
+
+                if (hasDuplicate) {
                     onResult(Result.failure(IllegalStateException("Bạn đã đăng ký chờ khung giờ này rồi")))
                     return@addOnSuccessListener
                 }
@@ -179,32 +183,35 @@ class WaitlistRepository(
         date: String? = null,
         onChange: (Result<List<WaitlistEntry>>) -> Unit
     ): ListenerRegistration {
-        var query = waitlistCollection.whereEqualTo("restaurantId", restaurantId)
-        if (!date.isNullOrBlank()) {
-            query = query.whereEqualTo("date", date.trim())
-        }
-
-        return query.addSnapshotListener { snapshot, error ->
-            if (error != null) {
-                Log.e(TAG, "Lỗi listenOwnerWaitlist: ${error.message}", error)
-                onChange(Result.failure(error))
-                return@addSnapshotListener
-            }
-
-            val entries = snapshot?.documents?.mapNotNull { doc ->
-                doc.toObject(WaitlistEntry::class.java)?.copy(id = doc.id)
-            } ?: emptyList()
-
-            // Tự động đánh dấu hết hạn cho các bản ghi đang chờ mà quá giờ
-            val now = System.currentTimeMillis()
-            entries.forEach { entry ->
-                if (entry.status == "waiting" && WaitlistValidator.isExpired(entry.date, entry.time, now)) {
-                    waitlistCollection.document(entry.id).update("status", "expired")
+        return waitlistCollection
+            .whereEqualTo("restaurantId", restaurantId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Log.e(TAG, "Lỗi listenOwnerWaitlist: ${error.message}", error)
+                    onChange(Result.failure(error))
+                    return@addSnapshotListener
                 }
-            }
 
-            onChange(Result.success(entries.sortedBy { it.createdAt }))
-        }
+                val allEntries = snapshot?.documents?.mapNotNull { doc ->
+                    doc.toObject(WaitlistEntry::class.java)?.copy(id = doc.id)
+                } ?: emptyList()
+
+                // Tự động đánh dấu hết hạn cho các bản ghi đang chờ mà quá giờ
+                val now = System.currentTimeMillis()
+                allEntries.forEach { entry ->
+                    if (entry.status == "waiting" && WaitlistValidator.isExpired(entry.date, entry.time, now)) {
+                        waitlistCollection.document(entry.id).update("status", "expired")
+                    }
+                }
+
+                val entries = if (!date.isNullOrBlank()) {
+                    allEntries.filter { it.date.trim() == date.trim() }
+                } else {
+                    allEntries
+                }
+
+                onChange(Result.success(entries.sortedBy { it.createdAt }))
+            }
     }
 
     /**
@@ -242,13 +249,14 @@ class WaitlistRepository(
     ) {
         waitlistCollection
             .whereEqualTo("restaurantId", restaurantId)
-            .whereEqualTo("date", date.trim())
-            .whereEqualTo("time", time.trim())
-            .whereEqualTo("status", "waiting")
             .get()
             .addOnSuccessListener { snapshot ->
                 val entries = snapshot.documents.mapNotNull { doc ->
                     doc.toObject(WaitlistEntry::class.java)?.copy(id = doc.id)
+                }.filter { entry ->
+                    entry.date.trim() == date.trim() &&
+                            entry.time.trim() == time.trim() &&
+                            entry.status == "waiting"
                 }
 
                 val candidate = WaitlistValidator.findNextCandidate(entries, freedTableCapacity)

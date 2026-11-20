@@ -303,6 +303,7 @@
             android:name="restaurantId"
             app:argType="string"
             android:defaultValue="" />
+    </fragment>
     <!-- Owner Kitchen Fragment (T27) -->
     <fragment
         android:id="@+id/ownerKitchenFragment"
