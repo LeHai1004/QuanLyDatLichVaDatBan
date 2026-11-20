@@ -542,4 +542,78 @@
     <string name="profile_edit_error_save_failed">Cập nhật thất bại. Vui lòng thử lại.</string>
     <string name="profile_rank_format">Hạng %s</string>
     <string name="profile_points_format">%d điểm</string>
+
+    <!-- History & Review (T20) -->
+    <string name="history_title">Lịch sử đặt bàn</string>
+    <string name="history_subtitle">Theo dõi và quản lý các lịch hẹn của bạn</string>
+    <string name="history_tab_upcoming">Sắp tới</string>
+    <string name="history_tab_completed">Đã xong</string>
+    <string name="history_tab_cancelled">Đã hủy</string>
+    <string name="history_status_pending">Chờ xác nhận</string>
+    <string name="history_status_waiting">Đang duyệt</string>
+    <string name="history_status_confirmed">Đã xác nhận</string>
+    <string name="history_status_checked_in">Đã đến quán</string>
+    <string name="history_status_serving">Đang phục vụ</string>
+    <string name="history_status_paid">Chờ đánh giá</string>
+    <string name="history_status_completed">Hoàn tất</string>
+    <string name="history_status_cancelled">Đã hủy</string>
+    <string name="history_status_rejected">Bị từ chối</string>
+    <string name="history_status_expired">Đã hết hạn</string>
+    <string name="history_status_no_show">Vắng mặt</string>
+    <string name="history_deposit_label">Tiền cọc: %s</string>
+    <string name="history_guests_format">%d khách</string>
+    <string name="history_btn_change_schedule">Đổi lịch</string>
+    <string name="history_btn_cancel_booking">Hủy bàn</string>
+    <string name="history_btn_review_now">Đánh giá ngay</string>
+    <string name="history_btn_reorder">Đặt lại</string>
+    <string name="history_empty_title">Không có lịch đặt bàn</string>
+    <string name="history_empty_upcoming_desc">Bạn hiện không có lịch đặt bàn nào sắp tới.</string>
+    <string name="history_empty_completed_desc">Bạn chưa hoàn tất bữa hẹn nào để hiển thị.</string>
+    <string name="history_empty_cancelled_desc">Chưa có lịch đặt bàn nào bị hủy.</string>
+    <string name="history_reorder_coming_soon">Tính năng đặt lại bàn đang được phát triển (T29).</string>
+    <string name="history_cannot_modify_checked_in">Đơn đặt bàn đã check-in hoặc đang phục vụ, không thể đổi lịch hoặc hủy.</string>
+    <string name="history_cannot_modify_past_time">Lịch hẹn đã qua thời gian đặt, không thể thay đổi hoặc hủy.</string>
+
+    <!-- Booking Change (T20) -->
+    <string name="booking_change_title">Thay đổi lịch đặt</string>
+    <string name="booking_change_card_current_title">Thông tin lịch hẹn hiện tại</string>
+    <string name="booking_change_card_new_title">Chọn thời gian và bàn mới</string>
+    <string name="booking_change_label_restaurant">Nhà hàng</string>
+    <string name="booking_change_label_booking_id">Mã đặt bàn: #%s</string>
+    <string name="booking_change_label_current_time">Thời gian: %1$s - %2$s</string>
+    <string name="booking_change_label_current_table">Bàn: %s</string>
+    <string name="booking_change_label_guests">Số lượng: %d khách</string>
+    <string name="booking_change_label_new_date">Ngày mới</string>
+    <string name="booking_change_label_new_time">Giờ mới</string>
+    <string name="booking_change_label_new_table">Chọn bàn trống</string>
+    <string name="booking_change_note_policy">Lưu ý: Thay đổi lịch cần được thực hiện trước giờ hẹn. Tiền cọc của quý khách sẽ được giữ nguyên cho lịch hẹn mới.</string>
+    <string name="booking_change_btn_confirm">Xác nhận đổi lịch</string>
+    <string name="booking_change_btn_cancel">Hủy đặt bàn này</string>
+    <string name="booking_change_dialog_cancel_title">Xác nhận hủy đặt bàn?</string>
+    <string name="booking_change_dialog_cancel_msg">Bạn có chắc chắn muốn hủy đơn đặt bàn này? Tiền cọc sẽ được hoàn lại theo chính sách của quán.</string>
+    <string name="booking_change_dialog_cancel_positive">Đồng ý hủy</string>
+    <string name="booking_change_dialog_cancel_negative">Quay lại</string>
+    <string name="booking_change_success">Thay đổi lịch hẹn thành công!</string>
+    <string name="booking_cancel_success">Đã hủy đơn đặt bàn thành công và hoàn cọc.</string>
+    <string name="booking_change_error_conflict">Bàn này đã có người đặt vào khung giờ đã chọn. Vui lòng chọn giờ hoặc bàn khác!</string>
+    <string name="booking_change_error_no_table">Vui lòng chọn bàn phù hợp.</string>
+    <string name="booking_change_error_same_schedule">Vui lòng chọn ngày, giờ hoặc bàn mới khác với lịch hiện tại.</string>
+
+    <!-- Review (T20) -->
+    <string name="review_title">Đánh giá trải nghiệm</string>
+    <string name="review_header_title">Bạn thấy bữa ăn thế nào?</string>
+    <string name="review_header_subtitle">Chạm vào sao để đánh giá trải nghiệm của bạn</string>
+    <string name="review_rating_1">Rất tệ</string>
+    <string name="review_rating_2">Tệ</string>
+    <string name="review_rating_3">Bình thường</string>
+    <string name="review_rating_4">Hài lòng</string>
+    <string name="review_rating_5">Tuyệt vời!</string>
+    <string name="review_comment_label">Nhận xét của bạn</string>
+    <string name="review_comment_hint">Chia sẻ trải nghiệm của bạn về món ăn, thái độ phục vụ và không gian nhà hàng...</string>
+    <string name="review_comment_counter_format">%d/500</string>
+    <string name="review_btn_submit">Gửi đánh giá</string>
+    <string name="review_success">Cảm ơn bạn đã gửi đánh giá!</string>
+    <string name="review_error_no_rating">Vui lòng chọn số sao đánh giá (từ 1 đến 5 sao).</string>
+    <string name="review_error_already_reviewed">Đơn đặt bàn này đã được đánh giá trước đó.</string>
+    <string name="review_error_not_paid">Chỉ có thể đánh giá đơn đã hoàn tất thanh toán.</string>
 </resources>

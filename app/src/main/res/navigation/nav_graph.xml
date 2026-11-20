@@ -32,7 +32,7 @@
 
     <fragment
         android:id="@+id/customerHistoryFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.customer.history.HistoryFragment"
         android:label="@string/nav_history">
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_history" />
     </fragment>
