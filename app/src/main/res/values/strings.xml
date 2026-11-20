@@ -665,4 +665,16 @@
     <string name="owner_table_error_cannot_delete_active">Không thể xóa bàn đang có lịch đặt hoặc đang phục vụ khách.</string>
     <string name="owner_table_save_success">Đã lưu thông tin bàn thành công!</string>
     <string name="owner_table_delete_success">Đã xóa bàn thành công.</string>
+    <!-- Active Bookings Tab -->
+    <string name="active_bookings_title">Lượt đặt bàn của bạn</string>
+    <string name="active_bookings_empty_title">Chưa có lượt đặt bàn nào</string>
+    <string name="active_bookings_empty_message">Bạn chưa có đơn đặt bàn nào cần check-in. Khám phá các nhà hàng ngon ngay nhé!</string>
+    <string name="active_bookings_btn_find_restaurant">Tìm quán</string>
+    <string name="active_bookings_status_confirmed">Đã xác nhận</string>
+    <string name="active_bookings_status_checked_in">Đã nhận bàn</string>
+    <string name="active_bookings_btn_arrived">Tôi đã đến quán</string>
+    <string name="active_bookings_btn_view_map">Xem sơ đồ quán</string>
+    <string name="active_bookings_btn_navigate">Chỉ đường</string>
+    <string name="active_bookings_table_format">%1$s · Tầng %2$d</string>
+    <string name="active_bookings_error">Không thể tải danh sách đặt bàn.</string>
 </resources>
