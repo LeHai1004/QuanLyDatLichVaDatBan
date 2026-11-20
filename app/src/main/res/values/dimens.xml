@@ -457,6 +457,17 @@
     <dimen name="nav_owner_pill_height">28dp</dimen>
     <dimen name="nav_owner_pill_radius">14dp</dimen>
 
+    <!-- QR Scan & Check-in (T19) -->
+    <dimen name="qr_scan_camera_height">380dp</dimen>
+    <dimen name="qr_scan_camera_radius">20dp</dimen>
+    <dimen name="qr_scan_box_size">240dp</dimen>
+    <dimen name="qr_scan_corner_length">30dp</dimen>
+    <dimen name="qr_scan_corner_thickness">3dp</dimen>
+    <dimen name="qr_scan_corner_radius">1.5dp</dimen>
+    <dimen name="qr_scan_card_radius">16dp</dimen>
+    <dimen name="checkin_seal_size">88dp</dimen>
+    <dimen name="checkin_card_radius">16dp</dimen>
+
     <!-- Voucher (T24) -->
     <dimen name="voucher_card_radius">14dp</dimen>
     <dimen name="voucher_card_padding">14dp</dimen>
