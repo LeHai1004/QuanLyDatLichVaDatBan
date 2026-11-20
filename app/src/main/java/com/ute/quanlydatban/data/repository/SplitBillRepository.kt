@@ -160,19 +160,37 @@ class SplitBillRepository(
             return
         }
 
-        val batch = firestore.batch()
-        for (g in guests) {
-            val docId = g.id.ifEmpty { "BG_${bookingId}_${g.userId.ifEmpty { System.nanoTime().toString() }}" }
-            val ref = firestore.collection("bookingGuests").document(docId)
-            batch.set(ref, g.copy(id = docId, bookingId = bookingId))
-        }
+        firestore.collection("bookingGuests")
+            .whereEqualTo("bookingId", bookingId)
+            .get()
+            .addOnSuccessListener { snap ->
+                val existingDocs = snap.documents
+                val newGuestIds = guests.map { it.id }.toSet()
 
-        batch.commit()
-            .addOnSuccessListener {
-                onResult(Result.success(Unit))
+                val batch = firestore.batch()
+                for (doc in existingDocs) {
+                    if (!newGuestIds.contains(doc.id)) {
+                        batch.delete(doc.reference)
+                    }
+                }
+
+                for (g in guests) {
+                    val docId = g.id.ifEmpty { "BG_${bookingId}_${g.userId.ifEmpty { System.nanoTime().toString() }}" }
+                    val ref = firestore.collection("bookingGuests").document(docId)
+                    batch.set(ref, g.copy(id = docId, bookingId = bookingId))
+                }
+
+                batch.commit()
+                    .addOnSuccessListener {
+                        onResult(Result.success(Unit))
+                    }
+                    .addOnFailureListener { err ->
+                        Log.e(TAG, "Lỗi syncGuestsList: ${err.message}", err)
+                        onResult(Result.failure(err))
+                    }
             }
             .addOnFailureListener { err ->
-                Log.e(TAG, "Lỗi syncGuestsList: ${err.message}", err)
+                Log.e(TAG, "Lỗi đọc existing guests khi sync: ${err.message}", err)
                 onResult(Result.failure(err))
             }
     }
@@ -205,6 +223,7 @@ class SplitBillRepository(
         val paymentRef = firestore.collection("payments").document(paymentId)
 
         firestore.runTransaction { tx ->
+            // --- 1. TẤT CẢ CÁC ĐỌC (READS) PHẢI CHẠY TRƯỚC MỌI GHI (WRITES) ---
             val guestSnap = tx.get(guestRef)
             if (!guestSnap.exists()) {
                 throw IllegalStateException("GUEST_NOT_FOUND")
@@ -215,6 +234,16 @@ class SplitBillRepository(
                 throw IllegalStateException("ALREADY_PAID")
             }
 
+            val bookingSnap = tx.get(bookingRef)
+            val paymentSnap = tx.get(paymentRef)
+
+            val otherSnapshots = mutableMapOf<String, com.google.firebase.firestore.DocumentSnapshot>()
+            for (otherId in allGuestIds) {
+                if (otherId == guestId) continue
+                otherSnapshots[otherId] = tx.get(firestore.collection("bookingGuests").document(otherId))
+            }
+
+            // --- 2. TẤT CẢ CÁC GHI (WRITES) ---
             val now = System.currentTimeMillis()
             val payment = Payment(
                 id = paymentId,
@@ -227,22 +256,23 @@ class SplitBillRepository(
                 paidAt = now
             )
 
-            tx.set(paymentRef, payment)
+            if (!paymentSnap.exists()) {
+                tx.set(paymentRef, payment)
+            }
             tx.update(guestRef, mapOf("paid" to true, "shareAmount" to amount))
 
-            // Kiểm tra trạng thái của các guest khác
             var allCompleted = true
             for (otherId in allGuestIds) {
                 if (otherId == guestId) continue
-                val otherSnap = tx.get(firestore.collection("bookingGuests").document(otherId))
-                val otherPaid = otherSnap.getBoolean("paid") ?: false
+                val otherSnap = otherSnapshots[otherId]
+                val otherPaid = otherSnap?.getBoolean("paid") ?: false
                 if (!otherPaid) {
                     allCompleted = false
                     break
                 }
             }
 
-            if (allCompleted) {
+            if (allCompleted && bookingSnap.exists()) {
                 tx.update(bookingRef, "status", BookingStatus.PAID.name)
             }
 

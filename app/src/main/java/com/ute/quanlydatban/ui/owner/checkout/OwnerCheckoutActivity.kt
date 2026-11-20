@@ -30,6 +30,14 @@ class OwnerCheckoutActivity : AppCompatActivity() {
 
     private var currentBookingId: String = ""
 
+    private val splitBillLauncher = registerForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            finish()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -75,7 +83,7 @@ class OwnerCheckoutActivity : AppCompatActivity() {
                 currentBookingId,
                 totalPayable
             )
-            startActivity(intent)
+            splitBillLauncher.launch(intent)
         }
 
         binding.btnConfirmPayment.setOnClickListener {
