@@ -162,4 +162,45 @@ class OrderRepository(
                 onResult(Result.failure(error))
             }
     }
+
+    // Lưu các món gọi tại bàn vào collection orderItems trên Firestore với source = table, status = waiting
+    fun saveTableOrderItems(
+        bookingId: String,
+        items: List<OrderItem>,
+        onResult: (Result<Unit>) -> Unit
+    ) {
+        if (bookingId.isBlank()) {
+            val err = IllegalArgumentException("bookingId không được để trống")
+            Log.e(TAG, err.message ?: "")
+            onResult(Result.failure(err))
+            return
+        }
+
+        if (items.isEmpty()) {
+            onResult(Result.success(Unit))
+            return
+        }
+
+        val batch = firestore.batch()
+        for (item in items) {
+            val id = item.id.ifEmpty { firestore.collection("orderItems").document().id }
+            val itemRef = firestore.collection("orderItems").document(id)
+            val finalItem = item.copy(
+                id = id,
+                bookingId = bookingId,
+                source = SOURCE_TABLE,
+                status = OrderItemStatus.WAITING.name
+            )
+            batch.set(itemRef, finalItem)
+        }
+
+        batch.commit()
+            .addOnSuccessListener {
+                onResult(Result.success(Unit))
+            }
+            .addOnFailureListener { error ->
+                Log.e(TAG, "Lỗi saveTableOrderItems cho booking #$bookingId: ${error.message}", error)
+                onResult(Result.failure(error))
+            }
+    }
 }

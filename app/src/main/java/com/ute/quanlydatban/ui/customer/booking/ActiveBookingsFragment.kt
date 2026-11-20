@@ -77,6 +77,13 @@ class ActiveBookingsFragment : Fragment() {
                     putExtra(IndoorMapActivity.EXTRA_RESTAURANT_ID, item.booking.restaurantId)
                 }
                 startActivity(intent)
+            },
+            onTableOrderClick = { item ->
+                val intent = Intent(requireContext(), TableQRScanActivity::class.java).apply {
+                    putExtra(TableQRScanActivity.EXTRA_BOOKING_ID, item.booking.id)
+                    putExtra(TableQRScanActivity.EXTRA_RESTAURANT_ID, item.booking.restaurantId)
+                }
+                startActivity(intent)
             }
         )
 
