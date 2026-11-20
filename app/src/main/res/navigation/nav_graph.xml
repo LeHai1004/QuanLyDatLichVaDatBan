@@ -31,7 +31,7 @@
 
     <fragment
         android:id="@+id/customerProfileFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.customer.profile.ProfileFragment"
         android:label="@string/nav_profile">
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_profile" />
     </fragment>
@@ -234,5 +234,27 @@
             android:name="restaurantId"
             app:argType="string"
             android:defaultValue="" />
+    </fragment>
+
+    <!-- Loyalty Placeholder (T25) -->
+    <fragment
+        android:id="@+id/loyaltyPlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:label="@string/profile_menu_loyalty">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/profile_menu_loyalty" />
+    </fragment>
+
+    <!-- Favorite Placeholder (T29) -->
+    <fragment
+        android:id="@+id/favoritePlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:label="@string/profile_menu_favorites">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/profile_menu_favorites" />
     </fragment>
 </navigation>
