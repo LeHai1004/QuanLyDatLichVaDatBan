@@ -96,14 +96,21 @@ object SeedData {
             }
         }
 
-        val expiry = 1830211200000L // 31/12/2027
+        val expGeneral = 1830211200000L // 31/12/2027
+        val expBep20k = 1796057999000L  // 30/11/2026
+        val expHen10 = 1797353999000L   // 15/12/2026
+        val expBanNgon = 1798736399000L// 31/12/2026
+
         listOf(
-            mapOf("code" to "WELCOME20", "type" to "amount", "value" to 20_000L, "minOrder" to 100_000L, "pointsCost" to 0L),
-            mapOf("code" to "GIAM10", "type" to "percent", "value" to 10L, "minOrder" to 200_000L, "pointsCost" to 100L),
-            mapOf("code" to "VIP50", "type" to "amount", "value" to 50_000L, "minOrder" to 300_000L, "pointsCost" to 300L)
+            mapOf("id" to "v_WELCOME20", "code" to "WELCOME20", "type" to "amount", "value" to 20_000L, "minOrder" to 100_000L, "maxDiscount" to 0L, "expiry" to expGeneral, "active" to true, "restaurantId" to "", "pointsCost" to 0L),
+            mapOf("id" to "v_GIAM10", "code" to "GIAM10", "type" to "percent", "value" to 10L, "minOrder" to 200_000L, "maxDiscount" to 50_000L, "expiry" to expGeneral, "active" to true, "restaurantId" to "", "pointsCost" to 100L),
+            mapOf("id" to "v_VIP50", "code" to "VIP50", "type" to "amount", "value" to 50_000L, "minOrder" to 300_000L, "maxDiscount" to 0L, "expiry" to expGeneral, "active" to true, "restaurantId" to "", "pointsCost" to 300L),
+            mapOf("id" to "v_BEP20K", "code" to "BEP20K", "type" to "amount", "value" to 20_000L, "minOrder" to 200_000L, "maxDiscount" to 0L, "expiry" to expBep20k, "active" to true, "restaurantId" to "", "pointsCost" to 0L),
+            mapOf("id" to "v_HEN10", "code" to "HEN10", "type" to "percent", "value" to 10L, "minOrder" to 0L, "maxDiscount" to 50_000L, "expiry" to expHen10, "active" to true, "restaurantId" to "", "pointsCost" to 0L),
+            mapOf("id" to "v_BANNGON10K", "code" to "BANNGON10K", "type" to "amount", "value" to 10_000L, "minOrder" to 100_000L, "maxDiscount" to 0L, "expiry" to expBanNgon, "active" to true, "restaurantId" to "", "pointsCost" to 0L)
         ).forEach { v ->
-            val id = "v_${v["code"]}"
-            batch.set(db.collection("vouchers").document(id), v + mapOf("id" to id, "expiry" to expiry))
+            val id = v["id"] as String
+            batch.set(db.collection("vouchers").document(id), v)
         }
 
         batch.commit()
