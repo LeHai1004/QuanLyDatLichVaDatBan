@@ -106,4 +106,16 @@
     <!-- Profile (T8) -->
     <color name="profile_avatar_bg">#FFE3D4</color>
     <color name="profile_stat_border">#EBDDD2</color>
+
+    <!-- History & Review (T20) -->
+    <color name="history_tab_bg">#F5EDE8</color>
+    <color name="history_tab_text_unselected">#8A7468</color>
+    <color name="history_status_confirmed_bg">#FFF2EB</color>
+    <color name="history_status_confirmed_text">#E8622C</color>
+    <color name="history_status_completed_bg">#E8F8F0</color>
+    <color name="history_status_completed_text">#258C63</color>
+    <color name="history_status_cancelled_bg">#FDECEB</color>
+    <color name="history_status_cancelled_text">#B93825</color>
+    <color name="history_status_serving_bg">#FEF3C7</color>
+    <color name="history_status_serving_text">#D97706</color>
 </resources>

@@ -118,7 +118,8 @@ data class MapNode(
 
 data class Review(
     val id: String = "", val bookingId: String = "", val userId: String = "",
-    val restaurantId: String = "", val rating: Long = 5, val comment: String = ""
+    val restaurantId: String = "", val rating: Long = 5, val comment: String = "",
+    val createdAt: Long = 0
 )
 
 data class AppNotification(

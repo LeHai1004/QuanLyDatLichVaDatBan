@@ -6,8 +6,8 @@ enum class BookingStatus {
     CHECKED_IN, SERVING, PAID, COMPLETED, CANCELLED, NO_SHOW;
 
     fun canTransitionTo(next: BookingStatus): Boolean = when (this) {
-        PENDING -> next == WAITING || next == EXPIRED
-        WAITING -> next == CONFIRMED || next == REJECTED
+        PENDING -> next == WAITING || next == EXPIRED || next == CANCELLED
+        WAITING -> next == CONFIRMED || next == REJECTED || next == CANCELLED
         CONFIRMED -> next == CHECKED_IN || next == CANCELLED || next == NO_SHOW
         CHECKED_IN -> next == SERVING
         SERVING -> next == PAID

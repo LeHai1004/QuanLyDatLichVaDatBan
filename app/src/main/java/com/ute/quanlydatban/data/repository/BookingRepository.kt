@@ -5,7 +5,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.ute.quanlydatban.data.model.Booking
 import com.ute.quanlydatban.data.model.BookingStatus
 import com.ute.quanlydatban.data.model.DiningTable
+import com.ute.quanlydatban.data.model.Payment
 import com.ute.quanlydatban.data.model.Restaurant
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class BookingRepository(
     private val firestore: FirebaseFirestore = FirebaseFirestore.getInstance()
@@ -380,5 +383,260 @@ class BookingRepository(
             Log.e(TAG, "Lỗi rejectBookingByOwner: ${error.message}", error)
             onResult(Result.failure(error))
         }
+    }
+
+    /**
+     * Khách hàng hủy đơn đặt bàn:
+     * - Áp dụng cho đơn PENDING, WAITING, CONFIRMED
+     * - Chặn hủy nếu đơn đã CHECKED_IN, SERVING hoặc quá thời gian hẹn
+     * - Trả bàn về trạng thái available
+     * - Đổi trạng thái booking thành CANCELLED
+     * - Cập nhật trạng thái hoàn tiền cọc trong collection payments
+     */
+    fun cancelBookingByCustomer(
+        bookingId: String,
+        onResult: (Result<Unit>) -> Unit
+    ) {
+        if (bookingId.isBlank()) {
+            onResult(Result.failure(IllegalArgumentException("bookingId không được để trống")))
+            return
+        }
+
+        val bookingRef = collection.document(bookingId)
+
+        firestore.runTransaction { transaction ->
+            val snapshot = transaction.get(bookingRef)
+            if (!snapshot.exists()) {
+                throw IllegalStateException("Không tìm thấy đơn đặt bàn #$bookingId")
+            }
+
+            val booking = snapshot.toObject(Booking::class.java)
+                ?: throw IllegalStateException("Không đọc được dữ liệu đơn đặt bàn")
+
+            val currentStatus = BookingStatus.from(booking.status)
+            if (currentStatus == BookingStatus.CHECKED_IN || currentStatus == BookingStatus.SERVING) {
+                throw IllegalStateException("CANNOT_CANCEL_CHECKED_IN")
+            }
+            if (currentStatus == BookingStatus.CANCELLED ||
+                currentStatus == BookingStatus.REJECTED ||
+                currentStatus == BookingStatus.EXPIRED ||
+                currentStatus == BookingStatus.NO_SHOW ||
+                currentStatus == BookingStatus.COMPLETED
+            ) {
+                throw IllegalStateException("ALREADY_FINISHED")
+            }
+
+            // Kiểm tra xem đơn đã qua thời gian hẹn chưa
+            if (isPastSchedule(booking.date, booking.time)) {
+                throw IllegalStateException("PAST_APPOINTMENT_TIME")
+            }
+
+            // 1. Cập nhật trạng thái booking thành CANCELLED
+            transaction.update(bookingRef, "status", BookingStatus.CANCELLED.name)
+
+            // 2. Trả bàn về available
+            if (booking.restaurantId.isNotBlank() && booking.tableId.isNotBlank()) {
+                val tableRef = firestore.collection("restaurants").document(booking.restaurantId)
+                    .collection("tables").document(booking.tableId)
+                transaction.update(tableRef, "status", "available")
+            }
+
+            // 3. Hoàn tiền cọc trong collection payments
+            val refundPaymentId = "PAY_${bookingId}_REFUND"
+            val refundRef = firestore.collection("payments").document(refundPaymentId)
+            val refundPayment = Payment(
+                id = refundPaymentId,
+                bookingId = bookingId,
+                userId = booking.userId,
+                type = "refund",
+                amount = booking.depositAmount,
+                method = "vietqr",
+                status = "completed",
+                paidAt = System.currentTimeMillis()
+            )
+            transaction.set(refundRef, refundPayment)
+            null
+        }.addOnSuccessListener {
+            // Cập nhật thêm khoản cọc gốc thành "refunded" nếu có
+            firestore.collection("payments")
+                .whereEqualTo("bookingId", bookingId)
+                .whereEqualTo("type", "deposit")
+                .get()
+                .addOnSuccessListener { paySnaps ->
+                    for (doc in paySnaps.documents) {
+                        doc.reference.update("status", "refunded")
+                    }
+                }
+            Log.i(TAG, "Khách đã hủy thành công đơn #$bookingId")
+            onResult(Result.success(Unit))
+        }.addOnFailureListener { error ->
+            Log.e(TAG, "Lỗi cancelBookingByCustomer: ${error.message}", error)
+            onResult(Result.failure(error))
+        }
+    }
+
+    /**
+     * Khách hàng đổi ngày, giờ hoặc bàn mới:
+     * - Kiểm tra đơn chưa CHECKED_IN, SERVING, hoặc quá giờ hẹn
+     * - Kiểm tra trùng lịch trên Firestore (bàn đó đã có đơn CONFIRMED/WAITING chưa)
+     * - Đổi bàn (giải phóng bàn cũ, giữ bàn mới) và cập nhật đơn
+     */
+    fun rescheduleBooking(
+        bookingId: String,
+        newDate: String,
+        newTime: String,
+        newTableId: String?,
+        onResult: (Result<Unit>) -> Unit
+    ) {
+        if (bookingId.isBlank() || newDate.isBlank() || newTime.isBlank()) {
+            onResult(Result.failure(IllegalArgumentException("Thiếu thông tin đổi lịch hẹn")))
+            return
+        }
+
+        if (isPastSchedule(newDate, newTime)) {
+            onResult(Result.failure(IllegalArgumentException("PAST_NEW_SCHEDULE")))
+            return
+        }
+
+        collection.document(bookingId).get()
+            .addOnSuccessListener { snapshot ->
+                if (!snapshot.exists()) {
+                    onResult(Result.failure(IllegalStateException("Không tìm thấy đơn #$bookingId")))
+                    return@addOnSuccessListener
+                }
+
+                val booking = snapshot.toObject(Booking::class.java)
+                if (booking == null) {
+                    onResult(Result.failure(IllegalStateException("Lỗi dữ liệu booking")))
+                    return@addOnSuccessListener
+                }
+
+                val currentStatus = BookingStatus.from(booking.status)
+                if (currentStatus == BookingStatus.CHECKED_IN || currentStatus == BookingStatus.SERVING) {
+                    onResult(Result.failure(IllegalStateException("CANNOT_MODIFY_CHECKED_IN")))
+                    return@addOnSuccessListener
+                }
+                if (currentStatus == BookingStatus.CANCELLED ||
+                    currentStatus == BookingStatus.REJECTED ||
+                    currentStatus == BookingStatus.EXPIRED ||
+                    currentStatus == BookingStatus.NO_SHOW ||
+                    currentStatus == BookingStatus.COMPLETED
+                ) {
+                    onResult(Result.failure(IllegalStateException("ALREADY_FINISHED")))
+                    return@addOnSuccessListener
+                }
+
+                if (isPastSchedule(booking.date, booking.time)) {
+                    onResult(Result.failure(IllegalStateException("PAST_APPOINTMENT_TIME")))
+                    return@addOnSuccessListener
+                }
+
+                val targetTableId = if (!newTableId.isNullOrBlank()) newTableId else booking.tableId
+
+                // Kiểm tra trùng lịch trên Firestore
+                collection
+                    .whereEqualTo("restaurantId", booking.restaurantId)
+                    .whereEqualTo("tableId", targetTableId)
+                    .whereEqualTo("date", newDate)
+                    .whereEqualTo("time", newTime)
+                    .get()
+                    .addOnSuccessListener { querySnapshot ->
+                        val hasConflict = querySnapshot.documents.any { doc ->
+                            if (doc.id == bookingId) return@any false
+                            val b = doc.toObject(Booking::class.java) ?: return@any false
+                            val st = BookingStatus.from(b.status)
+                            st != BookingStatus.CANCELLED &&
+                                st != BookingStatus.REJECTED &&
+                                st != BookingStatus.EXPIRED &&
+                                st != BookingStatus.NO_SHOW
+                        }
+
+                        if (hasConflict) {
+                            onResult(Result.failure(IllegalStateException("TABLE_CONFLICT")))
+                            return@addOnSuccessListener
+                        }
+
+                        // Thực hiện đổi lịch
+                        val bookingRef = collection.document(bookingId)
+                        val updates = mutableMapOf<String, Any>(
+                            "date" to newDate,
+                            "time" to newTime,
+                            "tableId" to targetTableId
+                        )
+
+                        firestore.runTransaction { tx ->
+                            // Nếu đổi bàn khác, cập nhật bàn cũ thành available và bàn mới thành booked
+                            if (targetTableId != booking.tableId && booking.restaurantId.isNotBlank()) {
+                                if (booking.tableId.isNotBlank()) {
+                                    val oldTableRef = firestore.collection("restaurants")
+                                        .document(booking.restaurantId)
+                                        .collection("tables").document(booking.tableId)
+                                    tx.update(oldTableRef, "status", "available")
+                                }
+                                val newTableRef = firestore.collection("restaurants")
+                                    .document(booking.restaurantId)
+                                    .collection("tables").document(targetTableId)
+                                tx.update(newTableRef, "status", "booked")
+                            }
+                            tx.update(bookingRef, updates)
+                            null
+                        }.addOnSuccessListener {
+                            Log.i(TAG, "Đã đổi lịch thành công cho đơn #$bookingId")
+                            onResult(Result.success(Unit))
+                        }.addOnFailureListener { err ->
+                            Log.e(TAG, "Lỗi transaction reschedule: ${err.message}", err)
+                            onResult(Result.failure(err))
+                        }
+                    }
+                    .addOnFailureListener { err ->
+                        Log.e(TAG, "Lỗi kiểm tra trùng lịch: ${err.message}", err)
+                        onResult(Result.failure(err))
+                    }
+            }
+            .addOnFailureListener { error ->
+                Log.e(TAG, "Lỗi đọc đơn đổi lịch: ${error.message}", error)
+                onResult(Result.failure(error))
+            }
+    }
+
+    /**
+     * Lấy danh sách lịch sử đặt bàn của khách hàng theo userId
+     */
+    fun getUserBookings(
+        userId: String,
+        onResult: (Result<List<Booking>>) -> Unit
+    ) {
+        if (userId.isBlank()) {
+            onResult(Result.success(emptyList()))
+            return
+        }
+
+        collection.whereEqualTo("userId", userId).get()
+            .addOnSuccessListener { snapshot ->
+                val bookings = snapshot.toObjects(Booking::class.java)
+                onResult(Result.success(bookings))
+            }
+            .addOnFailureListener { error ->
+                Log.e(TAG, "Lỗi getUserBookings: ${error.message}", error)
+                onResult(Result.failure(error))
+            }
+    }
+
+    /**
+     * Kiểm tra thời gian lịch hẹn đã trôi qua so với hiện tại hay chưa
+     */
+    fun isPastSchedule(dateStr: String, timeStr: String): Boolean {
+        if (dateStr.isBlank() || timeStr.isBlank()) return false
+        val formats = listOf("dd/MM/yyyy HH:mm", "yyyy-MM-dd HH:mm", "d/M/yyyy H:m")
+        for (pattern in formats) {
+            try {
+                val sdf = SimpleDateFormat(pattern, Locale.getDefault())
+                val parsed = sdf.parse("$dateStr $timeStr")
+                if (parsed != null) {
+                    return System.currentTimeMillis() > parsed.time
+                }
+            } catch (_: Exception) {}
+        }
+        return false
     }
 }

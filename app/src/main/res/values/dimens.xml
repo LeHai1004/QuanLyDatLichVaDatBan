@@ -485,4 +485,12 @@
     <dimen name="profile_stat_card_radius">14dp</dimen>
     <dimen name="profile_menu_card_radius">16dp</dimen>
     <dimen name="profile_menu_icon_size">20dp</dimen>
+
+    <!-- History & Review (T20) -->
+    <dimen name="history_card_radius">16dp</dimen>
+    <dimen name="history_card_elevation">2dp</dimen>
+    <dimen name="history_badge_radius">8dp</dimen>
+    <dimen name="history_action_btn_height">38dp</dimen>
+    <dimen name="review_star_size">40dp</dimen>
+    <dimen name="review_star_spacing">8dp</dimen>
 </resources>
