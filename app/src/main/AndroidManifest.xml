@@ -93,6 +93,10 @@
             android:name=".ui.owner.table.OwnerTableManageActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.owner.menu.OwnerMenuEditActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

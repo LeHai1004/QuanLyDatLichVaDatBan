@@ -207,10 +207,10 @@
             android:defaultValue="@string/nav_owner_table" />
     </fragment>
 
-    <!-- Owner Menu Placeholder (T13) -->
+    <!-- Owner Menu (T13) -->
     <fragment
         android:id="@+id/ownerMenuPlaceholderFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.owner.menu.OwnerMenuFragment"
         android:label="@string/nav_owner_menu">
         <argument
             android:name="screenTitle"
