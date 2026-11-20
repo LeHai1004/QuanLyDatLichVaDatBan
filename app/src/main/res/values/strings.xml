@@ -918,6 +918,37 @@
     <string name="table_qr_error_invalid">Mã bàn không hợp lệ, vui lòng thử lại</string>
     <string name="table_qr_error_empty">Vui lòng nhập mã bàn.</string>
 
+    <!-- Loyalty & Membership (T25) -->
+    <string name="loyalty_title">Tích điểm thành viên</string>
+    <string name="loyalty_current_points_label">Điểm tích lũy hiện tại</string>
+    <string name="loyalty_points_format">%d điểm</string>
+    <string name="loyalty_rank_bronze">Hạng Đồng</string>
+    <string name="loyalty_rank_silver">Hạng Bạc</string>
+    <string name="loyalty_rank_gold">Hạng Vàng</string>
+    <string name="loyalty_rank_badge_format">Hạng %s</string>
+    <string name="loyalty_next_rank_needed_format">Tích thêm %1$d điểm để lên Hạng %2$s</string>
+    <string name="loyalty_max_rank_reached">Bạn đã đạt hạng cao nhất: Hạng Vàng!</string>
+    <string name="loyalty_tab_rewards">Đổi ưu đãi</string>
+    <string name="loyalty_tab_history">Lịch sử tích điểm</string>
+    <string name="loyalty_btn_redeem">Đổi điểm</string>
+    <string name="loyalty_cost_points_format">%d điểm</string>
+    <string name="loyalty_empty_vouchers">Hiện chưa có voucher nào có thể đổi bằng điểm.</string>
+    <string name="loyalty_empty_history">Chưa có lịch sử giao dịch điểm.</string>
+    <string name="loyalty_empty_history_desc">Tích điểm khi hoàn tất đặt bàn tại các nhà hàng để nâng hạng và nhận nhiều ưu đãi hấp dẫn!</string>
+    <string name="loyalty_dialog_redeem_title">Đổi voucher ưu đãi</string>
+    <string name="loyalty_dialog_redeem_message">Bạn có muốn dùng %1$d điểm để đổi voucher \"%2$s\" không?</string>
+    <string name="loyalty_dialog_redeem_confirm">Đổi ngay</string>
+    <string name="loyalty_dialog_redeem_cancel">Để sau</string>
+    <string name="loyalty_redeem_success">Đổi voucher thành công! Kiểm tra trong mục Ưu đãi của bạn.</string>
+    <string name="loyalty_redeem_not_enough_points">Không đủ điểm để đổi voucher này.</string>
+    <string name="loyalty_redeem_error">Không thể đổi voucher. Vui lòng thử lại sau.</string>
+    <string name="loyalty_loading">Đang tải thông tin điểm…</string>
+    <string name="loyalty_error_load">Không thể tải thông tin điểm thành viên. Vui lòng thử lại.</string>
+    <string name="loyalty_policy_title">Quy định tích điểm &amp; lên hạng</string>
+    <string name="loyalty_policy_desc">• 10.000đ thanh toán = 1 điểm thưởng\n• Hạng Đồng: 0 – 99 điểm\n• Hạng Bạc: 100 – 499 điểm\n• Hạng Vàng: từ 500 điểm trở lên</string>
+    <string name="loyalty_tx_earned_default">Tích điểm đơn đặt bàn</string>
+    <string name="loyalty_tx_redeem_default">Đổi điểm lấy ưu đãi</string>
+    <string name="loyalty_tx_refund_default">Hoàn điểm hủy đơn</string>
     <!-- Order Tracking & Kitchen (T27) -->
     <string name="order_tracking_title">Tiến trình phục vụ</string>
     <string name="order_tracking_subtitle">Theo dõi món ăn theo thời gian thực</string>

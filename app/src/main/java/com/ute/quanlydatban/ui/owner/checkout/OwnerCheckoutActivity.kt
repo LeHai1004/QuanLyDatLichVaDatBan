@@ -132,6 +132,14 @@ class OwnerCheckoutActivity : AppCompatActivity() {
 
         viewModel.checkoutSuccessPayment.observe(this) { payment ->
             if (payment != null) {
+                val data = viewModel.checkoutData.value
+                if (data != null && data.booking.userId.isNotBlank()) {
+                    com.ute.quanlydatban.data.repository.LoyaltyRepository().awardPointsForBooking(
+                        bookingId = data.booking.id,
+                        userId = data.booking.userId,
+                        paidAmount = data.finalAmount
+                    ) { _ -> }
+                }
                 Toast.makeText(this, getString(R.string.owner_checkout_success), Toast.LENGTH_SHORT).show()
                 setResult(RESULT_OK)
                 finish()
