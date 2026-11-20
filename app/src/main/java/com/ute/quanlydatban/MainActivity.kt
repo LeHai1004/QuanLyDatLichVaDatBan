@@ -2,9 +2,7 @@ package com.ute.quanlydatban
 
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -30,10 +28,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         val role = intent.getStringExtra(EXTRA_ROLE)?.lowercase()
-        if (role != null && role != ROLE_CUSTOMER && role != ROLE_OWNER) {
-            rejectInvalidRole()
-            return
-        }
+        val isOwner = (role == ROLE_OWNER)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
@@ -45,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         val graph = navController.navInflater.inflate(R.navigation.nav_graph)
-        val startDest = if (role == ROLE_OWNER) {
+        val startDest = if (isOwner) {
             R.id.ownerOverviewFragment
         } else {
             R.id.customerHomeFragment
@@ -53,104 +48,206 @@ class MainActivity : AppCompatActivity() {
         graph.setStartDestination(startDest)
         navController.graph = graph
 
-        when (role) {
-            ROLE_OWNER -> setOwnerNavigation()
-            else -> setCustomerNavigation()
+        setupNavigation(isOwner)
+    }
+
+    private fun setupNavigation(isOwner: Boolean) {
+        if (isOwner) {
+            binding.llNavCustomer.visibility = View.GONE
+            binding.llNavOwner.visibility = View.VISIBLE
+            setOwnerNavigation()
+        } else {
+            binding.llNavOwner.visibility = View.GONE
+            binding.llNavCustomer.visibility = View.VISIBLE
+            setCustomerNavigation()
+        }
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (isOwner) {
+                when (destination.id) {
+                    R.id.ownerOverviewFragment -> {
+                        binding.llNavBottom.visibility = View.VISIBLE
+                        selectOwnerTab(0)
+                    }
+                    R.id.ownerBookingFragment -> {
+                        binding.llNavBottom.visibility = View.VISIBLE
+                        selectOwnerTab(1)
+                    }
+                    R.id.ownerTablePlaceholderFragment -> {
+                        binding.llNavBottom.visibility = View.VISIBLE
+                        selectOwnerTab(2)
+                    }
+                    R.id.ownerMenuPlaceholderFragment -> {
+                        binding.llNavBottom.visibility = View.VISIBLE
+                        selectOwnerTab(3)
+                    }
+                    R.id.ownerProfileFragment -> {
+                        binding.llNavBottom.visibility = View.VISIBLE
+                        selectOwnerTab(4)
+                    }
+                    else -> {
+                        binding.llNavBottom.visibility = View.GONE
+                    }
+                }
+            } else {
+                when (destination.id) {
+                    R.id.customerHomeFragment -> {
+                        binding.llNavBottom.visibility = View.VISIBLE
+                        selectCustomerTab(0)
+                    }
+                    R.id.customerBookingFragment -> {
+                        binding.llNavBottom.visibility = View.VISIBLE
+                        selectCustomerTab(1)
+                    }
+                    R.id.customerHistoryFragment -> {
+                        binding.llNavBottom.visibility = View.VISIBLE
+                        selectCustomerTab(2)
+                    }
+                    R.id.customerProfileFragment -> {
+                        binding.llNavBottom.visibility = View.VISIBLE
+                        selectCustomerTab(3)
+                    }
+                    else -> {
+                        binding.llNavBottom.visibility = View.GONE
+                    }
+                }
+            }
         }
     }
 
     private fun setCustomerNavigation() {
-        setNavLabels(
+        setCustomerNavLabels(
             R.string.nav_home,
             R.string.nav_booking,
             R.string.nav_history,
             R.string.nav_profile
         )
-        setNavIcons(
+        setCustomerNavIcons(
             R.drawable.ic_nav_home,
             R.drawable.ic_nav_calendar,
             R.drawable.ic_nav_history,
             R.drawable.ic_nav_profile
         )
         binding.llNavBottom.visibility = View.VISIBLE
-        configureTab(binding.llNavItem1, R.id.customerHomeFragment)
-        configureTab(binding.llNavItem2, R.id.customerBookingFragment)
-        configureTab(binding.llNavItem3, R.id.customerHistoryFragment)
-        configureTab(binding.llNavItem4, R.id.customerProfileFragment)
-        selectTab(0)
+        configureCustomerTab(binding.llNavItem1, R.id.customerHomeFragment, 0)
+        configureCustomerTab(binding.llNavItem2, R.id.customerBookingFragment, 1)
+        configureCustomerTab(binding.llNavItem3, R.id.customerHistoryFragment, 2)
+        configureCustomerTab(binding.llNavItem4, R.id.customerProfileFragment, 3)
+        selectCustomerTab(0)
     }
 
     private fun setOwnerNavigation() {
-        setNavLabels(
-            R.string.nav_owner_overview,
-            R.string.nav_owner_orders,
-            R.string.nav_history,
-            R.string.nav_profile
-        )
-        setNavIcons(
-            R.drawable.ic_nav_home,
-            R.drawable.ic_nav_calendar,
-            R.drawable.ic_nav_history,
-            R.drawable.ic_nav_profile
-        )
         binding.llNavBottom.visibility = View.VISIBLE
-        configureTab(binding.llNavItem1, R.id.ownerOverviewFragment)
-        configureTab(binding.llNavItem2, R.id.ownerBookingFragment)
-        configureTab(binding.llNavItem3, R.id.ownerHistoryFragment)
-        configureTab(binding.llNavItem4, R.id.ownerProfileFragment)
-        selectTab(0)
+        configureOwnerTab(binding.llOwnerNavItem1, R.id.ownerOverviewFragment, 0)
+        configureOwnerTab(binding.llOwnerNavItem2, R.id.ownerBookingFragment, 1)
+        configureOwnerTab(binding.llOwnerNavItem3, R.id.ownerTablePlaceholderFragment, 2)
+        configureOwnerTab(binding.llOwnerNavItem4, R.id.ownerMenuPlaceholderFragment, 3)
+        configureOwnerTab(binding.llOwnerNavItem5, R.id.ownerProfileFragment, 4)
+        selectOwnerTab(0)
     }
 
-    private fun rejectInvalidRole() {
-        binding.llNavBottom.visibility = View.GONE
-        SnackbarHelper.show(binding.root, getString(R.string.nav_role_invalid))
-        binding.root.postDelayed({ finish() }, DELAY_REJECT_MS)
-    }
-
-    private fun configureTab(item: LinearLayout, destinationId: Int) {
+    private fun configureCustomerTab(item: LinearLayout, destinationId: Int, index: Int) {
         item.setOnClickListener {
-            val options = androidx.navigation.NavOptions.Builder()
-                .setLaunchSingleTop(true)
-                .setRestoreState(true)
-                .setPopUpTo(navController.graph.startDestinationId, false, true)
-                .build()
-            navController.navigate(destinationId, null, options)
-            selectTab(
-                when (item.id) {
-                    R.id.llNavItem1 -> 0
-                    R.id.llNavItem2 -> 1
-                    R.id.llNavItem3 -> 2
-                    else -> 3
-                }
-            )
+            if (navController.currentDestination?.id != destinationId) {
+                val options = androidx.navigation.NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .setRestoreState(true)
+                    .setPopUpTo(navController.graph.startDestinationId, false, true)
+                    .build()
+                navController.navigate(destinationId, null, options)
+            }
+            selectCustomerTab(index)
         }
     }
 
-    private fun setNavLabels(vararg labels: Int) {
+    private fun configureOwnerTab(item: LinearLayout, destinationId: Int, index: Int) {
+        item.setOnClickListener {
+            if (navController.currentDestination?.id != destinationId) {
+                val options = androidx.navigation.NavOptions.Builder()
+                    .setLaunchSingleTop(true)
+                    .setRestoreState(true)
+                    .setPopUpTo(navController.graph.startDestinationId, false, true)
+                    .build()
+                navController.navigate(destinationId, null, options)
+            }
+            selectOwnerTab(index)
+        }
+    }
+
+    private fun setCustomerNavLabels(vararg labels: Int) {
         val views = listOf(binding.tvNav1, binding.tvNav2, binding.tvNav3, binding.tvNav4)
         labels.forEachIndexed { index, label ->
             views[index].setText(label)
         }
     }
 
-    private fun setNavIcons(vararg icons: Int) {
+    private fun setCustomerNavIcons(vararg icons: Int) {
         val views = listOf(binding.ivNav1, binding.ivNav2, binding.ivNav3, binding.ivNav4)
         icons.forEachIndexed { index, icon ->
             views[index].setImageResource(icon)
         }
     }
 
-    private fun selectTab(index: Int) {
+    private fun selectCustomerTab(index: Int) {
         val labels = listOf(binding.tvNav1, binding.tvNav2, binding.tvNav3, binding.tvNav4)
         val icons = listOf(binding.ivNav1, binding.ivNav2, binding.ivNav3, binding.ivNav4)
         val active = getColor(R.color.booktable_orange)
         val muted = getColor(R.color.booktable_muted)
         labels.forEachIndexed { i, label ->
             label.setTextColor(if (i == index) active else muted)
-            label.setTypeface(label.typeface, if (i == index) android.graphics.Typeface.BOLD else android.graphics.Typeface.NORMAL)
+            label.setTypeface(
+                label.typeface,
+                if (i == index) android.graphics.Typeface.BOLD else android.graphics.Typeface.NORMAL
+            )
         }
         icons.forEachIndexed { i, icon ->
             icon.setColorFilter(if (i == index) active else muted)
+        }
+    }
+
+    private fun selectOwnerTab(index: Int) {
+        val pillContainers = listOf(
+            binding.flOwnerNavIcon1,
+            binding.flOwnerNavIcon2,
+            binding.flOwnerNavIcon3,
+            binding.flOwnerNavIcon4,
+            binding.flOwnerNavIcon5
+        )
+        val icons = listOf(
+            binding.ivOwnerNav1,
+            binding.ivOwnerNav2,
+            binding.ivOwnerNav3,
+            binding.ivOwnerNav4,
+            binding.ivOwnerNav5
+        )
+        val labels = listOf(
+            binding.tvOwnerNav1,
+            binding.tvOwnerNav2,
+            binding.tvOwnerNav3,
+            binding.tvOwnerNav4,
+            binding.tvOwnerNav5
+        )
+        val activeColor = getColor(R.color.booktable_orange)
+        val mutedColor = getColor(R.color.booktable_muted)
+
+        pillContainers.forEachIndexed { i, container ->
+            if (i == index) {
+                container.setBackgroundResource(R.drawable.bg_nav_tab_selected)
+            } else {
+                container.background = null
+            }
+        }
+
+        icons.forEachIndexed { i, icon ->
+            icon.setColorFilter(if (i == index) activeColor else mutedColor)
+        }
+
+        labels.forEachIndexed { i, label ->
+            label.setTextColor(if (i == index) activeColor else mutedColor)
+            label.setTypeface(
+                label.typeface,
+                if (i == index) android.graphics.Typeface.BOLD else android.graphics.Typeface.NORMAL
+            )
         }
     }
 
