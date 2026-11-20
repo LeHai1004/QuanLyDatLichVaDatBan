@@ -475,4 +475,10 @@
     <dimen name="voucher_icon_size">40dp</dimen>
     <dimen name="voucher_btn_height">36dp</dimen>
     <dimen name="voucher_btn_radius">10dp</dimen>
+
+    <!-- Profile (T8) -->
+    <dimen name="profile_avatar_size">72dp</dimen>
+    <dimen name="profile_stat_card_radius">14dp</dimen>
+    <dimen name="profile_menu_card_radius">16dp</dimen>
+    <dimen name="profile_menu_icon_size">20dp</dimen>
 </resources>

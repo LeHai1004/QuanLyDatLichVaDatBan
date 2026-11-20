@@ -72,6 +72,9 @@
         <activity
             android:name=".ui.customer.booking.CheckInSuccessActivity"
             android:exported="false" />
+            android:name=".ui.customer.profile.EditProfileActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

@@ -42,8 +42,17 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
         setupCategoryChips()
         setupSearchBar()
+        setupNotifications()
         setupRetryButton()
         observeViewModel()
+    }
+
+    private fun setupNotifications() {
+        binding.ivNotifications.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_customerHomeFragment_to_customerNotificationFragment
+            )
+        }
     }
 
     private fun setupRecyclerView() {

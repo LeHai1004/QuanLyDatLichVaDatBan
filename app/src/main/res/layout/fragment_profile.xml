@@ -1,0 +1,479 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream">
+
+    <ScrollView
+        android:id="@+id/svContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_padding">
+
+            <!-- Profile Header Card -->
+            <LinearLayout
+                android:id="@+id/llHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingVertical="12dp">
+
+                <FrameLayout
+                    android:id="@+id/flAvatarContainer"
+                    android:layout_width="@dimen/profile_avatar_size"
+                    android:layout_height="@dimen/profile_avatar_size"
+                    android:background="@drawable/bg_avatar_circle">
+
+                    <ImageView
+                        android:id="@+id/ivAvatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/profile_title"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tvAvatarInitial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_orange"
+                        android:textSize="26sp"
+                        android:textStyle="bold"
+                        tools:text="H" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="@dimen/home_section_title_size"
+                    android:textStyle="bold"
+                    tools:text="Nguyễn Văn Hải" />
+
+                <TextView
+                    android:id="@+id/tvPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="@dimen/auth_body_text_size"
+                    tools:text="0912345678" />
+
+                <TextView
+                    android:id="@+id/tvMemberSince"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="@dimen/auth_footer_text_size"
+                    tools:text="Thành viên từ 11/2026" />
+
+                <TextView
+                    android:id="@+id/tvRankBadge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/bg_voucher_tag"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="3dp"
+                    android:textColor="@color/booktable_orange"
+                    android:textSize="@dimen/auth_label_text_size"
+                    android:textStyle="bold"
+                    tools:text="Hạng Đồng · 120 điểm" />
+            </LinearLayout>
+
+            <!-- 3 Stat Counters Card -->
+            <LinearLayout
+                android:id="@+id/llStatCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_profile_stat_card"
+                android:orientation="horizontal"
+                android:paddingVertical="14dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvBookingCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/auth_heading_text_size"
+                        android:textStyle="bold"
+                        tools:text="5" />
+
+                    <TextView
+                        android:id="@+id/tvBookingLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/profile_stat_bookings"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="@dimen/auth_footer_text_size" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/profile_stat_border" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvFavoriteCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/auth_heading_text_size"
+                        android:textStyle="bold"
+                        tools:text="3" />
+
+                    <TextView
+                        android:id="@+id/tvFavoriteLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/profile_stat_favorites"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="@dimen/auth_footer_text_size" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/profile_stat_border" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvReviewCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/auth_heading_text_size"
+                        android:textStyle="bold"
+                        tools:text="2" />
+
+                    <TextView
+                        android:id="@+id/tvReviewLabel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/profile_stat_reviews"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="@dimen/auth_footer_text_size" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Menu List Card -->
+            <LinearLayout
+                android:id="@+id/llMenuCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_profile_menu_card"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <!-- 1. Thông tin cá nhân -->
+                <LinearLayout
+                    android:id="@+id/llMenuInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/profile_menu_icon_size"
+                        android:layout_height="@dimen/profile_menu_icon_size"
+                        android:contentDescription="@string/profile_menu_info"
+                        android:src="@drawable/ic_auth_person"
+                        app:tint="@color/booktable_orange" />
+
+                    <TextView
+                        android:id="@+id/tvMenuInfo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/profile_menu_info"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/auth_body_text_size" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/profile_menu_info"
+                        android:src="@drawable/ic_chevron_right_orange" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/booktable_border" />
+
+                <!-- 2. Lịch sử đặt bàn -->
+                <LinearLayout
+                    android:id="@+id/llMenuHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/profile_menu_icon_size"
+                        android:layout_height="@dimen/profile_menu_icon_size"
+                        android:contentDescription="@string/profile_menu_history"
+                        android:src="@drawable/ic_nav_history"
+                        app:tint="@color/booktable_orange" />
+
+                    <TextView
+                        android:id="@+id/tvMenuHistory"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/profile_menu_history"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/auth_body_text_size" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/profile_menu_history"
+                        android:src="@drawable/ic_chevron_right_orange" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/booktable_border" />
+
+                <!-- 3. Voucher của tôi -->
+                <LinearLayout
+                    android:id="@+id/llMenuVouchers"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/profile_menu_icon_size"
+                        android:layout_height="@dimen/profile_menu_icon_size"
+                        android:contentDescription="@string/profile_menu_vouchers"
+                        android:src="@drawable/ic_voucher_ticket"
+                        app:tint="@color/booktable_orange" />
+
+                    <TextView
+                        android:id="@+id/tvMenuVouchers"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/profile_menu_vouchers"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/auth_body_text_size" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/profile_menu_vouchers"
+                        android:src="@drawable/ic_chevron_right_orange" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/booktable_border" />
+
+                <!-- 4. Điểm thành viên -->
+                <LinearLayout
+                    android:id="@+id/llMenuLoyalty"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/profile_menu_icon_size"
+                        android:layout_height="@dimen/profile_menu_icon_size"
+                        android:contentDescription="@string/profile_menu_loyalty"
+                        android:src="@drawable/ic_star"
+                        app:tint="@color/booktable_orange" />
+
+                    <TextView
+                        android:id="@+id/tvMenuLoyalty"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/profile_menu_loyalty"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/auth_body_text_size" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/profile_menu_loyalty"
+                        android:src="@drawable/ic_chevron_right_orange" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/booktable_border" />
+
+                <!-- 5. Quán yêu thích -->
+                <LinearLayout
+                    android:id="@+id/llMenuFavorites"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/profile_menu_icon_size"
+                        android:layout_height="@dimen/profile_menu_icon_size"
+                        android:contentDescription="@string/profile_menu_favorites"
+                        android:src="@drawable/ic_heart_outline"
+                        app:tint="@color/booktable_orange" />
+
+                    <TextView
+                        android:id="@+id/tvMenuFavorites"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/profile_menu_favorites"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/auth_body_text_size" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/profile_menu_favorites"
+                        android:src="@drawable/ic_chevron_right_orange" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/booktable_border" />
+
+                <!-- 6. Cài đặt -->
+                <LinearLayout
+                    android:id="@+id/llMenuSettings"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp">
+
+                    <ImageView
+                        android:layout_width="@dimen/profile_menu_icon_size"
+                        android:layout_height="@dimen/profile_menu_icon_size"
+                        android:contentDescription="@string/profile_menu_settings"
+                        android:src="@drawable/ic_sliders_horizontal"
+                        app:tint="@color/booktable_orange" />
+
+                    <TextView
+                        android:id="@+id/tvMenuSettings"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/profile_menu_settings"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/auth_body_text_size" />
+
+                    <ImageView
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:contentDescription="@string/profile_menu_settings"
+                        android:src="@drawable/ic_chevron_right_orange" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Logout Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnLogout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/auth_button_height"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="24dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/profile_btn_logout"
+                android:textColor="@color/booktable_error"
+                android:textSize="@dimen/auth_button_text_size"
+                android:textStyle="bold"
+                app:backgroundTint="@color/booktable_surface"
+                app:cornerRadius="@dimen/auth_button_radius"
+                app:strokeColor="@color/booktable_error"
+                app:strokeWidth="1dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Shared States -->
+    <include
+        android:id="@+id/layoutStates"
+        layout="@layout/layout_shared_states"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

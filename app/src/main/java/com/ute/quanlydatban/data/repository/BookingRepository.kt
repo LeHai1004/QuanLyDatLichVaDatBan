@@ -123,8 +123,18 @@ class BookingRepository(
                     return@addOnSuccessListener
                 }
 
+                val updatedBooking = booking.copy(
+                    id = bookingId,
+                    userId = snapshot.getString("userId").orEmpty().ifEmpty { booking.userId },
+                    restaurantId = snapshot.getString("restaurantId").orEmpty().ifEmpty { booking.restaurantId },
+                    status = nextStatus.name
+                )
+
                 collection.document(bookingId).update("status", nextStatus.name)
                     .addOnSuccessListener {
+                        Log.e("NotiEvent", "updateBookingStatus success -> bookingId: $bookingId, nextStatus: ${nextStatus.name}")
+                        NotificationRepository().createEventNotification(updatedBooking, nextStatus)
+
                         // Khi đơn hết hạn hoặc bị hủy, giải phóng bàn lại thành available
                         if (nextStatus == BookingStatus.EXPIRED ||
                             nextStatus == BookingStatus.CANCELLED ||
@@ -212,6 +222,7 @@ class BookingRepository(
         }
 
         val bookingRef = collection.document(bookingId)
+        var capturedBooking: Booking? = null
 
         firestore.runTransaction { transaction ->
             val snapshot = transaction.get(bookingRef)
@@ -226,9 +237,20 @@ class BookingRepository(
                 throw IllegalStateException("STATUS_CONFLICT:$currentStatusStr")
             }
 
+            val bookingObj = snapshot.toObject(Booking::class.java) ?: Booking(id = bookingId)
+            capturedBooking = bookingObj.copy(
+                id = bookingId,
+                userId = snapshot.getString("userId").orEmpty().ifEmpty { bookingObj.userId },
+                restaurantId = snapshot.getString("restaurantId").orEmpty().ifEmpty { bookingObj.restaurantId },
+                status = BookingStatus.CONFIRMED.name
+            )
+
             transaction.update(bookingRef, "status", BookingStatus.CONFIRMED.name)
             null
         }.addOnSuccessListener {
+            val bookingToNotify = capturedBooking ?: Booking(id = bookingId, status = BookingStatus.CONFIRMED.name)
+            Log.e("NotiEvent", "confirmBookingByOwner success -> bookingId: $bookingId, userId: ${bookingToNotify.userId}")
+            NotificationRepository().createEventNotification(bookingToNotify, BookingStatus.CONFIRMED)
             onResult(Result.success(Unit))
         }.addOnFailureListener { error ->
             Log.e(TAG, "Lỗi confirmBookingByOwner: ${error.message}", error)
@@ -250,6 +272,7 @@ class BookingRepository(
         }
 
         val bookingRef = collection.document(bookingId)
+        var capturedBooking: Booking? = null
 
         firestore.runTransaction { transaction ->
             val snapshot = transaction.get(bookingRef)
@@ -268,6 +291,14 @@ class BookingRepository(
             val tableId = snapshot.getString("tableId").orEmpty()
             val userId = snapshot.getString("userId").orEmpty()
             val depositAmount = snapshot.getLong("depositAmount") ?: 100_000L
+
+            val bookingObj = snapshot.toObject(Booking::class.java) ?: Booking(id = bookingId)
+            capturedBooking = bookingObj.copy(
+                id = bookingId,
+                userId = userId.ifEmpty { bookingObj.userId },
+                restaurantId = restaurantId.ifEmpty { bookingObj.restaurantId },
+                status = BookingStatus.REJECTED.name
+            )
 
             // 1. Đổi trạng thái booking thành REJECTED
             transaction.update(bookingRef, "status", BookingStatus.REJECTED.name)
@@ -295,6 +326,9 @@ class BookingRepository(
             transaction.set(refundRef, refundPayment)
             null
         }.addOnSuccessListener {
+            val bookingToNotify = capturedBooking ?: Booking(id = bookingId, status = BookingStatus.REJECTED.name)
+            Log.e("NotiEvent", "rejectBookingByOwner success -> bookingId: $bookingId, userId: ${bookingToNotify.userId}")
+            NotificationRepository().createEventNotification(bookingToNotify, BookingStatus.REJECTED)
             onResult(Result.success(Unit))
         }.addOnFailureListener { error ->
             Log.e(TAG, "Lỗi rejectBookingByOwner: ${error.message}", error)
