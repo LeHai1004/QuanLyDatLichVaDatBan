@@ -722,4 +722,26 @@
     <string name="owner_kitchen_empty_title">Bếp chưa có món cần làm</string>
     <string name="owner_kitchen_empty_desc">Hiện không có món nào đang chờ nấu hoặc phục vụ.</string>
     <string name="active_bookings_btn_track_order">Theo dõi món</string>
+
+    <!-- Service Request (T28) -->
+    <string name="service_request_title">Yêu cầu phục vụ</string>
+    <string name="service_request_btn_call_staff">Gọi nhân viên</string>
+    <string name="service_request_btn_water">Xin nước</string>
+    <string name="service_request_btn_bill">Tính tiền</string>
+    <string name="service_request_status_pending">Chờ xử lý</string>
+    <string name="service_request_status_handled">Đã xử lý</string>
+    <string name="service_request_pending_waiting">Đã gửi, vui lòng chờ</string>
+    <string name="service_request_error_pending_exists">Bạn đã gửi yêu cầu này, vui lòng chờ nhân viên.</string>
+    <string name="service_request_error_paid">Đơn đã thanh toán, không thể gửi yêu cầu.</string>
+    <string name="service_request_success">Đã gửi yêu cầu đến nhân viên.</string>
+    <string name="owner_service_request_title">Yêu cầu phục vụ</string>
+    <string name="owner_service_request_btn_handled">Đã xử lý</string>
+    <string name="owner_service_request_waiting_format">Chờ %d phút</string>
+    <string name="owner_service_request_empty_title">Chưa có yêu cầu mới</string>
+    <string name="owner_service_request_empty_desc">Hiện không có yêu cầu phục vụ nào từ khách tại bàn.</string>
+    <string name="owner_service_request_action_title">Yêu cầu phục vụ</string>
+
+    <!-- Service Request BILL lock (T28 Fix) -->
+    <string name="service_request_error_bill_requested">Bạn đã yêu cầu tính tiền, không thể gửi thêm yêu cầu.</string>
+    <string name="service_request_bill_handled">Đã tính tiền</string>
 </resources>

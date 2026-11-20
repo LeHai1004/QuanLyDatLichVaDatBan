@@ -76,9 +76,13 @@ class OwnerDashboardFragment : Fragment() {
             }
         }
 
-        // Lối vào Yêu cầu phục vụ (thẻ sau)
+        // Lối vào Yêu cầu phục vụ (T28)
         binding.cardActionService.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.owner_feature_coming_soon))
+            try {
+                findNavController().navigate(R.id.ownerServiceRequestFragment)
+            } catch (e: Exception) {
+                SnackbarHelper.show(binding.root, getString(R.string.owner_service_request_title))
+            }
         }
 
         // Lối vào Báo cáo doanh thu & Thống kê
