@@ -69,7 +69,13 @@ class OwnerCheckoutActivity : AppCompatActivity() {
         }
 
         binding.btnSplitBill.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.owner_checkout_split_bill_notice))
+            val totalPayable = viewModel.checkoutData.value?.finalAmount ?: 0L
+            val intent = com.ute.quanlydatban.ui.customer.split.SplitBillActivity.newIntent(
+                this,
+                currentBookingId,
+                totalPayable
+            )
+            startActivity(intent)
         }
 
         binding.btnConfirmPayment.setOnClickListener {
