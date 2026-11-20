@@ -71,8 +71,13 @@ class BookingFragment : Fragment() {
             ?: activity?.intent?.getStringExtra(BookingActivity.EXTRA_RESTAURANT_CLOSE_TIME)
         val deposit = arguments?.getLong(BookingActivity.EXTRA_DEPOSIT_AMOUNT, 100_000L)
             ?: activity?.intent?.getLongExtra(BookingActivity.EXTRA_DEPOSIT_AMOUNT, 100_000L)
+        val guests = arguments?.getLong("guests", 0L).takeIf { it != null && it > 0L }
+            ?: activity?.intent?.getLongExtra("guests", 0L).takeIf { it != null && it > 0L }
 
         viewModel.initRestaurant(restaurantId, name, address, openTime, closeTime, deposit)
+        if (guests != null) {
+            viewModel.setGuests(guests)
+        }
     }
 
     private fun setupHeader() {
