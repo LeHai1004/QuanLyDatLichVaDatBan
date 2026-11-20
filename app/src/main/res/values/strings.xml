@@ -711,4 +711,21 @@
     <string name="owner_checkout_success">Thanh toán hóa đơn thành công!</string>
     <string name="owner_checkout_error_not_serving">Đơn đặt bàn chưa ở trạng thái đang phục vụ.</string>
     <string name="owner_checkout_error_already_paid">Đơn này đã được thanh toán trước đó.</string>
+
+    <!-- Owner Review (T23) -->
+    <string name="owner_review_title">Đánh giá của khách</string>
+    <string name="owner_review_subtitle">Xem nhận xét và mức độ hài lòng của khách hàng</string>
+    <string name="owner_review_average_rating_title">Điểm trung bình</string>
+    <string name="owner_review_total_count_format">%d lượt đánh giá</string>
+    <string name="owner_review_based_on_format">Dựa trên %d lượt đánh giá</string>
+    <string name="owner_review_rating_out_of_five">%s / 5.0</string>
+    <string name="owner_review_filter_all">Tất cả (%d)</string>
+    <string name="owner_review_filter_star_format">%1$d sao (%2$d)</string>
+    <string name="owner_review_empty_title">Chưa có đánh giá nào</string>
+    <string name="owner_review_empty_message">Quán của bạn chưa nhận được đánh giá nào từ khách hàng.</string>
+    <string name="owner_review_empty_filter_message">Chưa có đánh giá nào phù hợp với bộ lọc số sao này.</string>
+    <string name="owner_review_customer_default_name">Khách hàng</string>
+    <string name="owner_review_btn_retry">Thử lại</string>
+    <string name="owner_review_error_load">Không thể tải danh sách đánh giá. Vui lòng thử lại.</string>
+    <string name="owner_profile_view_reviews">Xem đánh giá của khách</string>
 </resources>
