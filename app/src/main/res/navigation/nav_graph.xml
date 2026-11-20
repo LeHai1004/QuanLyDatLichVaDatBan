@@ -13,7 +13,15 @@
         <action
             android:id="@+id/action_customerHomeFragment_to_searchFilterFragment"
             app:destination="@id/searchFilterFragment" />
+        <action
+            android:id="@+id/action_customerHomeFragment_to_customerNotificationFragment"
+            app:destination="@id/customerNotificationFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/customerNotificationFragment"
+        android:name="com.ute.quanlydatban.ui.customer.NotificationFragment"
+        android:label="@string/customer_notification_title" />
 
     <fragment
         android:id="@+id/customerBookingFragment"

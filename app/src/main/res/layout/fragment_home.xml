@@ -17,14 +17,33 @@
         android:paddingBottom="@dimen/nav_bottom_height">
 
         <!-- Top Greeting Header -->
-        <TextView
-            android:id="@+id/tvGreeting"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/be_vietnam_pro"
-            android:text="@string/home_greeting"
-            android:textColor="@color/booktable_muted"
-            android:textSize="@dimen/home_greeting_size" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvGreeting"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/home_greeting"
+                android:textColor="@color/booktable_muted"
+                android:textSize="@dimen/home_greeting_size" />
+
+            <ImageView
+                android:id="@+id/ivNotifications"
+                android:layout_width="@dimen/auth_toolbar_icon_size"
+                android:layout_height="@dimen/auth_toolbar_icon_size"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:clickable="true"
+                android:contentDescription="@string/customer_notification_open"
+                android:focusable="true"
+                android:src="@drawable/ic_auth_bell"
+                app:tint="@color/booktable_dark" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvAppTitle"

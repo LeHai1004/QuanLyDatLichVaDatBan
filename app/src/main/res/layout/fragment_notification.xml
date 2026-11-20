@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/notification_screen_padding"
+        android:paddingTop="@dimen/notification_header_margin_top"
+        android:paddingBottom="@dimen/notification_header_gap">
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/customer_notification_title"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/notification_title_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvMarkAllRead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:paddingHorizontal="@dimen/notification_tag_padding_h"
+            android:paddingVertical="@dimen/notification_tag_padding_v"
+            android:text="@string/customer_notification_mark_all_read"
+            android:textColor="@color/booktable_orange"
+            android:textSize="@dimen/notification_action_text_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <include
+            android:id="@+id/layoutStates"
+            layout="@layout/layout_shared_states"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvNotifications"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingHorizontal="@dimen/notification_screen_padding"
+            android:paddingBottom="@dimen/nav_bottom_height"
+            android:visibility="gone"
+            tools:listitem="@layout/item_notification" />
+    </FrameLayout>
+</LinearLayout>
