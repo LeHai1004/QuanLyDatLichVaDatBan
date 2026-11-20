@@ -677,4 +677,26 @@
     <string name="active_bookings_btn_navigate">Chỉ đường</string>
     <string name="active_bookings_table_format">%1$s · Tầng %2$d</string>
     <string name="active_bookings_error">Không thể tải danh sách đặt bàn.</string>
+    <string name="active_bookings_btn_table_order">Gọi món tại bàn</string>
+
+    <!-- Table Order & QR Scan (T26) -->
+    <string name="table_qr_scan_title">Quét QR bàn</string>
+    <string name="table_order_title">Gọi món tại bàn</string>
+    <string name="table_order_btn_submit">Gửi bếp</string>
+    <string name="table_order_cart_empty">Vui lòng chọn ít nhất 1 món ăn.</string>
+    <string name="table_order_success">Đã gửi order cho bếp.</string>
+    <string name="table_qr_scan_invalid_table">Mã QR bàn không hợp lệ hoặc không thuộc nhà hàng này.</string>
+    <string name="table_qr_scan_no_active_booking">Bạn chưa check-in bàn này hoặc đơn đặt bàn không hợp lệ.</string>
+
+    <!-- Table QR Scan (T26 - Dedicated Strings) -->
+    <string name="table_qr_title">Quét mã trên bàn</string>
+    <string name="table_qr_subtitle">Đưa mã QR vào giữa khung hình để bắt đầu</string>
+    <string name="table_qr_btn_manual">Nhập mã bàn</string>
+    <string name="table_qr_dialog_manual_title">Nhập mã bàn</string>
+    <string name="table_qr_dialog_manual_message">Nhập mã in trên bàn của bạn để gọi món</string>
+    <string name="table_qr_dialog_manual_hint">Ví dụ: r1_t2</string>
+    <string name="table_qr_dialog_manual_confirm">Xác nhận</string>
+    <string name="table_qr_dialog_manual_cancel">Hủy</string>
+    <string name="table_qr_error_invalid">Mã bàn không hợp lệ, vui lòng thử lại</string>
+    <string name="table_qr_error_empty">Vui lòng nhập mã bàn.</string>
 </resources>

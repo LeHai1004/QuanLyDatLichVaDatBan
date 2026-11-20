@@ -93,6 +93,12 @@
             android:name=".ui.owner.table.OwnerTableManageActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.customer.booking.TableQRScanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.customer.booking.TableOrderActivity"
+            android:exported="false" />
     </application>
 
 </manifest>
