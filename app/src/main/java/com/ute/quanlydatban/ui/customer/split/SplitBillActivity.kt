@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ute.quanlydatban.R
 import com.ute.quanlydatban.databinding.ActivitySplitBillBinding
 import com.ute.quanlydatban.util.SnackbarHelper
@@ -151,20 +152,27 @@ class SplitBillActivity : AppCompatActivity() {
 
     private fun showPaymentMethodDialog(person: SplitPersonUiModel) {
         val amountStr = formatMoney(person.shareAmount)
-        val options = arrayOf(
-            getString(R.string.split_bill_dialog_btn_cash),
-            getString(R.string.split_bill_dialog_btn_vietqr)
-        )
+        val title = getString(R.string.split_bill_dialog_method_title)
+        val msg = getString(R.string.split_bill_dialog_method_msg, amountStr, person.name)
 
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.split_bill_dialog_method_title))
-            .setMessage(getString(R.string.split_bill_dialog_method_msg, amountStr, person.name))
-            .setItems(options) { _, which ->
-                val method = if (which == 0) "cash" else "vietqr"
-                processPayment(person, method)
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle(title)
+            .setMessage(msg)
+            .setPositiveButton(getString(R.string.split_bill_dialog_btn_cash)) { _, _ ->
+                processPayment(person, "cash")
+            }
+            .setNeutralButton(getString(R.string.split_bill_dialog_btn_vietqr)) { _, _ ->
+                processPayment(person, "vietqr")
             }
             .setNegativeButton(getString(R.string.split_bill_dialog_btn_cancel), null)
             .show()
+
+        val orangeColor = ContextCompat.getColor(this, R.color.booktable_orange)
+        val mutedColor = ContextCompat.getColor(this, R.color.booktable_muted)
+
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE)?.setTextColor(orangeColor)
+        dialog.getButton(AlertDialog.BUTTON_NEUTRAL)?.setTextColor(orangeColor)
+        dialog.getButton(AlertDialog.BUTTON_NEGATIVE)?.setTextColor(mutedColor)
     }
 
     private fun processPayment(person: SplitPersonUiModel, method: String) {
@@ -269,5 +277,13 @@ class SplitBillActivity : AppCompatActivity() {
                 binding.btnFinishSplit.text = getString(R.string.split_bill_btn_finish)
             }
         }
+    }
+
+    override fun finish() {
+        val persons = viewModel.persons.value.orEmpty()
+        if (persons.isNotEmpty() && persons.all { it.isPaid }) {
+            setResult(RESULT_OK)
+        }
+        super.finish()
     }
 }

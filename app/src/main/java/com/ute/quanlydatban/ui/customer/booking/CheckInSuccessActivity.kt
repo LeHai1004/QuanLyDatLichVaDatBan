@@ -71,9 +71,13 @@ class CheckInSuccessActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Nút "Quét QR bàn gọi món" (T26) - KHÔNG LÀM trong thẻ này
+        // Nút "Quét QR bàn gọi món" (T26)
         binding.btnTableQr.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.checkin_success_table_qr_coming_soon))
+            val intent = android.content.Intent(this, TableQRScanActivity::class.java).apply {
+                putExtra(TableQRScanActivity.EXTRA_BOOKING_ID, bookingId)
+                putExtra(TableQRScanActivity.EXTRA_RESTAURANT_ID, restaurantId)
+            }
+            startActivity(intent)
         }
     }
 
