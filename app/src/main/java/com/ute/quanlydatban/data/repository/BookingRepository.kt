@@ -41,6 +41,52 @@ class BookingRepository(
             }
     }
 
+    fun getTable(restaurantId: String, tableId: String, onResult: (Result<DiningTable?>) -> Unit) {
+        if (restaurantId.isBlank() || tableId.isBlank()) {
+            onResult(Result.success(null))
+            return
+        }
+        firestore.collection("restaurants").document(restaurantId)
+            .collection("tables").document(tableId).get()
+            .addOnSuccessListener { snapshot ->
+                val table = snapshot.toObject(DiningTable::class.java)?.copy(id = snapshot.id)
+                onResult(Result.success(table))
+            }
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Lỗi đọc table: ${e.message}", e)
+                onResult(Result.failure(e))
+            }
+    }
+
+    /**
+     * Lấy các đơn hàng hoạt động của khách (status = CONFIRMED hoặc CHECKED_IN)
+     */
+    fun getActiveBookingsForCustomer(
+        userId: String,
+        onResult: (Result<List<Booking>>) -> Unit
+    ) {
+        if (userId.isBlank()) {
+            onResult(Result.success(emptyList()))
+            return
+        }
+
+        val activeStatuses = listOf(BookingStatus.CONFIRMED.name, BookingStatus.CHECKED_IN.name)
+
+        collection
+            .whereEqualTo("userId", userId)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val bookings = snapshot.toObjects(Booking::class.java).filter { b ->
+                    activeStatuses.contains(b.status)
+                }.sortedByDescending { it.createdAt }
+                onResult(Result.success(bookings))
+            }
+            .addOnFailureListener { error ->
+                Log.e(TAG, "Lỗi getActiveBookingsForCustomer: ${error.message}", error)
+                onResult(Result.failure(error))
+            }
+    }
+
     // Lấy danh sách bàn theo quán và tự động giải phóng các bàn giữ chỗ quá 10 phút
     fun getTables(restaurantId: String, onResult: (Result<List<DiningTable>>) -> Unit) {
         if (restaurantId.isBlank()) {
