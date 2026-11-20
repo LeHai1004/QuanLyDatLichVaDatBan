@@ -11,9 +11,11 @@ import com.ute.quanlydatban.data.model.Booking
 import com.ute.quanlydatban.data.model.BookingStatus
 import com.ute.quanlydatban.data.model.OrderItem
 import com.ute.quanlydatban.data.model.Restaurant
+import com.ute.quanlydatban.data.model.Voucher
 import com.ute.quanlydatban.data.repository.BookingRepository
 import com.ute.quanlydatban.data.repository.OrderRepository
 import com.ute.quanlydatban.data.repository.PaymentRepository
+import com.ute.quanlydatban.data.repository.VoucherRepository
 import java.util.Locale
 
 class PaymentViewModel(
@@ -35,6 +37,14 @@ class PaymentViewModel(
 
     private val _orderItems = MutableLiveData<List<OrderItem>>(emptyList())
     val orderItems: LiveData<List<OrderItem>> = _orderItems
+
+    private val voucherRepository = VoucherRepository()
+
+    private val _selectedVoucher = MutableLiveData<Voucher?>()
+    val selectedVoucher: LiveData<Voucher?> = _selectedVoucher
+
+    private val _voucherDiscount = MutableLiveData<Long>(0L)
+    val voucherDiscount: LiveData<Long> = _voucherDiscount
 
     private val _remainingTimeFormatted = MutableLiveData<String>("10:00")
     val remainingTimeFormatted: LiveData<String> = _remainingTimeFormatted
@@ -154,12 +164,16 @@ class PaymentViewModel(
         }
 
         val userId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty().ifEmpty { "GUEST_USER" }
+        val voucherId = _selectedVoucher.value?.id.orEmpty()
         _isLoading.value = true
         _errorMessage.value = null
 
         paymentRepository.confirmDepositPayment(bookingId, userId, amount) { result ->
             _isLoading.value = false
             result.onSuccess {
+                if (voucherId.isNotBlank()) {
+                    VoucherRepository().useVoucherTransaction(userId, voucherId, bookingId) { _ -> }
+                }
                 countDownTimer?.cancel()
                 _isPaymentSuccess.value = true
             }.onFailure { error ->
@@ -174,13 +188,40 @@ class PaymentViewModel(
         }
     }
 
-    /**
-     * Tính tổng hóa đơn (tiền món + cọc/phụ thu nếu có)
-     */
-    fun calculateTotalBill(): Long {
+    fun applyVoucher(voucher: Voucher) {
+        _selectedVoucher.value = voucher
+        val raw = calculateRawTotalBill()
+        val discount = voucherRepository.calculateDiscount(voucher, raw)
+        _voucherDiscount.value = discount
+    }
+
+    fun applyVoucherByCode(code: String) {
+        val raw = calculateRawTotalBill()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
+        val restId = _restaurant.value?.id.orEmpty()
+        voucherRepository.applyVoucherCode(userId, code, raw, restId) { result ->
+            result.onSuccess { voucher ->
+                applyVoucher(voucher)
+            }.onFailure { err ->
+                _errorMessage.value = err.message ?: "Mã voucher không hợp lệ."
+            }
+        }
+    }
+
+    fun calculateRawTotalBill(): Long {
         val itemsTotal = _orderItems.value?.sumOf { it.qty * it.unitPrice } ?: 0L
         val deposit = getDepositAmount()
         return if (itemsTotal > 0L) itemsTotal else deposit
+    }
+
+    /**
+     * Tính tổng hóa đơn (tiền món + cọc/phụ thu nếu có, đã trừ voucher)
+     */
+    fun calculateTotalBill(): Long {
+        val raw = calculateRawTotalBill()
+        val discount = _voucherDiscount.value ?: 0L
+        val net = raw - discount
+        return if (net > 0L) net else 0L
     }
 
     fun getDepositAmount(): Long {

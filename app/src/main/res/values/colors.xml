@@ -84,4 +84,11 @@
     <color name="checkin_seal_tint">#258C63</color>
     <color name="checkin_room_badge_bg">#FFE3D4</color>
     <color name="checkin_room_badge_text">#C94A1A</color>
+
+    <!-- Voucher (T24) -->
+    <color name="voucher_tag_bg">#FFF3EB</color>
+    <color name="voucher_tag_border">#E8622C</color>
+    <color name="voucher_disabled_bg">#F3F4F6</color>
+    <color name="voucher_disabled_text">#9CA3AF</color>
+    <color name="voucher_card_bg">#FFFFFF</color>
 </resources>

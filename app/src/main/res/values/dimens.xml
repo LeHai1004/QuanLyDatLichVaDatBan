@@ -467,4 +467,12 @@
     <dimen name="qr_scan_card_radius">16dp</dimen>
     <dimen name="checkin_seal_size">88dp</dimen>
     <dimen name="checkin_card_radius">16dp</dimen>
+
+    <!-- Voucher (T24) -->
+    <dimen name="voucher_card_radius">14dp</dimen>
+    <dimen name="voucher_card_padding">14dp</dimen>
+    <dimen name="voucher_tag_radius">6dp</dimen>
+    <dimen name="voucher_icon_size">40dp</dimen>
+    <dimen name="voucher_btn_height">36dp</dimen>
+    <dimen name="voucher_btn_radius">10dp</dimen>
 </resources>

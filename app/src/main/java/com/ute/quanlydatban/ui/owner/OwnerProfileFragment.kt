@@ -53,6 +53,15 @@ class OwnerProfileFragment : Fragment() {
             )
         }
 
+        binding.btnManageVouchers.setOnClickListener {
+            val resId = viewModel.restaurant.value?.id.orEmpty()
+            val bundle = Bundle().apply {
+                putString("restaurantId", resId)
+            }
+            androidx.navigation.fragment.NavHostFragment.findNavController(this)
+                .navigate(R.id.ownerVoucherFragment, bundle)
+        }
+
         binding.btnLogout.setOnClickListener {
             viewModel.signOut()
             val intent = Intent(requireContext(), LoginActivity::class.java).apply {

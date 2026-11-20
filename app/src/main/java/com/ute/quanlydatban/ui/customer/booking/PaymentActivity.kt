@@ -84,9 +84,29 @@ class PaymentActivity : AppCompatActivity() {
             SnackbarHelper.show(binding.root, getString(R.string.payment_method_coming_soon))
         }
 
-        // Voucher & Điểm thưởng: chừa chỗ
+        // Voucher: mở màn hình VoucherFragment
         binding.llVoucherRow.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.feature_coming_soon))
+            val totalBill = viewModel.calculateRawTotalBill()
+            val fragment = com.ute.quanlydatban.ui.customer.voucher.VoucherFragment()
+            val args = Bundle().apply {
+                putString(com.ute.quanlydatban.ui.customer.voucher.VoucherFragment.ARG_RESTAURANT_ID, restaurantId)
+                putLong(com.ute.quanlydatban.ui.customer.voucher.VoucherFragment.ARG_TOTAL_BILL, totalBill)
+            }
+            fragment.arguments = args
+
+            supportFragmentManager.setFragmentResultListener(
+                com.ute.quanlydatban.ui.customer.voucher.VoucherFragment.REQUEST_KEY, this
+            ) { _, bundle ->
+                val code = bundle.getString(com.ute.quanlydatban.ui.customer.voucher.VoucherFragment.RESULT_VOUCHER_CODE).orEmpty()
+                if (code.isNotBlank()) {
+                    viewModel.applyVoucherByCode(code)
+                }
+            }
+
+            supportFragmentManager.beginTransaction()
+                .replace(android.R.id.content, fragment)
+                .addToBackStack(null)
+                .commit()
         }
         binding.llPointsRow.setOnClickListener {
             SnackbarHelper.show(binding.root, getString(R.string.feature_coming_soon))
@@ -126,26 +146,19 @@ class PaymentActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.orderItems.observe(this) {
+        viewModel.selectedVoucher.observe(this) { voucher ->
+            if (voucher != null) {
+                binding.tvVoucherLabel.text = "Mã ưu đãi: ${voucher.code}"
+                binding.tvVoucherLabel.setTextColor(getColor(R.color.booktable_orange))
+            } else {
+                binding.tvVoucherLabel.text = getString(R.string.payment_voucher_placeholder)
+                binding.tvVoucherLabel.setTextColor(getColor(R.color.booktable_muted))
+            }
             updatePriceBreakdown()
         }
 
-        viewModel.remainingTimeFormatted.observe(this) { timeStr ->
-            binding.tvCountdown.text = getString(R.string.payment_countdown_format, timeStr)
-        }
-
-        viewModel.isExpired.observe(this) { expired ->
-            if (expired) {
-                binding.btnPaid.isEnabled = false
-                SnackbarHelper.show(binding.root, getString(R.string.payment_expired_error))
-            }
-        }
-
-        viewModel.errorMessage.observe(this) { error ->
-            if (error != null) {
-                SnackbarHelper.show(binding.root, error)
-                viewModel.clearMessages()
-            }
+        viewModel.voucherDiscount.observe(this) {
+            updatePriceBreakdown()
         }
 
         // Khi cọc thành công: chuyển sang BookingConfirmActivity
@@ -165,11 +178,19 @@ class PaymentActivity : AppCompatActivity() {
         val totalBill = viewModel.calculateTotalBill()
         val deposit = viewModel.getDepositAmount()
         val remaining = viewModel.calculateRemainingAmount()
+        val discount = viewModel.voucherDiscount.value ?: 0L
 
         binding.tvDepositAmount.text = formatMoney(deposit)
         binding.tvDepositAmountRow.text = formatMoney(deposit)
         binding.tvTotalBillAmount.text = formatMoney(totalBill)
         binding.tvRemainingAmount.text = formatMoney(remaining)
+
+        if (discount > 0L) {
+            binding.llVoucherDiscountRow.visibility = View.VISIBLE
+            binding.tvVoucherDiscountAmount.text = "-${formatMoney(discount)}"
+        } else {
+            binding.llVoucherDiscountRow.visibility = View.GONE
+        }
     }
 
     companion object {

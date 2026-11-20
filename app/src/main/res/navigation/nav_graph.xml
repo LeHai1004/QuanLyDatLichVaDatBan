@@ -209,4 +209,30 @@
             app:argType="reference"
             android:defaultValue="@string/nav_owner_menu" />
     </fragment>
+
+    <!-- Voucher Customer (T24) -->
+    <fragment
+        android:id="@+id/voucherFragment"
+        android:name="com.ute.quanlydatban.ui.customer.voucher.VoucherFragment"
+        android:label="@string/voucher_title">
+        <argument
+            android:name="restaurantId"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="totalBill"
+            app:argType="long"
+            android:defaultValue="0L" />
+    </fragment>
+
+    <!-- Voucher Owner (T24) -->
+    <fragment
+        android:id="@+id/ownerVoucherFragment"
+        android:name="com.ute.quanlydatban.ui.owner.voucher.OwnerVoucherFragment"
+        android:label="@string/owner_voucher_title">
+        <argument
+            android:name="restaurantId"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
 </navigation>

@@ -432,4 +432,40 @@
     <string name="checkin_success_table_waiting_format">%s đang chờ bạn</string>
     <string name="checkin_success_map_coming_soon">Chức năng bản đồ chỉ đường đến bàn đang phát triển (T19)</string>
     <string name="checkin_success_table_qr_coming_soon">Chức năng quét QR bàn gọi món đang phát triển (T26)</string>
+
+    <!-- Voucher (T24) -->
+    <string name="voucher_title">Voucher của tôi</string>
+    <string name="voucher_input_hint">Nhập mã ưu đãi</string>
+    <string name="voucher_btn_apply">Áp dụng</string>
+    <string name="voucher_section_exclusive">Ưu đãi dành riêng cho bạn</string>
+    <string name="voucher_btn_use_now">Dùng ngay</string>
+    <string name="voucher_status_used">Đã dùng</string>
+    <string name="voucher_status_expired">Hết hạn</string>
+    <string name="voucher_note_footer">Lưu ý: Mỗi đơn hàng chỉ áp dụng tối đa 1 mã giảm giá. Vui lòng kiểm tra điều kiện áp dụng trước khi sử dụng.</string>
+    <string name="voucher_empty_title">Không có voucher nào</string>
+    <string name="voucher_empty_desc">Bạn chưa có voucher ưu đãi nào khả dụng lúc này.</string>
+    <string name="voucher_error_invalid">Mã voucher không hợp lệ hoặc không tồn tại.</string>
+    <string name="voucher_error_expired">Mã voucher này đã hết hạn sử dụng.</string>
+    <string name="voucher_error_used">Mã voucher này đã được sử dụng.</string>
+    <string name="voucher_error_min_order">Đơn hàng chưa đạt giá trị tối thiểu %s.</string>
+    <string name="voucher_error_inactive">Voucher tạm thời ngưng áp dụng.</string>
+    <string name="owner_voucher_title">Quản lý Voucher</string>
+    <string name="owner_voucher_btn_add">+ Thêm voucher</string>
+    <string name="owner_voucher_dialog_add_title">Thêm Voucher mới</string>
+    <string name="owner_voucher_dialog_edit_title">Chỉnh sửa Voucher</string>
+    <string name="owner_voucher_label_code">Mã voucher</string>
+    <string name="owner_voucher_label_type">Loại ưu đãi</string>
+    <string name="owner_voucher_label_value">Mức giảm</string>
+    <string name="owner_voucher_label_min_order">Đơn tối thiểu</string>
+    <string name="owner_voucher_label_max_discount">Giảm tối đa (0 = không giới hạn)</string>
+    <string name="owner_voucher_label_expiry">Ngày hết hạn (dd/MM/yyyy)</string>
+    <string name="owner_voucher_type_amount">Số tiền cố định (VNĐ)</string>
+    <string name="owner_voucher_type_percent">Theo phần trăm (%)</string>
+    <string name="owner_voucher_save_success">Đã lưu thông tin voucher thành công.</string>
+    <string name="owner_voucher_empty">Quán chưa tạo voucher nào. Bấm nút bên dưới để tạo mới.</string>
+    <string name="owner_profile_manage_vouchers">Quản lý Voucher ưu đãi</string>
+    <string name="payment_voucher_discount_label">Giảm giá voucher</string>
+    <string name="voucher_min_order_format">Đơn từ %s</string>
+    <string name="voucher_max_discount_format">Tối đa %s</string>
+    <string name="voucher_expiry_format">HSD: %s</string>
 </resources>
