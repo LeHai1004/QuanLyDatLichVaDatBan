@@ -7,6 +7,7 @@ import com.ute.quanlydatban.data.model.BookingStatus
 import com.ute.quanlydatban.data.model.DiningTable
 import com.ute.quanlydatban.data.model.Payment
 import com.ute.quanlydatban.data.model.Restaurant
+import com.ute.quanlydatban.work.ReminderScheduler
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -215,6 +216,16 @@ class BookingRepository(
                         Log.e("NotiEvent", "updateBookingStatus success -> bookingId: $bookingId, nextStatus: ${nextStatus.name}")
                         NotificationRepository().createEventNotification(updatedBooking, nextStatus)
 
+                        if (nextStatus == BookingStatus.CONFIRMED) {
+                            ReminderScheduler.scheduleReminder(updatedBooking)
+                        } else if (nextStatus == BookingStatus.CANCELLED ||
+                            nextStatus == BookingStatus.REJECTED ||
+                            nextStatus == BookingStatus.EXPIRED ||
+                            nextStatus == BookingStatus.NO_SHOW
+                        ) {
+                            ReminderScheduler.cancelReminder(bookingId)
+                        }
+
                         // Khi đơn hết hạn hoặc bị hủy, giải phóng bàn lại thành available
                         if (nextStatus == BookingStatus.EXPIRED ||
                             nextStatus == BookingStatus.CANCELLED ||
@@ -331,6 +342,7 @@ class BookingRepository(
             val bookingToNotify = capturedBooking ?: Booking(id = bookingId, status = BookingStatus.CONFIRMED.name)
             Log.e("NotiEvent", "confirmBookingByOwner success -> bookingId: $bookingId, userId: ${bookingToNotify.userId}")
             NotificationRepository().createEventNotification(bookingToNotify, BookingStatus.CONFIRMED)
+            ReminderScheduler.scheduleReminder(bookingToNotify)
             onResult(Result.success(Unit))
         }.addOnFailureListener { error ->
             Log.e(TAG, "Lỗi confirmBookingByOwner: ${error.message}", error)
@@ -409,6 +421,7 @@ class BookingRepository(
             val bookingToNotify = capturedBooking ?: Booking(id = bookingId, status = BookingStatus.REJECTED.name)
             Log.e("NotiEvent", "rejectBookingByOwner success -> bookingId: $bookingId, userId: ${bookingToNotify.userId}")
             NotificationRepository().createEventNotification(bookingToNotify, BookingStatus.REJECTED)
+            ReminderScheduler.cancelReminder(bookingId)
             onResult(Result.success(Unit))
         }.addOnFailureListener { error ->
             Log.e(TAG, "Lỗi rejectBookingByOwner: ${error.message}", error)
@@ -499,6 +512,7 @@ class BookingRepository(
                     }
                 }
             Log.i(TAG, "Khách đã hủy thành công đơn #$bookingId")
+            ReminderScheduler.cancelReminder(bookingId)
             onResult(Result.success(Unit))
         }.addOnFailureListener { error ->
             Log.e(TAG, "Lỗi cancelBookingByCustomer: ${error.message}", error)
@@ -613,6 +627,16 @@ class BookingRepository(
                             null
                         }.addOnSuccessListener {
                             Log.i(TAG, "Đã đổi lịch thành công cho đơn #$bookingId")
+                            ReminderScheduler.cancelReminder(bookingId)
+                            if (currentStatus == BookingStatus.CONFIRMED) {
+                                val updatedBooking = booking.copy(
+                                    id = bookingId,
+                                    date = newDate,
+                                    time = newTime,
+                                    tableId = targetTableId
+                                )
+                                ReminderScheduler.scheduleReminder(updatedBooking)
+                            }
                             onResult(Result.success(Unit))
                         }.addOnFailureListener { err ->
                             Log.e(TAG, "Lỗi transaction reschedule: ${err.message}", err)
