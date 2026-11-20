@@ -104,6 +104,10 @@
             android:name=".ui.customer.split.SplitBillActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.customer.invite.InviteFriendsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
