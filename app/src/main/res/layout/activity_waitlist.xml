@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorWaitlistRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- Toolbar -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@color/booktable_surface"
+            android:elevation="2dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/owner_notification_btn_back"
+                android:padding="4dp"
+                android:src="@drawable/ic_auth_back"
+                app:tint="@color/booktable_dark" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/waitlist_customer_title"
+                android:textColor="@color/booktable_dark"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Informational Banner -->
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardBackgroundColor="@color/notification_unread_bg"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeColor="@color/notification_unread_border"
+                    app:strokeWidth="1dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="14dp">
+
+                        <ImageView
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:src="@drawable/ic_waitlist"
+                            app:tint="@color/booktable_orange" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/waitlist_banner_hint"
+                            android:textColor="@color/booktable_dark"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <!-- Section: Desired Slot -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/waitlist_section_desired_slot"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <!-- Restaurant Name card -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/waitlist_field_restaurant"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tvRestaurantName"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_owner_input_field"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:gravity="center_vertical"
+                    android:paddingHorizontal="14dp"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:text="Nhà hàng Bếp Nhà" />
+
+                <!-- Date & Time Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:orientation="horizontal">
+
+                    <!-- Date picker -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="6dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/waitlist_field_date"
+                            android:textColor="@color/booktable_muted"
+                            android:textSize="12sp" />
+
+                        <LinearLayout
+                            android:id="@+id/llDateContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/bg_owner_input_field"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="12dp">
+
+                            <TextView
+                                android:id="@+id/tvSelectedDate"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:textColor="@color/booktable_dark"
+                                android:textSize="14sp"
+                                tools:text="24/10/2026" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_nav_calendar"
+                                app:tint="@color/booktable_orange" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Time picker -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/waitlist_field_time"
+                            android:textColor="@color/booktable_muted"
+                            android:textSize="12sp" />
+
+                        <LinearLayout
+                            android:id="@+id/llTimeContainer"
+                            android:layout_width="match_parent"
+                            android:layout_height="48dp"
+                            android:layout_marginTop="4dp"
+                            android:background="@drawable/bg_owner_input_field"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingHorizontal="12dp">
+
+                            <TextView
+                                android:id="@+id/tvSelectedTime"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:textColor="@color/booktable_dark"
+                                android:textSize="14sp"
+                                tools:text="18:30" />
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_clock"
+                                app:tint="@color/booktable_orange" />
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Guests Stepper Row -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:text="@string/waitlist_field_guests"
+                            android:textColor="@color/booktable_muted"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:id="@+id/tvGuestsCount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:textColor="@color/booktable_dark"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="2 người" />
+                    </LinearLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnMinusGuest"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:insetLeft="0dp"
+                        android:insetTop="0dp"
+                        android:insetRight="0dp"
+                        android:insetBottom="0dp"
+                        android:padding="0dp"
+                        android:text="-"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="18sp"
+                        app:cornerRadius="21dp"
+                        app:strokeColor="@color/booktable_border" />
+
+                    <TextView
+                        android:id="@+id/tvGuestNumber"
+                        android:layout_width="40dp"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:gravity="center"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        tools:text="2" />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnPlusGuest"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:backgroundTint="@color/booktable_orange"
+                        android:insetLeft="0dp"
+                        android:insetTop="0dp"
+                        android:insetRight="0dp"
+                        android:insetBottom="0dp"
+                        android:padding="0dp"
+                        android:text="+"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        app:cornerRadius="21dp" />
+                </LinearLayout>
+
+                <!-- Section: Contact Info -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/waitlist_section_contact_info"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <!-- Name field -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/waitlist_field_name"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etName"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_owner_input_field"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:hint="@string/auth_name_hint"
+                    android:inputType="textPersonName"
+                    android:maxLines="1"
+                    android:paddingHorizontal="14dp"
+                    android:textColor="@color/booktable_dark"
+                    android:textColorHint="@color/booktable_muted"
+                    android:textSize="14sp" />
+
+                <!-- Phone field -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/waitlist_field_phone"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/etPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/bg_owner_input_field"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:hint="@string/auth_phone_hint"
+                    android:inputType="phone"
+                    android:maxLines="1"
+                    android:paddingHorizontal="14dp"
+                    android:textColor="@color/booktable_dark"
+                    android:textColorHint="@color/booktable_muted"
+                    android:textSize="14sp" />
+
+                <!-- CTA Button -->
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnRegisterWaitlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="24dp"
+                    android:backgroundTint="@color/booktable_orange"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/waitlist_btn_register"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    app:cornerRadius="12dp" />
+
+                <!-- Loading Indicator -->
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:indeterminateTint="@color/booktable_orange"
+                    android:visibility="gone" />
+
+                <!-- Section: My Existing Entries -->
+                <TextView
+                    android:id="@+id/tvMyEntriesTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="28dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/waitlist_section_my_entries"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvMyWaitlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:nestedScrollingEnabled="false"
+                    tools:listitem="@layout/item_waitlist" />
+
+                <!-- Empty State for My Entries -->
+                <TextView
+                    android:id="@+id/tvEmptyMyEntries"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="24dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:gravity="center"
+                    android:text="@string/waitlist_empty_customer"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="13sp"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

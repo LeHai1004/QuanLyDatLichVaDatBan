@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream"
+    android:orientation="vertical">
+
+    <!-- Top Header -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/waitlist_owner_title"
+            android:textColor="@color/booktable_dark"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/waitlist_owner_subtitle"
+            android:textColor="@color/booktable_muted"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+    <!-- Date selector row -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/tvOwnerDate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:textColor="@color/booktable_dark"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            tools:text="Ngày: 24/10/2026 (Hôm nay)" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnOwnerChangeDate"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="Đổi ngày"
+            android:textAllCaps="false"
+            android:textColor="@color/booktable_orange"
+            android:textSize="13sp"
+            app:icon="@drawable/ic_nav_calendar"
+            app:iconSize="16dp"
+            app:iconTint="@color/booktable_orange" />
+    </LinearLayout>
+
+    <!-- Filter chips -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="8dp"
+        android:scrollbars="none">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipGroupFilter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipAll"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/waitlist_owner_filter_all"
+                android:textColor="@color/booktable_dark"
+                app:chipBackgroundColor="@color/owner_chip_selected_bg"
+                app:chipStrokeColor="@color/owner_chip_selected_border"
+                app:chipStrokeWidth="1dp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipWaiting"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/waitlist_owner_filter_waiting"
+                android:textColor="@color/booktable_dark" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipNotified"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/waitlist_owner_filter_notified"
+                android:textColor="@color/booktable_dark" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chipHandled"
+                style="@style/Widget.MaterialComponents.Chip.Choice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/waitlist_owner_filter_handled"
+                android:textColor="@color/booktable_dark" />
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <!-- 3 States: Loading, Empty, Error -->
+    <include
+        android:id="@+id/layoutStates"
+        layout="@layout/layout_shared_states"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <!-- RecyclerView for Owner Waitlist -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvOwnerWaitlist"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="24dp"
+        tools:listitem="@layout/item_waitlist" />
+
+</LinearLayout>

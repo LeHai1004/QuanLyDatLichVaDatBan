@@ -87,8 +87,21 @@ class RestaurantDetailActivity : AppCompatActivity() {
             handleToggleFavorite()
         }
 
+        val openWaitlist = {
+            val currentRestaurant = viewModel.currentRestaurant.value
+            val intent = Intent(this, com.ute.quanlydatban.ui.customer.waitlist.WaitlistActivity::class.java).apply {
+                putExtra(com.ute.quanlydatban.ui.customer.waitlist.WaitlistActivity.EXTRA_RESTAURANT_ID, restaurantId)
+                putExtra(com.ute.quanlydatban.ui.customer.waitlist.WaitlistActivity.EXTRA_RESTAURANT_NAME, currentRestaurant?.name.orEmpty())
+            }
+            startActivity(intent)
+        }
+
         binding.ivWaitlist.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.detail_waitlist_desc))
+            openWaitlist()
+        }
+
+        binding.btnJoinWaitlist.setOnClickListener {
+            openWaitlist()
         }
     }
 

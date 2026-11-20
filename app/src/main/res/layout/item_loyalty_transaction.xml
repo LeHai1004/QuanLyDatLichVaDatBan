@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardLoyaltyTransaction"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="4dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="1dp"
+    app:strokeColor="@color/booktable_border"
+    app:strokeWidth="0.8dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="12dp">
+
+        <!-- Transaction Icon Container -->
+        <FrameLayout
+            android:id="@+id/flTxIconBg"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_status_badge_open">
+
+            <ImageView
+                android:id="@+id/ivTxIcon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:contentDescription="@null"
+                android:src="@drawable/ic_point_plus" />
+        </FrameLayout>
+
+        <!-- Transaction Details -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvTxReason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:maxLines="1"
+                android:textColor="@color/booktable_dark"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="Tích điểm đơn đặt bàn #1024" />
+
+            <TextView
+                android:id="@+id/tvTxTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_muted"
+                android:textSize="11sp"
+                tools:text="14:20 · 20/11/2026" />
+        </LinearLayout>
+
+        <!-- Points Change -->
+        <TextView
+            android:id="@+id/tvTxPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:textColor="@color/loyalty_tx_plus"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            tools:text="+35 điểm" />
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

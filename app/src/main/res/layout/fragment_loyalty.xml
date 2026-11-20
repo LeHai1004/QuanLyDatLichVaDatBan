@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream"
+    android:orientation="vertical">
+
+    <!-- Top Toolbar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_booking_back_btn"
+            android:contentDescription="@null"
+            android:padding="8dp"
+            android:src="@drawable/ic_auth_back"
+            app:tint="@color/booktable_dark" />
+
+        <TextView
+            android:id="@+id/tvToolbarTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:gravity="center"
+            android:text="@string/loyalty_title"
+            android:textColor="@color/booktable_dark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/ivInfoPolicy"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@null"
+            android:padding="8dp"
+            android:src="@drawable/ic_auth_bell"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="24dp">
+
+            <!-- Card: Points & Rank Info -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cardLoyaltyMembership"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="2dp"
+                app:strokeWidth="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_loyalty_card"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <!-- Top row: Rank badge & Rank Name -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:id="@+id/ivRankBadge"
+                            android:layout_width="28dp"
+                            android:layout_height="28dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_rank_bronze" />
+
+                        <TextView
+                            android:id="@+id/tvRankName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:fontFamily="@font/be_vietnam_pro"
+                            android:textColor="@color/white"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="Hạng Bạc" />
+
+                        <View
+                            android:layout_width="0dp"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_loyalty_coin" />
+                    </LinearLayout>
+
+                    <!-- Points label & Value -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/loyalty_current_points_label"
+                        android:textColor="#B3FFFFFF"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/tvPoints"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/loyalty_points_gold"
+                        android:textSize="32sp"
+                        android:textStyle="bold"
+                        tools:text="350 điểm" />
+
+                    <!-- Progress to next rank -->
+                    <ProgressBar
+                        android:id="@+id/pbNextRank"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="6dp"
+                        android:layout_marginTop="16dp"
+                        android:max="100"
+                        android:progress="65"
+                        android:progressDrawable="@drawable/bg_loyalty_progress" />
+
+                    <TextView
+                        android:id="@+id/tvNextRankNotice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="#E6FFFFFF"
+                        android:textSize="12sp"
+                        tools:text="Tích thêm 150 điểm để lên Hạng Vàng" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Switcher Tabs (Đổi ưu đãi / Lịch sử) -->
+            <LinearLayout
+                android:id="@+id/llTabSwitcher"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_owner_table_tag_room"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="4dp">
+
+                <TextView
+                    android:id="@+id/tvTabRewards"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_menu_add_btn_active"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:gravity="center"
+                    android:text="@string/loyalty_tab_rewards"
+                    android:textColor="@color/white"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTabHistory"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:gravity="center"
+                    android:text="@string/loyalty_tab_history"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <!-- 3 States Container -->
+            <include
+                android:id="@+id/layoutStates"
+                layout="@layout/layout_shared_states"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp" />
+
+            <!-- Rewards Section: List of Vouchers to redeem -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvLoyaltyVouchers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:nestedScrollingEnabled="false"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_loyalty_voucher" />
+
+            <!-- History Section: List of Transactions -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvLoyaltyTransactions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:nestedScrollingEnabled="false"
+                android:visibility="gone"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_loyalty_transaction" />
+
+            <!-- Empty State for current tab -->
+            <LinearLayout
+                android:id="@+id/llTabEmpty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:contentDescription="@null"
+                    android:src="@drawable/ic_loyalty_empty"
+                    app:tint="@color/booktable_border" />
+
+                <TextView
+                    android:id="@+id/tvTabEmptyTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/loyalty_empty_history"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvTabEmptyDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="24dp"
+                    android:layout_marginTop="6dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:gravity="center"
+                    android:text="@string/loyalty_empty_history_desc"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="13sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</LinearLayout>

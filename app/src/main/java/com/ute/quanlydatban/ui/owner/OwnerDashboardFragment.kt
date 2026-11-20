@@ -1,5 +1,6 @@
 package com.ute.quanlydatban.ui.owner
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -67,14 +68,22 @@ class OwnerDashboardFragment : Fragment() {
             }
         }
 
-        // Lối vào Bếp (thẻ sau)
+        // Lối vào Bếp & Điều phối món (T27)
         binding.cardActionKitchen.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.owner_feature_coming_soon))
+            try {
+                findNavController().navigate(R.id.ownerKitchenFragment)
+            } catch (e: Exception) {
+                SnackbarHelper.show(binding.root, getString(R.string.owner_kitchen_title))
+            }
         }
 
-        // Lối vào Yêu cầu phục vụ (thẻ sau)
+        // Lối vào Yêu cầu phục vụ (T28)
         binding.cardActionService.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.owner_feature_coming_soon))
+            try {
+                findNavController().navigate(R.id.ownerServiceRequestFragment)
+            } catch (e: Exception) {
+                SnackbarHelper.show(binding.root, getString(R.string.owner_service_request_title))
+            }
         }
 
         // Lối vào Báo cáo doanh thu & Thống kê
@@ -92,6 +101,15 @@ class OwnerDashboardFragment : Fragment() {
                 findNavController().navigate(R.id.ownerProfileFragment)
             } catch (e: Exception) {
                 SnackbarHelper.show(binding.root, getString(R.string.owner_action_profile_title))
+            }
+        }
+
+        // Lối vào Danh sách chờ (T32)
+        binding.cardActionWaitlist.setOnClickListener {
+            try {
+                findNavController().navigate(R.id.action_ownerOverviewFragment_to_ownerWaitlistFragment)
+            } catch (e: Exception) {
+                SnackbarHelper.show(binding.root, getString(R.string.waitlist_owner_action_title))
             }
         }
     }

@@ -49,6 +49,7 @@ class TableSelectFragment : Fragment() {
         setupHeader()
         setupContextBanner()
         setupRecyclerView()
+        setupWaitlistPrompt()
         setupConfirmButton()
         setupRetryButton()
         observeViewModel()
@@ -87,6 +88,24 @@ class TableSelectFragment : Fragment() {
         binding.rvTables.apply {
             layoutManager = GridLayoutManager(requireContext(), 2)
             adapter = tableAdapter
+        }
+    }
+
+    private fun setupWaitlistPrompt() {
+        binding.btnWaitlistFromTableSelect.setOnClickListener {
+            val date = viewModel.selectedDate.value.orEmpty()
+            val time = viewModel.selectedTime.value.orEmpty()
+            val guests = viewModel.selectedGuests.value ?: 2L
+            val restName = viewModel.restaurant.value?.name.orEmpty()
+
+            val intent = android.content.Intent(requireContext(), com.ute.quanlydatban.ui.customer.waitlist.WaitlistActivity::class.java).apply {
+                putExtra(com.ute.quanlydatban.ui.customer.waitlist.WaitlistActivity.EXTRA_RESTAURANT_ID, restaurantId)
+                putExtra(com.ute.quanlydatban.ui.customer.waitlist.WaitlistActivity.EXTRA_RESTAURANT_NAME, restName)
+                putExtra(com.ute.quanlydatban.ui.customer.waitlist.WaitlistActivity.EXTRA_DATE, date)
+                putExtra(com.ute.quanlydatban.ui.customer.waitlist.WaitlistActivity.EXTRA_TIME, time)
+                putExtra(com.ute.quanlydatban.ui.customer.waitlist.WaitlistActivity.EXTRA_GUESTS, guests)
+            }
+            startActivity(intent)
         }
     }
 
