@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llCheckInSuccessRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream"
+    android:orientation="vertical">
+
+    <!-- Page Header (h=72dp) -->
+    <LinearLayout
+        android:id="@+id/llHeader"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/booking_back_btn_size"
+            android:layout_height="@dimen/booking_back_btn_size"
+            android:background="@drawable/bg_booking_back_btn"
+            android:contentDescription="@string/cd_back_button"
+            android:src="@drawable/ic_auth_back" />
+
+        <LinearLayout
+            android:id="@+id/llPageTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="13dp"
+                    android:layout_height="13dp"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_brand_utensils"
+                    app:tint="@color/booktable_active" />
+
+                <TextView
+                    android:id="@+id/tvBrand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/checkin_success_brand_title"
+                    android:textColor="@color/booktable_active"
+                    android:textSize="10sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvHeaderWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:maxLines="1"
+                android:text="@string/confirm_welcome_title"
+                android:textColor="@color/booktable_dark"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnNotification"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_booking_back_btn"
+            android:contentDescription="@string/owner_action_notifications_title"
+            android:src="@drawable/ic_auth_bell" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/svContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="36dp"
+            android:paddingBottom="24dp">
+
+            <!-- Biểu tượng xác nhận (Success Seal) -->
+            <ImageView
+                android:id="@+id/ivSuccessSeal"
+                android:layout_width="@dimen/checkin_seal_size"
+                android:layout_height="@dimen/checkin_seal_size"
+                android:background="@drawable/bg_checkin_seal"
+                android:contentDescription="@string/checkin_success_title"
+                android:padding="20dp"
+                android:src="@drawable/ic_checkin_seal_check" />
+
+            <!-- Tiêu đề thành công -->
+            <TextView
+                android:id="@+id/tvSuccessTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/checkin_success_title"
+                android:textColor="@color/booktable_dark"
+                android:textSize="23sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvRestaurantWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/qr_restaurant_welcome_format"
+                android:textColor="@color/booktable_muted"
+                android:textSize="12sp" />
+
+            <!-- Card thông tin đặt bàn (Ticket Card) -->
+            <LinearLayout
+                android:id="@+id/llTicketCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="26dp"
+                android:background="@drawable/bg_checkin_card"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:id="@+id/tvCodeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/checkin_success_code_label"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="10sp" />
+
+                <TextView
+                    android:id="@+id/tvBookingCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:text="BT241026" />
+
+                <!-- Đường gạch đứt ngăn cách (Perforation) -->
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/payment_card_border" />
+
+                <!-- Phòng / bàn đã đặt (Badge) -->
+                <TextView
+                    android:id="@+id/tvBookedRoom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_checkin_room_badge"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:gravity="center"
+                    android:paddingHorizontal="12dp"
+                    android:paddingVertical="8dp"
+                    android:textColor="@color/checkin_room_badge_text"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    tools:text="Phòng VIP 2 · Tầng 2" />
+
+                <TextView
+                    android:id="@+id/tvTimeGuests"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    tools:text="18:30 · 4 người" />
+
+                <TextView
+                    android:id="@+id/tvBookingDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="11sp"
+                    tools:text="24/10/2026" />
+            </LinearLayout>
+
+            <!-- Ghi chú nhân viên -->
+            <TextView
+                android:id="@+id/tvNotice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:gravity="center"
+                android:text="@string/checkin_success_notice"
+                android:textColor="@color/booktable_muted"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Thao tác cuối màn hình (Bottom action) -->
+    <LinearLayout
+        android:id="@+id/llBottomAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingTop="12dp"
+        android:paddingBottom="14dp">
+
+        <!-- Nút chính: Xem đường đến bàn -->
+        <RelativeLayout
+            android:id="@+id/btnViewMap"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:background="@drawable/bg_button_orange"
+            android:clickable="true"
+            android:focusable="true"
+            android:paddingHorizontal="18dp">
+
+            <TextView
+                android:id="@+id/tvBtnViewMapText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/checkin_success_btn_view_map"
+                android:textColor="@color/white"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/checkin_success_btn_view_map"
+                android:src="@drawable/ic_arrow_right_cue" />
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tvTableWaiting"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:gravity="center"
+            android:textColor="@color/booktable_muted"
+            android:textSize="10sp"
+            tools:text="Phòng VIP 2 · Tầng 2 đang chờ bạn" />
+
+        <!-- Nút phụ: Quét QR bàn gọi món (T26) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnTableQr"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/checkin_success_btn_table_qr"
+            android:textAllCaps="false"
+            android:textColor="@color/booktable_orange"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            app:cornerRadius="14dp"
+            app:strokeColor="@color/booktable_orange"
+            app:strokeWidth="1.5dp" />
+    </LinearLayout>
+
+</LinearLayout>

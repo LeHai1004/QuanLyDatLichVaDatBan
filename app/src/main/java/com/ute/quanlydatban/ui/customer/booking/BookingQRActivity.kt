@@ -85,9 +85,13 @@ class BookingQRActivity : AppCompatActivity() {
             SnackbarHelper.show(binding.root, getString(R.string.feature_coming_soon))
         }
 
-        // Nút "Tôi đã đến quán" (T19) - chừa chỗ, bấm hiện Snackbar "Sắp ra mắt"
+        // Nút "Tôi đã đến quán" -> Mở QRScanActivity (T19)
         binding.btnArrived.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.feature_coming_soon))
+            val intent = android.content.Intent(this, QRScanActivity::class.java).apply {
+                putExtra(QRScanActivity.EXTRA_BOOKING_ID, bookingId)
+                putExtra(QRScanActivity.EXTRA_RESTAURANT_ID, restaurantId)
+            }
+            startActivity(intent)
         }
     }
 

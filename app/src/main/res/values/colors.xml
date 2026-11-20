@@ -74,4 +74,14 @@
     <color name="owner_status_marker_done">#2E9E6B</color>
     <color name="owner_status_marker_cooking">#E8622C</color>
     <color name="owner_status_marker_pending">#F2A93B</color>
+
+    <!-- QR Scan & Check-in (T19) -->
+    <color name="qr_camera_bg">#2B1B14</color>
+    <color name="qr_laser_line">#E8622C</color>
+    <color name="qr_badge_bg">#3D2E27</color>
+    <color name="qr_corner_line">#E8622C</color>
+    <color name="checkin_seal_bg">#E8F8F0</color>
+    <color name="checkin_seal_tint">#258C63</color>
+    <color name="checkin_room_badge_bg">#FFE3D4</color>
+    <color name="checkin_room_badge_text">#C94A1A</color>
 </resources>

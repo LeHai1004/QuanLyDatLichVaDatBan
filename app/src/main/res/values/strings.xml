@@ -355,7 +355,7 @@
     <string name="owner_booking_tab_confirmed">Đã xác nhận</string>
     <string name="owner_booking_tab_arrived">Đã đến</string>
     <string name="owner_booking_tab_cancelled">Đã hủy</string>
-    <string name="owner_booking_count_format">%d lượt đang %s</string>
+    <string name="owner_booking_count_format">%1$d lượt đang %2$s</string>
     <string name="owner_booking_sort_earliest">Giờ đến sớm nhất</string>
     <string name="owner_booking_btn_reject">Từ chối</string>
     <string name="owner_booking_btn_confirm">Xác nhận</string>
@@ -378,7 +378,7 @@
     <string name="owner_booking_preorder_count_format">%d món</string>
     <string name="owner_booking_preorder_empty">Khách chưa đặt món trước cho đơn này.</string>
     <string name="owner_booking_preorder_subtotal">Tạm tính món ăn</string>
-    <string name="owner_preorder_summary_format">%d lượt đặt · %d phần món</string>
+    <string name="owner_preorder_summary_format">%1$d lượt đặt · %2$d phần món</string>
     <string name="owner_preorder_sort_time">Theo giờ đến</string>
     <string name="owner_preorder_btn_done">Đã chuẩn bị xong</string>
     <string name="owner_preorder_status_done">Xong</string>
@@ -391,4 +391,45 @@
     <string name="nav_owner_bookings">Lượt đặt</string>
     <string name="nav_owner_table">Bàn</string>
     <string name="nav_owner_menu">Thực đơn</string>
+
+    <!-- QR Scan & Check-in (T19) -->
+    <string name="qr_scan_title">Quét mã trên bàn</string>
+    <string name="qr_scan_subtitle_bold">Quét mã QR tại quán để check-in</string>
+    <string name="qr_scan_subtitle_regular">Đưa mã QR vào giữa khung hình để bắt đầu.</string>
+    <string name="qr_scan_ready_badge">SẴN SÀNG QUÉT</string>
+    <string name="qr_scan_hold_steady">Giữ điện thoại ổn định để nhận mã</string>
+    <string name="qr_scan_info_card_title">Mã QR nằm tại vị trí của quán</string>
+    <string name="qr_scan_info_card_desc">Không quét được? Nhập mã vị trí để tiếp tục.</string>
+    <string name="qr_scan_btn_manual">Nhập mã vị trí thủ công</string>
+    <string name="qr_scan_footer_note">Gọi món nhanh · Phục vụ tại bàn</string>
+    <string name="qr_scan_dialog_manual_title">Nhập mã vị trí check-in</string>
+    <string name="qr_scan_dialog_manual_message">Nhập mã định danh vị trí hoặc mã bàn của nhà hàng để check-in:</string>
+    <string name="qr_scan_dialog_manual_hint">Ví dụ: LOC_01, BAN_01 hoặc dán mã QR</string>
+    <string name="qr_scan_dialog_manual_btn_confirm">Xác nhận</string>
+    <string name="qr_scan_dialog_manual_btn_cancel">Hủy</string>
+    <string name="qr_scan_dialog_manual_empty_error">Vui lòng nhập mã vị trí</string>
+    <string name="qr_scan_permission_rationale">Ứng dụng cần quyền sử dụng máy ảnh để quét mã QR check-in tại quán. Vui lòng cấp quyền hoặc nhập mã thủ công.</string>
+    <string name="qr_scan_permission_btn_grant">Cấp quyền máy ảnh</string>
+    <string name="qr_scan_permission_denied_message">Quyền máy ảnh bị từ chối. Bạn có thể nhập mã vị trí thủ công để check-in.</string>
+    <string name="qr_scan_error_invalid_qr">Mã QR sai định dạng hoặc không phải mã vị trí check-in.</string>
+    <string name="qr_scan_error_wrong_restaurant">Không đúng quán đã đặt.</string>
+    <string name="qr_scan_error_not_confirmed">Đơn đặt bàn chưa được xác nhận, không thể check-in.</string>
+    <string name="qr_scan_error_expired">Đơn đặt bàn đã hết hạn, không thể check-in.</string>
+    <string name="qr_scan_error_no_show">Đơn đặt bàn đã bị đánh dấu vắng mặt (No-show), không thể check-in.</string>
+    <string name="qr_scan_error_cancelled">Đơn đặt bàn đã bị hủy, không thể check-in.</string>
+    <string name="qr_scan_error_already_checked_in">Đơn đặt bàn này đã được check-in trước đó.</string>
+    <string name="qr_scan_error_booking_not_found">Không tìm thấy thông tin đơn đặt bàn.</string>
+    <string name="qr_scan_processing">Đang xác thực mã vị trí…</string>
+
+    <string name="checkin_success_brand_title">BookTable</string>
+    <string name="checkin_success_welcome_header">Chào bạn đến %s</string>
+    <string name="checkin_success_title">Check-in thành công</string>
+    <string name="checkin_success_restaurant_welcome">%s hân hạnh đón bạn</string>
+    <string name="checkin_success_code_label">MÃ ĐẶT BÀN</string>
+    <string name="checkin_success_notice">Nhà hàng đã nhận thông báo, nhân viên sẽ chuẩn bị bàn</string>
+    <string name="checkin_success_btn_view_map">Xem đường đến bàn</string>
+    <string name="checkin_success_btn_table_qr">Quét QR bàn gọi món (T26)</string>
+    <string name="checkin_success_table_waiting_format">%s đang chờ bạn</string>
+    <string name="checkin_success_map_coming_soon">Chức năng bản đồ chỉ đường đến bàn đang phát triển (T19)</string>
+    <string name="checkin_success_table_qr_coming_soon">Chức năng quét QR bàn gọi món đang phát triển (T26)</string>
 </resources>
