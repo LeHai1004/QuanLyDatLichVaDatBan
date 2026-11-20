@@ -62,6 +62,37 @@ class BookingRepository(
     }
 
     /**
+     * Lắng nghe danh sách đơn đặt bàn của quán theo thời gian thực (real-time)
+     */
+    fun listenBookingsForRestaurant(
+        restaurantId: String,
+        onChange: (Result<List<Booking>>) -> Unit
+    ): com.google.firebase.firestore.ListenerRegistration {
+        if (restaurantId.isBlank()) {
+            onChange(Result.success(emptyList()))
+            return collection.whereEqualTo("restaurantId", "__NONE__").addSnapshotListener { _, _ -> }
+        }
+
+        return collection
+            .whereEqualTo("restaurantId", restaurantId)
+            .addSnapshotListener { snap, error ->
+                when {
+                    error != null -> {
+                        Log.e(TAG, "Lỗi listenBookingsForRestaurant($restaurantId): ${error.message}", error)
+                        onChange(Result.failure(error))
+                    }
+                    snap != null -> {
+                        val list = snap.documents.map { doc ->
+                            val b = doc.toObject(Booking::class.java) ?: Booking()
+                            b.copy(id = doc.id)
+                        }
+                        onChange(Result.success(list))
+                    }
+                }
+            }
+    }
+
+    /**
      * Lấy các đơn hàng hoạt động của khách (status = CONFIRMED hoặc CHECKED_IN)
      */
     fun getActiveBookingsForCustomer(

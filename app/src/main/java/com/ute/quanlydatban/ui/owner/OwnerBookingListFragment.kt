@@ -55,6 +55,14 @@ class OwnerBookingListFragment : Fragment() {
         viewModel.loadRestaurantAndBookings()
     }
 
+    override fun onResume() {
+        super.onResume()
+        val rId = viewModel.restaurant.value?.id.orEmpty()
+        if (rId.isNotBlank()) {
+            viewModel.loadBookingsForRestaurant(rId)
+        }
+    }
+
     private fun setupTopBar() {
         binding.btnBack.setOnClickListener {
             findNavController().navigateUp()

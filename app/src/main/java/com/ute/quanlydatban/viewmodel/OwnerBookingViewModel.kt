@@ -73,6 +73,8 @@ class OwnerBookingViewModel(
     private val _actionSuccessMessage = MutableLiveData<String?>()
     val actionSuccessMessage: LiveData<String?> = _actionSuccessMessage
 
+    private var bookingsListenerRegistration: com.google.firebase.firestore.ListenerRegistration? = null
+
     init {
         val todayStr = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
         _selectedDate.value = todayStr
@@ -102,7 +104,8 @@ class OwnerBookingViewModel(
         }
 
         _isLoading.value = true
-        bookingRepo.getWhere("restaurantId", restaurantId) { result ->
+        bookingsListenerRegistration?.remove()
+        bookingsListenerRegistration = bookingRepo.listenBookingsForRestaurant(restaurantId) { result ->
             _isLoading.value = false
             result.onSuccess { list ->
                 _allBookings.value = list
@@ -483,6 +486,12 @@ class OwnerBookingViewModel(
     fun clearMessages() {
         _errorMessage.value = null
         _actionSuccessMessage.value = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        bookingsListenerRegistration?.remove()
+        bookingsListenerRegistration = null
     }
 
     class Factory(
