@@ -1,6 +1,7 @@
 package com.ute.quanlydatban.ui.owner
 
 import android.content.Context
+import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,6 +50,10 @@ class OwnerNotificationAdapter(
                 binding.cardNotification.setBackgroundResource(R.drawable.bg_notification_item_read)
                 binding.vUnreadDot.visibility = View.GONE
             }
+            binding.tvNotificationTitle.setTypeface(
+                null,
+                if (item.read) Typeface.NORMAL else Typeface.BOLD
+            )
 
             // Gán icon và nhãn theo loại thông báo
             when (item.type) {
