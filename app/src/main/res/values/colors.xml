@@ -125,4 +125,7 @@
     <color name="owner_table_serving">#D97706</color>
     <color name="owner_table_room_tag_text">#D97706</color>
     <color name="owner_table_room_tag_bg">#FEF3C7</color>
+
+    <!-- Favorite & Rebook (T29) -->
+    <color name="favorite_heart_active">#E53E3E</color>
 </resources>
