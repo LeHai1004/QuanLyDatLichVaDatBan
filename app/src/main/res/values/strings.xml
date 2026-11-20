@@ -99,6 +99,22 @@
     <string name="owner_notification_seed_body_2">Khách hàng Trần Thị Mai đã check-in tại Bàn 2 (Tầng 1).</string>
     <string name="owner_notification_seed_title_3">Khách hủy đặt bàn #BK098</string>
     <string name="owner_notification_seed_body_3">Khách hàng Lê Minh Tuấn đã hủy lịch hẹn lúc 18:30 do có việc bận.</string>
+    <string name="customer_notification_title">Thông báo</string>
+    <string name="customer_notification_open">Mở thông báo</string>
+    <string name="customer_notification_mark_all_read">Đọc tất cả</string>
+    <string name="customer_notification_all_read_success">Đã đánh dấu đọc tất cả thông báo.</string>
+    <string name="customer_notification_login_required">Vui lòng đăng nhập để xem thông báo.</string>
+    <string name="customer_notification_login_required_update">Vui lòng đăng nhập để cập nhật thông báo.</string>
+    <string name="customer_notification_missing_id">Không tìm thấy mã thông báo.</string>
+    <string name="customer_notification_type_booking">Đặt bàn</string>
+    <string name="customer_notification_type_cancel">Hủy bàn</string>
+    <string name="customer_notification_type_arrival">Khách đến</string>
+    <string name="customer_notification_type_general">Hệ thống</string>
+    <string name="customer_notification_reminder_unavailable">Thông báo nhắc lịch sẽ được hỗ trợ trong bản cập nhật sắp tới.</string>
+    <string name="customer_notification_table_unavailable">Thông báo có bàn sẽ được hỗ trợ trong bản cập nhật sắp tới.</string>
+    <string name="customer_notification_detail_unavailable">Thông báo này chưa có màn hình chi tiết.</string>
+    <string name="customer_notification_missing_booking_id">Không tìm thấy mã đơn đặt bàn trong thông báo.</string>
+    <string name="customer_notification_booking_missing">Đơn đặt bàn này không tồn tại hoặc đã bị xóa.</string>
     <!-- Owner Dashboard, Stats, Profile (T12) -->
     <string name="owner_dashboard_title">Tổng quan quán</string>
     <string name="owner_dashboard_greeting">Xin chào, Chủ quán!</string>
@@ -501,4 +517,29 @@
     <string name="indoor_map_dialog_manual_cancel">Hủy</string>
     <string name="indoor_map_stairs_label">CẦU THANG</string>
     <string name="indoor_map_you_are_here">Bạn đang ở đây</string>
+
+    <!-- Profile (T8) -->
+    <string name="profile_title">Hồ sơ cá nhân</string>
+    <string name="profile_edit_title">Chỉnh sửa hồ sơ</string>
+    <string name="profile_member_since_format">Thành viên từ %s</string>
+    <string name="profile_stat_bookings">Bữa hẹn</string>
+    <string name="profile_stat_favorites">Quán yêu thích</string>
+    <string name="profile_stat_reviews">Đánh giá</string>
+    <string name="profile_menu_info">Thông tin cá nhân</string>
+    <string name="profile_menu_history">Lịch sử đặt bàn</string>
+    <string name="profile_menu_vouchers">Voucher của tôi</string>
+    <string name="profile_menu_loyalty">Điểm thành viên</string>
+    <string name="profile_menu_favorites">Quán yêu thích</string>
+    <string name="profile_menu_settings">Cài đặt</string>
+    <string name="profile_btn_logout">Đăng xuất</string>
+    <string name="profile_edit_label_name">Họ và tên</string>
+    <string name="profile_edit_label_email">Email</string>
+    <string name="profile_edit_label_phone">Số điện thoại</string>
+    <string name="profile_edit_btn_save">Lưu thay đổi</string>
+    <string name="profile_edit_save_success">Cập nhật thông tin thành công.</string>
+    <string name="profile_edit_error_name_empty">Vui lòng nhập họ và tên.</string>
+    <string name="profile_edit_error_phone_invalid">Số điện thoại không đúng định dạng (10 số, bắt đầu bằng 0).</string>
+    <string name="profile_edit_error_save_failed">Cập nhật thất bại. Vui lòng thử lại.</string>
+    <string name="profile_rank_format">Hạng %s</string>
+    <string name="profile_points_format">%d điểm</string>
 </resources>

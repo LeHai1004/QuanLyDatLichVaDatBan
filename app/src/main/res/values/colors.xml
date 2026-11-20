@@ -102,4 +102,8 @@
     <color name="map_user_dot">#2E9E6B</color>
     <color name="map_user_halo">#4D2E9E6B</color>
     <color name="map_stairs_color">#8A7468</color>
+
+    <!-- Profile (T8) -->
+    <color name="profile_avatar_bg">#FFE3D4</color>
+    <color name="profile_stat_border">#EBDDD2</color>
 </resources>
