@@ -616,4 +616,16 @@
     <string name="review_error_no_rating">Vui lòng chọn số sao đánh giá (từ 1 đến 5 sao).</string>
     <string name="review_error_already_reviewed">Đơn đặt bàn này đã được đánh giá trước đó.</string>
     <string name="review_error_not_paid">Chỉ có thể đánh giá đơn đã hoàn tất thanh toán.</string>
+    <!-- Active Bookings Tab -->
+    <string name="active_bookings_title">Lượt đặt bàn của bạn</string>
+    <string name="active_bookings_empty_title">Chưa có lượt đặt bàn nào</string>
+    <string name="active_bookings_empty_message">Bạn chưa có đơn đặt bàn nào cần check-in. Khám phá các nhà hàng ngon ngay nhé!</string>
+    <string name="active_bookings_btn_find_restaurant">Tìm quán</string>
+    <string name="active_bookings_status_confirmed">Đã xác nhận</string>
+    <string name="active_bookings_status_checked_in">Đã nhận bàn</string>
+    <string name="active_bookings_btn_arrived">Tôi đã đến quán</string>
+    <string name="active_bookings_btn_view_map">Xem sơ đồ quán</string>
+    <string name="active_bookings_btn_navigate">Chỉ đường</string>
+    <string name="active_bookings_table_format">%1$s · Tầng %2$d</string>
+    <string name="active_bookings_error">Không thể tải danh sách đặt bàn.</string>
 </resources>

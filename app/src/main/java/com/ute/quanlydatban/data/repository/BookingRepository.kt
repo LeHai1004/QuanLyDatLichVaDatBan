@@ -44,6 +44,52 @@ class BookingRepository(
             }
     }
 
+    fun getTable(restaurantId: String, tableId: String, onResult: (Result<DiningTable?>) -> Unit) {
+        if (restaurantId.isBlank() || tableId.isBlank()) {
+            onResult(Result.success(null))
+            return
+        }
+        firestore.collection("restaurants").document(restaurantId)
+            .collection("tables").document(tableId).get()
+            .addOnSuccessListener { snapshot ->
+                val table = snapshot.toObject(DiningTable::class.java)?.copy(id = snapshot.id)
+                onResult(Result.success(table))
+            }
+            .addOnFailureListener { e ->
+                Log.e(TAG, "Lỗi đọc table: ${e.message}", e)
+                onResult(Result.failure(e))
+            }
+    }
+
+    /**
+     * Lấy các đơn hàng hoạt động của khách (status = CONFIRMED hoặc CHECKED_IN)
+     */
+    fun getActiveBookingsForCustomer(
+        userId: String,
+        onResult: (Result<List<Booking>>) -> Unit
+    ) {
+        if (userId.isBlank()) {
+            onResult(Result.success(emptyList()))
+            return
+        }
+
+        val activeStatuses = listOf(BookingStatus.CONFIRMED.name, BookingStatus.CHECKED_IN.name)
+
+        collection
+            .whereEqualTo("userId", userId)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                val bookings = snapshot.toObjects(Booking::class.java).filter { b ->
+                    activeStatuses.contains(b.status)
+                }.sortedByDescending { it.createdAt }
+                onResult(Result.success(bookings))
+            }
+            .addOnFailureListener { error ->
+                Log.e(TAG, "Lỗi getActiveBookingsForCustomer: ${error.message}", error)
+                onResult(Result.failure(error))
+            }
+    }
+
     // Lấy danh sách bàn theo quán và tự động giải phóng các bàn giữ chỗ quá 10 phút
     fun getTables(restaurantId: String, onResult: (Result<List<DiningTable>>) -> Unit) {
         if (restaurantId.isBlank()) {
@@ -126,8 +172,18 @@ class BookingRepository(
                     return@addOnSuccessListener
                 }
 
+                val updatedBooking = booking.copy(
+                    id = bookingId,
+                    userId = snapshot.getString("userId").orEmpty().ifEmpty { booking.userId },
+                    restaurantId = snapshot.getString("restaurantId").orEmpty().ifEmpty { booking.restaurantId },
+                    status = nextStatus.name
+                )
+
                 collection.document(bookingId).update("status", nextStatus.name)
                     .addOnSuccessListener {
+                        Log.e("NotiEvent", "updateBookingStatus success -> bookingId: $bookingId, nextStatus: ${nextStatus.name}")
+                        NotificationRepository().createEventNotification(updatedBooking, nextStatus)
+
                         // Khi đơn hết hạn hoặc bị hủy, giải phóng bàn lại thành available
                         if (nextStatus == BookingStatus.EXPIRED ||
                             nextStatus == BookingStatus.CANCELLED ||
@@ -215,6 +271,7 @@ class BookingRepository(
         }
 
         val bookingRef = collection.document(bookingId)
+        var capturedBooking: Booking? = null
 
         firestore.runTransaction { transaction ->
             val snapshot = transaction.get(bookingRef)
@@ -229,9 +286,20 @@ class BookingRepository(
                 throw IllegalStateException("STATUS_CONFLICT:$currentStatusStr")
             }
 
+            val bookingObj = snapshot.toObject(Booking::class.java) ?: Booking(id = bookingId)
+            capturedBooking = bookingObj.copy(
+                id = bookingId,
+                userId = snapshot.getString("userId").orEmpty().ifEmpty { bookingObj.userId },
+                restaurantId = snapshot.getString("restaurantId").orEmpty().ifEmpty { bookingObj.restaurantId },
+                status = BookingStatus.CONFIRMED.name
+            )
+
             transaction.update(bookingRef, "status", BookingStatus.CONFIRMED.name)
             null
         }.addOnSuccessListener {
+            val bookingToNotify = capturedBooking ?: Booking(id = bookingId, status = BookingStatus.CONFIRMED.name)
+            Log.e("NotiEvent", "confirmBookingByOwner success -> bookingId: $bookingId, userId: ${bookingToNotify.userId}")
+            NotificationRepository().createEventNotification(bookingToNotify, BookingStatus.CONFIRMED)
             onResult(Result.success(Unit))
         }.addOnFailureListener { error ->
             Log.e(TAG, "Lỗi confirmBookingByOwner: ${error.message}", error)
@@ -253,6 +321,7 @@ class BookingRepository(
         }
 
         val bookingRef = collection.document(bookingId)
+        var capturedBooking: Booking? = null
 
         firestore.runTransaction { transaction ->
             val snapshot = transaction.get(bookingRef)
@@ -271,6 +340,14 @@ class BookingRepository(
             val tableId = snapshot.getString("tableId").orEmpty()
             val userId = snapshot.getString("userId").orEmpty()
             val depositAmount = snapshot.getLong("depositAmount") ?: 100_000L
+
+            val bookingObj = snapshot.toObject(Booking::class.java) ?: Booking(id = bookingId)
+            capturedBooking = bookingObj.copy(
+                id = bookingId,
+                userId = userId.ifEmpty { bookingObj.userId },
+                restaurantId = restaurantId.ifEmpty { bookingObj.restaurantId },
+                status = BookingStatus.REJECTED.name
+            )
 
             // 1. Đổi trạng thái booking thành REJECTED
             transaction.update(bookingRef, "status", BookingStatus.REJECTED.name)
@@ -298,6 +375,9 @@ class BookingRepository(
             transaction.set(refundRef, refundPayment)
             null
         }.addOnSuccessListener {
+            val bookingToNotify = capturedBooking ?: Booking(id = bookingId, status = BookingStatus.REJECTED.name)
+            Log.e("NotiEvent", "rejectBookingByOwner success -> bookingId: $bookingId, userId: ${bookingToNotify.userId}")
+            NotificationRepository().createEventNotification(bookingToNotify, BookingStatus.REJECTED)
             onResult(Result.success(Unit))
         }.addOnFailureListener { error ->
             Log.e(TAG, "Lỗi rejectBookingByOwner: ${error.message}", error)
