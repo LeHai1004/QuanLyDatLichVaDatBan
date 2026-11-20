@@ -40,7 +40,8 @@ data class Booking(
 
 data class BookingGuest(
     val id: String = "", val bookingId: String = "", val userId: String = "",
-    val status: String = "invited", val shareAmount: Long = 0, val paid: Boolean = false
+    val status: String = "invited", val shareAmount: Long = 0, val paid: Boolean = false,
+    val userName: String = "", val avatarUrl: String = ""
 )
 
 data class OrderItem(
@@ -48,13 +49,28 @@ data class OrderItem(
     val name: String = "", val qty: Long = 1,
     val unitPrice: Long = 0,            // giá chụp tại lúc gọi, đổi menu không làm sai hóa đơn cũ
     val source: String = "pre",         // pre | table
-    val status: String = OrderItemStatus.WAITING.name
+    val status: String = OrderItemStatus.WAITING.name,
+    val userId: String = "",
+    val userName: String = ""
 )
 
 data class ServiceRequest(
     val id: String = "", val bookingId: String = "", val tableId: String = "",
-    val type: String = "", val status: String = "open", val createdAt: Long = 0
+    val restaurantId: String = "",
+    val type: String = "", val status: String = "pending",
+    val createdAt: Long = 0, val handledAt: Long = 0
 )
+
+object ServiceRequestType {
+    const val SERVICE = "SERVICE"
+    const val WATER = "WATER"
+    const val BILL = "BILL"
+}
+
+object ServiceRequestStatus {
+    const val PENDING = "pending"
+    const val HANDLED = "handled"
+}
 
 data class Payment(
     val id: String = "", val bookingId: String = "", val userId: String = "",
@@ -101,8 +117,13 @@ data class Favorite(
 
 data class WaitlistEntry(
     val id: String = "", val userId: String = "", val restaurantId: String = "",
+    val restaurantName: String = "",
     val date: String = "", val time: String = "", val guests: Long = 1,
-    val status: String = "waiting"
+    val status: String = "waiting", // "waiting" | "notified" | "expired"
+    val createdAt: Long = 0,
+    val handled: Boolean = false,
+    val customerName: String = "",
+    val customerPhone: String = ""
 )
 
 data class QrLocation(

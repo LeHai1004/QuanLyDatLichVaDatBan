@@ -37,6 +37,15 @@
             android:textStyle="bold" />
 
         <ImageView
+            android:id="@+id/btnScanQr"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="12dp"
+            android:contentDescription="Quét vé QR"
+            android:src="@drawable/ic_owner_table_qr"
+            app:tint="@color/booktable_orange" />
+
+        <ImageView
             android:id="@+id/btnFilterOptions"
             android:layout_width="21dp"
             android:layout_height="21dp"

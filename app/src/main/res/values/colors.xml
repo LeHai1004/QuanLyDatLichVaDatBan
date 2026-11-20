@@ -138,4 +138,29 @@
     <color name="loyalty_tx_plus">#258C63</color>
     <color name="loyalty_tx_minus">#E8622C</color>
     <color name="loyalty_tab_active_bg">#FFE5D6</color>
+    <!-- Owner Menu (T13) -->
+    <color name="owner_menu_category_selected">#E8622C</color>
+    <color name="owner_menu_category_unselected">#8A7468</color>
+    <color name="owner_menu_category_bg_selected">#FFE3D4</color>
+    <color name="owner_menu_category_bg_unselected">#FFFFFF</color>
+    <color name="owner_menu_status_available">#258C63</color>
+    <color name="owner_menu_status_unavailable">#B93825</color>
+    <!-- Waitlist (T32) -->
+    <color name="waitlist_badge_waiting_text">#D97706</color>
+    <color name="waitlist_badge_waiting_bg">#FEF3C7</color>
+    <color name="waitlist_badge_notified_text">#258C63</color>
+    <color name="waitlist_badge_notified_bg">#E8F8F0</color>
+    <color name="waitlist_badge_expired_text">#8A7468</color>
+    <color name="waitlist_badge_expired_bg">#F5EDE8</color>
+    <color name="waitlist_badge_handled_text">#1D4ED8</color>
+    <color name="waitlist_badge_handled_bg">#EFF6FF</color>
+    <!-- Order Tracking & Kitchen (T27) -->
+    <color name="order_status_waiting_bg">#F3F4F6</color>
+    <color name="order_status_waiting_text">#6B7280</color>
+    <color name="order_status_cooking_bg">#FFE5D6</color>
+    <color name="order_status_cooking_text">#E8622C</color>
+    <color name="order_status_done_bg">#FEF3C7</color>
+    <color name="order_status_done_text">#D97706</color>
+    <color name="order_status_served_bg">#E8F8F0</color>
+    <color name="order_status_served_text">#258C63</color>
 </resources>

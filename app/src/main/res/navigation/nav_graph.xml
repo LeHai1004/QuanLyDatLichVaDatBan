@@ -58,6 +58,12 @@
         <action
             android:id="@+id/action_ownerOverviewFragment_to_ownerNotificationFragment"
             app:destination="@id/ownerNotificationFragment" />
+        <action
+            android:id="@+id/action_ownerOverviewFragment_to_ownerReviewFragment"
+            app:destination="@id/ownerReviewFragment" />
+        <action
+            android:id="@+id/action_ownerOverviewFragment_to_ownerWaitlistFragment"
+            app:destination="@id/ownerWaitlistFragment" />
     </fragment>
 
     <fragment
@@ -82,6 +88,9 @@
         android:name="com.ute.quanlydatban.ui.owner.OwnerProfileFragment"
         android:label="@string/nav_profile">
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_profile" />
+        <action
+            android:id="@+id/action_ownerProfileFragment_to_ownerReviewFragment"
+            app:destination="@id/ownerReviewFragment" />
     </fragment>
 
     <fragment
@@ -207,10 +216,10 @@
             android:defaultValue="@string/nav_owner_table" />
     </fragment>
 
-    <!-- Owner Menu Placeholder (T13) -->
+    <!-- Owner Menu (T13) -->
     <fragment
         android:id="@+id/ownerMenuPlaceholderFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.owner.menu.OwnerMenuFragment"
         android:label="@string/nav_owner_menu">
         <argument
             android:name="screenTitle"
@@ -264,5 +273,56 @@
             android:name="screenTitle"
             app:argType="reference"
             android:defaultValue="@string/profile_menu_favorites" />
+    </fragment>
+
+    <!-- Owner Review (T23) -->
+    <fragment
+        android:id="@+id/ownerReviewFragment"
+        android:name="com.ute.quanlydatban.ui.owner.review.OwnerReviewFragment"
+        android:label="@string/owner_review_title">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/owner_review_title" />
+        <argument
+            android:name="restaurantId"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <!-- Owner Waitlist (T32) -->
+    <fragment
+        android:id="@+id/ownerWaitlistFragment"
+        android:name="com.ute.quanlydatban.ui.owner.waitlist.OwnerWaitlistFragment"
+        android:label="@string/waitlist_owner_title">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/waitlist_owner_title" />
+        <argument
+            android:name="restaurantId"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+    <!-- Owner Kitchen Fragment (T27) -->
+    <fragment
+        android:id="@+id/ownerKitchenFragment"
+        android:name="com.ute.quanlydatban.ui.owner.OwnerKitchenFragment"
+        android:label="@string/owner_kitchen_title">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/owner_kitchen_title" />
+    </fragment>
+
+    <!-- Owner Service Request Fragment (T28) -->
+    <fragment
+        android:id="@+id/ownerServiceRequestFragment"
+        android:name="com.ute.quanlydatban.ui.owner.OwnerServiceRequestFragment"
+        android:label="@string/owner_service_request_title">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/owner_service_request_title" />
     </fragment>
 </navigation>

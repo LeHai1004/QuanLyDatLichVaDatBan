@@ -1,5 +1,6 @@
 package com.ute.quanlydatban.ui.customer.booking
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.enableEdgeToEdge
@@ -111,7 +112,11 @@ class TableOrderActivity : AppCompatActivity() {
 
         viewModel.orderSuccess.observe(this) { success ->
             if (success) {
-                SnackbarHelper.show(binding.root, getString(R.string.table_order_success))
+                val intent = Intent(this, OrderTrackingActivity::class.java).apply {
+                    putExtra(OrderTrackingActivity.EXTRA_BOOKING_ID, bookingId)
+                    putExtra(OrderTrackingActivity.EXTRA_RESTAURANT_ID, restaurantId)
+                }
+                startActivity(intent)
                 viewModel.clearMessages()
                 finish()
             }
