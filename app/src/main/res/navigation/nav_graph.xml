@@ -244,10 +244,10 @@
             android:defaultValue="" />
     </fragment>
 
-    <!-- Loyalty Placeholder (T25) -->
+    <!-- Loyalty (T25) -->
     <fragment
         android:id="@+id/loyaltyPlaceholderFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.customer.loyalty.LoyaltyFragment"
         android:label="@string/profile_menu_loyalty">
         <argument
             android:name="screenTitle"

@@ -125,4 +125,17 @@
     <color name="owner_table_serving">#D97706</color>
     <color name="owner_table_room_tag_text">#D97706</color>
     <color name="owner_table_room_tag_bg">#FEF3C7</color>
+
+    <!-- Loyalty & Membership (T25) -->
+    <color name="loyalty_bronze">#CD7F32</color>
+    <color name="loyalty_silver">#94A3B8</color>
+    <color name="loyalty_gold">#F59E0B</color>
+    <color name="loyalty_card_bg_start">#2B1B14</color>
+    <color name="loyalty_card_bg_end">#452C22</color>
+    <color name="loyalty_points_gold">#FBBF24</color>
+    <color name="loyalty_progress_bg">#33FFFFFF</color>
+    <color name="loyalty_progress_fill">#E8622C</color>
+    <color name="loyalty_tx_plus">#258C63</color>
+    <color name="loyalty_tx_minus">#E8622C</color>
+    <color name="loyalty_tab_active_bg">#FFE5D6</color>
 </resources>
