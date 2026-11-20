@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/customerBookingFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.customer.booking.ActiveBookingsFragment"
         android:label="@string/nav_booking">
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_booking" />
     </fragment>
