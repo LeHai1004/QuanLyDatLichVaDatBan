@@ -97,6 +97,32 @@
             android:name=".ui.owner.menu.OwnerMenuEditActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+            android:name=".ui.owner.scan.OwnerQRScanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.owner.checkout.OwnerCheckoutActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.customer.split.SplitBillActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.customer.invite.InviteFriendsActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.customer.waitlist.WaitlistActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+            android:name=".ui.customer.booking.TableQRScanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.customer.booking.TableOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.customer.booking.OrderTrackingActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

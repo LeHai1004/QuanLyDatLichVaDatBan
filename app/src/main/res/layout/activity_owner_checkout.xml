@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream"
+    android:orientation="vertical">
+
+    <!-- Top Toolbar -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="16dp">
+
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_booking_back_btn"
+            android:contentDescription="@null"
+            android:padding="8dp"
+            android:src="@drawable/ic_auth_back"
+            app:tint="@color/booktable_dark" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif-black"
+            android:gravity="center"
+            android:text="@string/owner_checkout_title"
+            android:textColor="@color/booktable_dark"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <!-- Card 1: Booking & Customer Info -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/booktable_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvBookingCode"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-bold"
+                            android:textColor="@color/booktable_orange"
+                            android:textSize="16sp"
+                            android:textStyle="bold"
+                            tools:text="#BT-1234" />
+
+                        <TextView
+                            android:id="@+id/tvTableName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/bg_notification_tag"
+                            android:fontFamily="sans-serif-bold"
+                            android:paddingHorizontal="8dp"
+                            android:paddingVertical="3dp"
+                            android:textColor="@color/booktable_dark"
+                            android:textSize="12sp"
+                            tools:text="Bàn T1-04" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="10dp"
+                        android:background="@color/booktable_border" />
+
+                    <TextView
+                        android:id="@+id/tvCustomerNamePhone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-medium"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="14sp"
+                        tools:text="Nguyễn Văn A · 090 123 4567" />
+
+                    <TextView
+                        android:id="@+id/tvBookingDateTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:fontFamily="sans-serif"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="13sp"
+                        tools:text="Thời gian: 20/11/2026 · 19:30" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card 2: Dish List -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/booktable_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-bold"
+                        android:text="@string/owner_checkout_dish_list_title"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:id="@+id/llDishesContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="vertical" />
+
+                    <TextView
+                        android:id="@+id/tvDishEmpty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:padding="16dp"
+                        android:text="@string/owner_checkout_dish_empty"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="13sp"
+                        android:visibility="gone"
+                        tools:visibility="gone" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card 3: Payment Breakdown -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/booktable_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-bold"
+                        android:text="@string/owner_checkout_payment_details_title"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <!-- Dishes subtotal -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/owner_checkout_label_dishes_total"
+                            android:textColor="@color/booktable_dark"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvDishesTotal"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-medium"
+                            android:textColor="@color/booktable_dark"
+                            android:textSize="14sp"
+                            tools:text="450.000đ" />
+                    </LinearLayout>
+
+                    <!-- Deposit paid -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/owner_checkout_label_deposit_paid"
+                            android:textColor="@color/booktable_dark"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvDepositPaid"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-medium"
+                            android:textColor="@color/owner_stat_serving"
+                            android:textSize="14sp"
+                            tools:text="-100.000đ" />
+                    </LinearLayout>
+
+                    <!-- Voucher placeholder (T24) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/owner_checkout_label_voucher"
+                            android:textColor="@color/booktable_muted"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/owner_checkout_voucher_placeholder"
+                            android:textColor="@color/booktable_muted"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <!-- Points placeholder (T25) -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/owner_checkout_label_points"
+                            android:textColor="@color/booktable_muted"
+                            android:textSize="13sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/owner_checkout_points_placeholder"
+                            android:textColor="@color/booktable_muted"
+                            android:textSize="13sp" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginVertical="12dp"
+                        android:background="@color/booktable_border" />
+
+                    <!-- Final amount remaining -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-bold"
+                            android:text="@string/owner_checkout_label_final_amount"
+                            android:textColor="@color/booktable_dark"
+                            android:textSize="16sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tvFinalAmount"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif-black"
+                            android:textColor="@color/booktable_orange"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            tools:text="350.000đ" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Card 4: Payment Method Selection -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:strokeColor="@color/booktable_border"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="sans-serif-bold"
+                        android:text="@string/owner_checkout_payment_method_title"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="15sp"
+                        android:textStyle="bold" />
+
+                    <!-- Cash method -->
+                    <LinearLayout
+                        android:id="@+id/llMethodCash"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="12dp"
+                        android:background="@drawable/bg_owner_payment_method_selected"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="14dp">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_owner_pay_cash" />
+
+                        <TextView
+                            android:id="@+id/tvMethodCash"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-bold"
+                            android:text="@string/owner_checkout_method_cash"
+                            android:textColor="@color/booktable_orange"
+                            android:textSize="14sp" />
+
+                        <RadioButton
+                            android:id="@+id/rbMethodCash"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/booktable_orange"
+                            android:checked="true"
+                            android:clickable="false" />
+                    </LinearLayout>
+
+                    <!-- VietQR method -->
+                    <LinearLayout
+                        android:id="@+id/llMethodVietQr"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="8dp"
+                        android:background="@drawable/bg_owner_payment_method_unselected"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="14dp">
+
+                        <ImageView
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:contentDescription="@null"
+                            android:src="@drawable/ic_owner_pay_qr" />
+
+                        <TextView
+                            android:id="@+id/tvMethodVietQr"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:layout_weight="1"
+                            android:fontFamily="sans-serif-medium"
+                            android:text="@string/owner_checkout_method_vietqr"
+                            android:textColor="@color/booktable_dark"
+                            android:textSize="14sp" />
+
+                        <RadioButton
+                            android:id="@+id/rbMethodVietQr"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:buttonTint="@color/booktable_orange"
+                            android:checked="false"
+                            android:clickable="false" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Spacer -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <!-- Buttons -->
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSplitBill"
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:background="@drawable/bg_btn_history_action_outlined"
+                android:drawableStart="@drawable/ic_owner_split_bill"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/booktable_orange"
+                android:fontFamily="sans-serif-medium"
+                android:paddingHorizontal="16dp"
+                android:text="@string/owner_checkout_btn_split_bill"
+                android:textAllCaps="false"
+                android:textColor="@color/booktable_orange"
+                android:textSize="14sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnConfirmPayment"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_button_orange"
+                android:fontFamily="sans-serif-bold"
+                android:text="@string/owner_checkout_btn_confirm"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="15sp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Loading State Overlay -->
+    <FrameLayout
+        android:id="@+id/flLoadingOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        tools:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/booktable_orange" />
+    </FrameLayout>
+</LinearLayout>

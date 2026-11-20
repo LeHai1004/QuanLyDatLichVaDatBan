@@ -174,9 +174,48 @@ class OwnerBookingDetailActivity : AppCompatActivity() {
         }
         binding.tvStatusText.text = statusText
 
-        // Nút duyệt chỉ hiển thị khi đơn đang chờ duyệt
+        // Điều khiển các nút hành động theo trạng thái đơn
         val isWaiting = (status == BookingStatus.WAITING || status == BookingStatus.PENDING)
-        binding.llBottomActions.visibility = if (isWaiting) View.VISIBLE else View.GONE
+        val isServing = (status == BookingStatus.SERVING)
+        val isCheckedIn = (status == BookingStatus.CHECKED_IN)
+
+        when {
+            isWaiting -> {
+                binding.llBottomActions.visibility = View.VISIBLE
+                binding.btnReject.visibility = View.VISIBLE
+                binding.btnConfirm.text = getString(R.string.owner_booking_btn_confirm)
+                binding.btnConfirm.setOnClickListener {
+                    viewModel.confirmBooking(bookingId) { success ->
+                        if (success) {
+                            SnackbarHelper.show(binding.root, getString(R.string.owner_booking_confirm_success))
+                        }
+                    }
+                }
+            }
+            isServing -> {
+                binding.llBottomActions.visibility = View.VISIBLE
+                binding.btnReject.visibility = View.GONE
+                binding.btnConfirm.text = "Thanh toán (Checkout)"
+                binding.btnConfirm.setOnClickListener {
+                    val intent = Intent(this, com.ute.quanlydatban.ui.owner.checkout.OwnerCheckoutActivity::class.java).apply {
+                        putExtra(com.ute.quanlydatban.ui.owner.checkout.OwnerCheckoutActivity.EXTRA_BOOKING_ID, bookingId)
+                    }
+                    startActivity(intent)
+                }
+            }
+            isCheckedIn -> {
+                binding.llBottomActions.visibility = View.VISIBLE
+                binding.btnReject.visibility = View.GONE
+                binding.btnConfirm.text = "Quét vé bắt đầu phục vụ"
+                binding.btnConfirm.setOnClickListener {
+                    val intent = Intent(this, com.ute.quanlydatban.ui.owner.scan.OwnerQRScanActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+            else -> {
+                binding.llBottomActions.visibility = View.GONE
+            }
+        }
 
         // Khách hàng
         val name = detail.customerName.ifBlank { "Khách hàng" }

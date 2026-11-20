@@ -76,9 +76,14 @@ class BookingConfirmActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Nút "Mời bạn bè" (chừa chỗ cho T31)
+        // Nút "Mời bạn bè" (T31)
         binding.btnInviteFriends.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.feature_coming_soon))
+            val intent = com.ute.quanlydatban.ui.customer.invite.InviteFriendsActivity.newIntent(
+                this,
+                bookingId,
+                restaurantId
+            )
+            startActivity(intent)
         }
     }
 
