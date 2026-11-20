@@ -793,6 +793,54 @@
     <string name="invite_join_error_not_logged_in">Vui lòng đăng nhập để tham gia đơn đặt bàn.</string>
     <string name="invite_join_success">Đã tham gia đơn đặt bàn thành công!</string>
     <string name="invite_decline_success">Đã từ chối lời mời.</string>
+
+    <!-- Waitlist (T32) -->
+    <string name="waitlist_customer_title">Danh sách chờ</string>
+    <string name="waitlist_customer_subtitle">Nhận thông báo ngay khi có bàn trống phù hợp</string>
+    <string name="waitlist_section_desired_slot">Khung giờ mong muốn</string>
+    <string name="waitlist_section_contact_info">Thông tin liên hệ</string>
+    <string name="waitlist_section_my_entries">Lượt đăng ký của bạn</string>
+    <string name="waitlist_field_restaurant">Nhà hàng</string>
+    <string name="waitlist_field_date">Ngày đặt</string>
+    <string name="waitlist_field_time">Khung giờ</string>
+    <string name="waitlist_field_guests">Số lượng khách</string>
+    <string name="waitlist_field_name">Họ và tên</string>
+    <string name="waitlist_field_phone">Số điện thoại</string>
+    <string name="waitlist_btn_register">Đăng ký vào danh sách chờ</string>
+    <string name="waitlist_banner_hint">Khi có khách hủy bàn hoặc quán có bàn trống phù hợp với thời gian và số người bạn đăng ký, hệ thống sẽ gửi thông báo để bạn đặt bàn ngay.</string>
+    <string name="waitlist_status_waiting">Đang chờ</string>
+    <string name="waitlist_status_notified">Đã báo có bàn</string>
+    <string name="waitlist_status_expired">Hết hạn</string>
+    <string name="waitlist_status_handled">Đã xử lý</string>
+    <string name="waitlist_err_past_time">Không thể đăng ký chờ cho thời gian trong quá khứ.</string>
+    <string name="waitlist_err_duplicate">Bạn đã đăng ký chờ khung giờ này rồi.</string>
+    <string name="waitlist_err_table_available">Hiện vẫn còn bàn trống phù hợp, bạn có thể đặt ngay!</string>
+    <string name="waitlist_err_invalid_input">Vui lòng điền đầy đủ và chính xác thông tin liên hệ.</string>
+    <string name="waitlist_btn_book_now">Đặt bàn ngay</string>
+    <string name="waitlist_register_success">Đã đăng ký danh sách chờ thành công! Chúng tôi sẽ thông báo khi có bàn.</string>
+    <string name="waitlist_empty_customer">Bạn chưa có lượt đăng ký chờ nào.</string>
+    <string name="waitlist_owner_title">Danh sách chờ của quán</string>
+    <string name="waitlist_owner_subtitle">Khách đăng ký nhận thông báo khi quán có bàn trống</string>
+    <string name="waitlist_owner_filter_all">Tất cả</string>
+    <string name="waitlist_owner_filter_waiting">Đang chờ</string>
+    <string name="waitlist_owner_filter_notified">Đã báo có bàn</string>
+    <string name="waitlist_owner_filter_handled">Đã xử lý</string>
+    <string name="waitlist_owner_btn_mark_handled">Đã xử lý</string>
+    <string name="waitlist_owner_btn_call">Gọi khách</string>
+    <string name="waitlist_owner_empty">Không có lượt đăng ký chờ nào trong ngày này.</string>
+    <string name="waitlist_owner_marked_success">Đã cập nhật trạng thái đã xử lý.</string>
+    <string name="waitlist_entry_info_format">%1$s · %2$s · %3$d người</string>
+    <string name="waitlist_entry_created_format">Đăng ký lúc: %s</string>
+    <string name="waitlist_prompt_detail_title">Khung giờ bạn muốn đã kín bàn?</string>
+    <string name="waitlist_prompt_detail_desc">Đăng ký danh sách chờ để nhận thông báo ngay khi có bàn trống phù hợp.</string>
+    <string name="waitlist_prompt_detail_btn">Đăng ký danh sách chờ</string>
+    <string name="waitlist_prompt_table_select_text">Chưa chọn được bàn ưng ý? Đăng ký chờ khung giờ này:</string>
+    <string name="waitlist_prompt_table_select_btn">Vào danh sách chờ</string>
+    <string name="waitlist_owner_action_title">Danh sách chờ</string>
+    <string name="waitlist_owner_action_desc">Xem và xử lý khách chờ bàn khi quán đông</string>
+    <string name="waitlist_notification_title">Đã có bàn trống tại %s</string>
+    <string name="waitlist_notification_body">Quán %1$s đã có bàn trống cho %2$d người vào lúc %3$s ngày %4$s. Mời bạn vào đặt bàn ngay!</string>
+
     <!-- Active Bookings Tab -->
     <string name="active_bookings_title">Lượt đặt bàn của bạn</string>
     <string name="active_bookings_empty_title">Chưa có lượt đặt bàn nào</string>

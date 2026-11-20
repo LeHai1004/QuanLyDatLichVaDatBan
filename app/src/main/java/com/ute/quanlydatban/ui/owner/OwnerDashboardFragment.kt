@@ -103,6 +103,15 @@ class OwnerDashboardFragment : Fragment() {
                 SnackbarHelper.show(binding.root, getString(R.string.owner_action_profile_title))
             }
         }
+
+        // Lối vào Danh sách chờ (T32)
+        binding.cardActionWaitlist.setOnClickListener {
+            try {
+                findNavController().navigate(R.id.action_ownerOverviewFragment_to_ownerWaitlistFragment)
+            } catch (e: Exception) {
+                SnackbarHelper.show(binding.root, getString(R.string.waitlist_owner_action_title))
+            }
+        }
     }
 
     private fun setupRetryButton() {

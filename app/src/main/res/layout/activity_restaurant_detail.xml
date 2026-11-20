@@ -405,6 +405,62 @@
                         android:textColor="@color/booktable_muted"
                         android:textSize="@dimen/detail_status_text_size"
                         android:visibility="gone" />
+
+                    <!-- Waitlist Prompt Block (T32) -->
+                    <com.google.android.material.card.MaterialCardView
+                        android:id="@+id/cardWaitlistPrompt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="16dp"
+                        app:cardBackgroundColor="@color/notification_unread_bg"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="0dp"
+                        app:strokeColor="@color/notification_unread_border"
+                        app:strokeWidth="1dp">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:text="@string/waitlist_prompt_detail_title"
+                                android:textColor="@color/booktable_dark"
+                                android:textSize="15sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:text="@string/waitlist_prompt_detail_desc"
+                                android:textColor="@color/booktable_muted"
+                                android:textSize="13sp" />
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnJoinWaitlist"
+                                android:layout_width="wrap_content"
+                                android:layout_height="38dp"
+                                android:layout_marginTop="10dp"
+                                android:backgroundTint="@color/booktable_orange"
+                                android:fontFamily="@font/be_vietnam_pro"
+                                android:insetTop="0dp"
+                                android:insetBottom="0dp"
+                                android:paddingHorizontal="16dp"
+                                android:text="@string/waitlist_prompt_detail_btn"
+                                android:textAllCaps="false"
+                                android:textColor="@color/white"
+                                android:textSize="13sp"
+                                android:textStyle="bold"
+                                app:cornerRadius="8dp" />
+                        </LinearLayout>
+                    </com.google.android.material.card.MaterialCardView>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
