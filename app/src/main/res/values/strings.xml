@@ -853,4 +853,71 @@
     <string name="active_bookings_btn_navigate">Chỉ đường</string>
     <string name="active_bookings_table_format">%1$s · Tầng %2$d</string>
     <string name="active_bookings_error">Không thể tải danh sách đặt bàn.</string>
+    <string name="active_bookings_btn_table_order">Gọi món tại bàn</string>
+
+    <!-- Table Order & QR Scan (T26) -->
+    <string name="table_qr_scan_title">Quét QR bàn</string>
+    <string name="table_order_title">Gọi món tại bàn</string>
+    <string name="table_order_btn_submit">Gửi bếp</string>
+    <string name="table_order_cart_empty">Vui lòng chọn ít nhất 1 món ăn.</string>
+    <string name="table_order_success">Đã gửi order cho bếp.</string>
+    <string name="table_qr_scan_invalid_table">Mã QR bàn không hợp lệ hoặc không thuộc nhà hàng này.</string>
+    <string name="table_qr_scan_no_active_booking">Bạn chưa check-in bàn này hoặc đơn đặt bàn không hợp lệ.</string>
+
+    <!-- Table QR Scan (T26 - Dedicated Strings) -->
+    <string name="table_qr_title">Quét mã trên bàn</string>
+    <string name="table_qr_subtitle">Đưa mã QR vào giữa khung hình để bắt đầu</string>
+    <string name="table_qr_btn_manual">Nhập mã bàn</string>
+    <string name="table_qr_dialog_manual_title">Nhập mã bàn</string>
+    <string name="table_qr_dialog_manual_message">Nhập mã in trên bàn của bạn để gọi món</string>
+    <string name="table_qr_dialog_manual_hint">Ví dụ: r1_t2</string>
+    <string name="table_qr_dialog_manual_confirm">Xác nhận</string>
+    <string name="table_qr_dialog_manual_cancel">Hủy</string>
+    <string name="table_qr_error_invalid">Mã bàn không hợp lệ, vui lòng thử lại</string>
+    <string name="table_qr_error_empty">Vui lòng nhập mã bàn.</string>
+
+    <!-- Order Tracking & Kitchen (T27) -->
+    <string name="order_tracking_title">Tiến trình phục vụ</string>
+    <string name="order_tracking_subtitle">Theo dõi món ăn theo thời gian thực</string>
+    <string name="order_tracking_section_dishes">Danh sách món ăn</string>
+    <string name="order_tracking_status_waiting">Chờ nhận</string>
+    <string name="order_tracking_status_cooking">Đang nấu</string>
+    <string name="order_tracking_status_done">Đã xong</string>
+    <string name="order_tracking_status_served">Đã ra món</string>
+    <string name="order_tracking_service_completed">Hoàn tất phục vụ</string>
+    <string name="order_tracking_service_in_progress">Bếp đang chuẩn bị món</string>
+    <string name="order_tracking_btn_call_staff">Gọi phục vụ</string>
+    <string name="order_tracking_empty_title">Chưa có món nào được gọi</string>
+    <string name="order_tracking_empty_desc">Bạn chưa gọi món ăn nào cho đơn này.</string>
+    <string name="order_tracking_offline_banner">Đang offline. Tự động cập nhật khi có mạng.</string>
+    <string name="owner_kitchen_title">Bếp &amp; Điều phối món</string>
+    <string name="owner_kitchen_btn_start_cooking">Bắt đầu nấu</string>
+    <string name="owner_kitchen_btn_done">Đã xong</string>
+    <string name="owner_kitchen_btn_served">Đã ra món</string>
+    <string name="owner_kitchen_status_conflict">Món đã được cập nhật bởi người khác</string>
+    <string name="owner_kitchen_empty_title">Bếp chưa có món cần làm</string>
+    <string name="owner_kitchen_empty_desc">Hiện không có món nào đang chờ nấu hoặc phục vụ.</string>
+    <string name="active_bookings_btn_track_order">Theo dõi món</string>
+
+    <!-- Service Request (T28) -->
+    <string name="service_request_title">Yêu cầu phục vụ</string>
+    <string name="service_request_btn_call_staff">Gọi nhân viên</string>
+    <string name="service_request_btn_water">Xin nước</string>
+    <string name="service_request_btn_bill">Tính tiền</string>
+    <string name="service_request_status_pending">Chờ xử lý</string>
+    <string name="service_request_status_handled">Đã xử lý</string>
+    <string name="service_request_pending_waiting">Đã gửi, vui lòng chờ</string>
+    <string name="service_request_error_pending_exists">Bạn đã gửi yêu cầu này, vui lòng chờ nhân viên.</string>
+    <string name="service_request_error_paid">Đơn đã thanh toán, không thể gửi yêu cầu.</string>
+    <string name="service_request_success">Đã gửi yêu cầu đến nhân viên.</string>
+    <string name="owner_service_request_title">Yêu cầu phục vụ</string>
+    <string name="owner_service_request_btn_handled">Đã xử lý</string>
+    <string name="owner_service_request_waiting_format">Chờ %d phút</string>
+    <string name="owner_service_request_empty_title">Chưa có yêu cầu mới</string>
+    <string name="owner_service_request_empty_desc">Hiện không có yêu cầu phục vụ nào từ khách tại bàn.</string>
+    <string name="owner_service_request_action_title">Yêu cầu phục vụ</string>
+
+    <!-- Service Request BILL lock (T28 Fix) -->
+    <string name="service_request_error_bill_requested">Bạn đã yêu cầu tính tiền, không thể gửi thêm yêu cầu.</string>
+    <string name="service_request_bill_handled">Đã tính tiền</string>
 </resources>

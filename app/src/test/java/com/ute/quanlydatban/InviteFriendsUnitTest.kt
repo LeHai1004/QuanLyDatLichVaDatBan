@@ -148,4 +148,15 @@ class InviteFriendsUnitTest {
 
         assertTrue(result.isSuccess)
     }
+
+    @Test
+    fun validateJoin_nullOrInvalidBooking_returnsFailure() {
+        val result = InviteFriendsValidator.validateJoinEligibility(
+            booking = null,
+            existingGuests = emptyList(),
+            currentUserId = "USER_GUEST"
+        )
+
+        assertTrue(result.isFailure)
+    }
 }

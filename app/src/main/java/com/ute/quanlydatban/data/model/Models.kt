@@ -56,8 +56,21 @@ data class OrderItem(
 
 data class ServiceRequest(
     val id: String = "", val bookingId: String = "", val tableId: String = "",
-    val type: String = "", val status: String = "open", val createdAt: Long = 0
+    val restaurantId: String = "",
+    val type: String = "", val status: String = "pending",
+    val createdAt: Long = 0, val handledAt: Long = 0
 )
+
+object ServiceRequestType {
+    const val SERVICE = "SERVICE"
+    const val WATER = "WATER"
+    const val BILL = "BILL"
+}
+
+object ServiceRequestStatus {
+    const val PENDING = "pending"
+    const val HANDLED = "handled"
+}
 
 data class Payment(
     val id: String = "", val bookingId: String = "", val userId: String = "",

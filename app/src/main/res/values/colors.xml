@@ -135,4 +135,13 @@
     <color name="waitlist_badge_expired_bg">#F5EDE8</color>
     <color name="waitlist_badge_handled_text">#1D4ED8</color>
     <color name="waitlist_badge_handled_bg">#EFF6FF</color>
+    <!-- Order Tracking & Kitchen (T27) -->
+    <color name="order_status_waiting_bg">#F3F4F6</color>
+    <color name="order_status_waiting_text">#6B7280</color>
+    <color name="order_status_cooking_bg">#FFE5D6</color>
+    <color name="order_status_cooking_text">#E8622C</color>
+    <color name="order_status_done_bg">#FEF3C7</color>
+    <color name="order_status_done_text">#D97706</color>
+    <color name="order_status_served_bg">#E8F8F0</color>
+    <color name="order_status_served_text">#258C63</color>
 </resources>

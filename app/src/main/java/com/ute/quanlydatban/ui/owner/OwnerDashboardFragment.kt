@@ -68,15 +68,22 @@ class OwnerDashboardFragment : Fragment() {
             }
         }
 
-        // Lối vào Bếp (thẻ sau)
+        // Lối vào Bếp & Điều phối món (T27)
         binding.cardActionKitchen.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.owner_feature_coming_soon))
+            try {
+                findNavController().navigate(R.id.ownerKitchenFragment)
+            } catch (e: Exception) {
+                SnackbarHelper.show(binding.root, getString(R.string.owner_kitchen_title))
+            }
         }
 
-        // Lối vào Quét vé phục vụ khách (T22)
+        // Lối vào Yêu cầu phục vụ (T28)
         binding.cardActionService.setOnClickListener {
-            val intent = Intent(requireContext(), com.ute.quanlydatban.ui.owner.scan.OwnerQRScanActivity::class.java)
-            startActivity(intent)
+            try {
+                findNavController().navigate(R.id.ownerServiceRequestFragment)
+            } catch (e: Exception) {
+                SnackbarHelper.show(binding.root, getString(R.string.owner_service_request_title))
+            }
         }
 
         // Lối vào Báo cáo doanh thu & Thống kê

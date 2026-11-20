@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardServiceRequest"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="@color/voucher_card_bg"
+    app:cardCornerRadius="@dimen/kitchen_card_radius"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/booktable_border"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="14dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvTableName"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_dark"
+                android:textSize="@dimen/auth_button_text_size"
+                android:textStyle="bold"
+                tools:text="Bàn 1 · Tầng 1" />
+
+            <TextView
+                android:id="@+id/tvWaitingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_error"
+                android:textSize="@dimen/auth_label_text_size"
+                tools:text="Chờ 3 phút" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvType"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_orange"
+                android:textSize="@dimen/auth_body_text_size"
+                android:textStyle="bold"
+                tools:text="Xin nước" />
+
+            <TextView
+                android:id="@+id/tvStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_status_badge_open"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:textColor="@color/booktable_orange"
+                android:textSize="@dimen/auth_label_text_size"
+                tools:text="Chờ xử lý" />
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnHandled"
+            android:layout_width="match_parent"
+            android:layout_height="38dp"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_service_request_btn_handled"
+            android:textColor="@color/booktable_surface"
+            android:textSize="@dimen/auth_label_text_size"
+            app:backgroundTint="@color/booking_success_green"
+            app:cornerRadius="8dp" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

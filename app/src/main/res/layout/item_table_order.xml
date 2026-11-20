@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/cardTableOrder"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    app:cardBackgroundColor="@color/voucher_card_bg"
+    app:cardCornerRadius="@dimen/voucher_card_radius"
+    app:cardElevation="0dp"
+    app:strokeColor="@color/booktable_border"
+    app:strokeWidth="1dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="@dimen/voucher_card_padding">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvItemName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_dark"
+                android:textSize="@dimen/auth_button_text_size"
+                android:textStyle="bold"
+                tools:text="Gỏi cuốn tôm thịt" />
+
+            <TextView
+                android:id="@+id/tvItemCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_muted"
+                android:textSize="@dimen/auth_label_text_size"
+                tools:text="Khai vị" />
+
+            <TextView
+                android:id="@+id/tvItemPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:textColor="@color/booktable_orange"
+                android:textSize="@dimen/auth_label_text_size"
+                android:textStyle="bold"
+                tools:text="69.000đ" />
+        </LinearLayout>
+
+        <!-- Quantity Controls -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnMinus"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_cart_qty_box"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_minus"
+                app:tint="@color/booktable_dark" />
+
+            <TextView
+                android:id="@+id/tvQty"
+                android:layout_width="36dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:gravity="center"
+                android:textColor="@color/booktable_dark"
+                android:textSize="@dimen/auth_body_text_size"
+                android:textStyle="bold"
+                tools:text="0" />
+
+            <ImageButton
+                android:id="@+id/btnPlus"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@drawable/bg_cart_qty_box"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_plus"
+                app:tint="@color/booktable_dark" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
