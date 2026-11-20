@@ -30,6 +30,14 @@ class OwnerCheckoutActivity : AppCompatActivity() {
 
     private var currentBookingId: String = ""
 
+    private val splitBillLauncher = registerForActivityResult(
+        androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == RESULT_OK) {
+            finish()
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -69,7 +77,13 @@ class OwnerCheckoutActivity : AppCompatActivity() {
         }
 
         binding.btnSplitBill.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.owner_checkout_split_bill_notice))
+            val totalPayable = viewModel.checkoutData.value?.finalAmount ?: 0L
+            val intent = com.ute.quanlydatban.ui.customer.split.SplitBillActivity.newIntent(
+                this,
+                currentBookingId,
+                totalPayable
+            )
+            splitBillLauncher.launch(intent)
         }
 
         binding.btnConfirmPayment.setOnClickListener {

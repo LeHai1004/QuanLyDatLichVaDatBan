@@ -728,6 +728,37 @@
     <string name="owner_review_btn_retry">Thử lại</string>
     <string name="owner_review_error_load">Không thể tải danh sách đánh giá. Vui lòng thử lại.</string>
     <string name="owner_profile_view_reviews">Xem đánh giá của khách</string>
+
+    <!-- Split Bill (T30) -->
+    <string name="split_bill_title">Chia hóa đơn</string>
+    <string name="split_bill_subtitle">Chia đều hoặc chia theo món ăn từng người</string>
+    <string name="split_bill_mode_equal">Chia đều</string>
+    <string name="split_bill_mode_items">Chia theo món</string>
+    <string name="split_bill_total_payable">Tổng tiền cần thanh toán</string>
+    <string name="split_bill_guest_count_label">Số người chia tiền</string>
+    <string name="split_bill_person_count_format">%d người</string>
+    <string name="split_bill_share_per_person">Mỗi người trả:</string>
+    <string name="split_bill_remainder_notice_format">Do chia tiền lẻ không tròn, người đầu tiên (chủ bàn) trả thêm %s tiền làm tròn.</string>
+    <string name="split_bill_status_paid">Đã thanh toán</string>
+    <string name="split_bill_status_unpaid">Chưa thanh toán</string>
+    <string name="split_bill_btn_pay_share">Thu phần này</string>
+    <string name="split_bill_person_host_name">Người 1 (Chủ bàn)</string>
+    <string name="split_bill_person_name_format">Người %d</string>
+    <string name="split_bill_dishes_section_title">Danh sách món ăn</string>
+    <string name="split_bill_assign_dish_hint">Gán cho:</string>
+    <string name="split_bill_error_unassigned_item">Món \"%s\" chưa được gán cho ai.</string>
+    <string name="split_bill_error_min_guests">Cần ít nhất 2 người để chia hóa đơn.</string>
+    <string name="split_bill_error_sum_mismatch">Tổng các phần tiền không khớp với tổng hóa đơn cần trả.</string>
+    <string name="split_bill_error_unpaid_remaining">Còn %d người chưa thanh toán. Vui lòng thanh toán đủ các phần tiền.</string>
+    <string name="split_bill_dialog_method_title">Chọn phương thức thu tiền</string>
+    <string name="split_bill_dialog_method_msg">Thu %1$s từ %2$s</string>
+    <string name="split_bill_dialog_btn_cash">Tiền mặt</string>
+    <string name="split_bill_dialog_btn_vietqr">VietQR</string>
+    <string name="split_bill_dialog_btn_cancel">Hủy</string>
+    <string name="split_bill_pay_success_format">Đã ghi nhận thanh toán cho %s thành công!</string>
+    <string name="split_bill_all_completed_success">Toàn bộ hóa đơn đã được thanh toán hoàn tất!</string>
+    <string name="split_bill_btn_finish">Hoàn tất chia hóa đơn</string>
+    <string name="split_bill_paid_summary_format">Đã thanh toán: %1$d/%2$d người</string>
     <!-- Active Bookings Tab -->
     <string name="active_bookings_title">Lượt đặt bàn của bạn</string>
     <string name="active_bookings_empty_title">Chưa có lượt đặt bàn nào</string>
