@@ -39,6 +39,7 @@ class PaymentRepository(
         val bookingRef = firestore.collection("bookings").document(bookingId)
         val paymentId = "PAY_${bookingId}_DEPOSIT"
         val paymentRef = collection.document(paymentId)
+        var capturedBooking: Booking? = null
 
         firestore.runTransaction { transaction ->
             val bookingSnap = transaction.get(bookingRef)
@@ -68,6 +69,15 @@ class PaymentRepository(
             val now = System.currentTimeMillis()
             val qrCodeValue = bookingSnap.getString("qrCode")?.takeIf { it.isNotBlank() } ?: "BT_${bookingId}"
 
+            val bookingObj = bookingSnap.toObject(Booking::class.java) ?: Booking(id = bookingId)
+            capturedBooking = bookingObj.copy(
+                id = bookingId,
+                userId = userId.ifEmpty { bookingObj.userId },
+                restaurantId = bookingSnap.getString("restaurantId").orEmpty().ifEmpty { bookingObj.restaurantId },
+                depositAmount = amount,
+                status = BookingStatus.WAITING.name
+            )
+
             val payment = Payment(
                 id = paymentId,
                 bookingId = bookingId,
@@ -93,6 +103,9 @@ class PaymentRepository(
             transaction.set(paymentRef, payment)
             payment
         }.addOnSuccessListener { payment ->
+            val bookingToNotify = capturedBooking ?: Booking(id = bookingId, userId = userId, status = BookingStatus.WAITING.name)
+            Log.e("NotiEvent", "confirmDepositPayment success -> bookingId: $bookingId, status: WAITING")
+            NotificationRepository().createEventNotification(bookingToNotify, BookingStatus.WAITING)
             onResult(Result.success(payment))
         }.addOnFailureListener { error ->
             Log.e(TAG, "Lỗi confirmDepositPayment: ${error.message}", error)

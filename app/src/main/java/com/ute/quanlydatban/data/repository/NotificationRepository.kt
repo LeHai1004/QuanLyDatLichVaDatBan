@@ -1,8 +1,12 @@
 package com.ute.quanlydatban.data.repository
 
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.ute.quanlydatban.data.model.AppNotification
+import com.ute.quanlydatban.data.model.Booking
+import com.ute.quanlydatban.data.model.BookingStatus
 
 class NotificationRepository(
     private val auth: FirebaseAuth = FirebaseAuth.getInstance(),
@@ -15,33 +19,205 @@ class NotificationRepository(
     val currentUserId: String?
         get() = auth.currentUser?.uid
 
-    // Lấy danh sách thông báo của người dùng, sắp xếp mới nhất lên đầu
+    /**
+     * Tạo thông báo từ các sự kiện hệ thống (WAITING, CONFIRMED, REJECTED, EXPIRED, CANCELLED, CHECKED_IN)
+     * Document ID: "{bookingId}_{eventType}" dùng set() để ghi đè (không trùng lặp).
+     */
+    fun createEventNotification(
+        booking: Booking,
+        status: BookingStatus,
+        onResult: ((Result<Unit>) -> Unit)? = null
+    ) {
+        if (booking.id.isBlank()) {
+            Log.w("NotiEvent", "createEventNotification: booking.id rỗng")
+            onResult?.invoke(Result.success(Unit))
+            return
+        }
+
+        val eventTypeStr = status.name
+        val notiId = "${booking.id}_$eventTypeStr"
+        val notiRef = firestore.collection(NOTIFICATIONS_COLLECTION).document(notiId)
+
+        val isForOwner = when (status) {
+            BookingStatus.WAITING,
+            BookingStatus.CANCELLED,
+            BookingStatus.CHECKED_IN -> true
+            BookingStatus.CONFIRMED,
+            BookingStatus.REJECTED,
+            BookingStatus.EXPIRED -> false
+            else -> {
+                onResult?.invoke(Result.success(Unit))
+                return
+            }
+        }
+
+        fun sendNoti(recipientUserId: String, notiType: String, title: String, body: String) {
+            val targetUserId = recipientUserId.ifEmpty {
+                auth.currentUser?.uid.orEmpty().ifEmpty { "user_default" }
+            }
+
+            Log.e("NotiEvent", "Starting sendNoti -> notiId: $notiId, eventType: $eventTypeStr, targetUserId: $targetUserId")
+
+            val noti = AppNotification(
+                id = notiId,
+                userId = targetUserId,
+                type = notiType,
+                title = title,
+                body = body,
+                read = false,
+                createdAt = System.currentTimeMillis(),
+                targetId = booking.id
+            )
+
+            notiRef.set(noti)
+                .addOnSuccessListener {
+                    Log.e("NotiEvent", "THÀNH CÔNG: Đã tạo thông báo doc $notiId cho userId $targetUserId (event: $eventTypeStr)")
+                    onResult?.invoke(Result.success(Unit))
+                }
+                .addOnFailureListener { err ->
+                    Log.e("NotiEvent", "THẤT BẠI: Lỗi ghi Firestore doc $notiId: ${err.message}", err)
+                    onResult?.invoke(Result.failure(err))
+                }
+        }
+
+        if (isForOwner) {
+            if (booking.restaurantId.isBlank()) {
+                Log.w("NotiEvent", "Thiếu restaurantId cho booking #${booking.id}, gửi cho current user hoặc 'owner'")
+                val fallbackOwner = auth.currentUser?.uid.orEmpty().ifEmpty { "owner" }
+                val (type, title, body) = when (status) {
+                    BookingStatus.WAITING -> Triple(
+                        TYPE_BOOKING_NEW,
+                        "Đơn đặt bàn mới #${booking.id}",
+                        "Đơn đặt bàn #${booking.id} đã hoàn tất đặt cọc, chờ bạn xác nhận."
+                    )
+                    BookingStatus.CANCELLED -> Triple(
+                        TYPE_BOOKING_CANCELLED,
+                        "Đơn đặt bàn #${booking.id} đã bị hủy",
+                        "Khách hàng đã hủy đơn đặt bàn #${booking.id}."
+                    )
+                    BookingStatus.CHECKED_IN -> Triple(
+                        TYPE_GUEST_ARRIVED,
+                        "Khách đã đến quán - Đơn #${booking.id}",
+                        "Khách hàng của đơn #${booking.id} đã đến nhận bàn."
+                    )
+                    else -> Triple(TYPE_GENERAL, "Thông báo đơn #${booking.id}", "")
+                }
+                sendNoti(fallbackOwner, type, title, body)
+                return
+            }
+
+            firestore.collection("restaurants").document(booking.restaurantId).get()
+                .addOnSuccessListener { rSnap ->
+                    var ownerId = rSnap.getString("ownerId").orEmpty()
+                    if (ownerId.isBlank()) {
+                        Log.w("NotiEvent", "Thiếu ownerId trong doc restaurants/${booking.restaurantId}, dùng current user làm fallback")
+                        ownerId = auth.currentUser?.uid.orEmpty().ifEmpty { "owner" }
+                    }
+                    val (type, title, body) = when (status) {
+                        BookingStatus.WAITING -> Triple(
+                            TYPE_BOOKING_NEW,
+                            "Đơn đặt bàn mới #${booking.id}",
+                            "Đơn đặt bàn #${booking.id} đã hoàn tất đặt cọc, chờ bạn xác nhận."
+                        )
+                        BookingStatus.CANCELLED -> Triple(
+                            TYPE_BOOKING_CANCELLED,
+                            "Đơn đặt bàn #${booking.id} đã bị hủy",
+                            "Khách hàng đã hủy đơn đặt bàn #${booking.id}."
+                        )
+                        BookingStatus.CHECKED_IN -> Triple(
+                            TYPE_GUEST_ARRIVED,
+                            "Khách đã đến quán - Đơn #${booking.id}",
+                            "Khách hàng của đơn #${booking.id} đã đến nhận bàn."
+                        )
+                        else -> Triple(TYPE_GENERAL, "Thông báo đơn #${booking.id}", "")
+                    }
+                    sendNoti(ownerId, type, title, body)
+                }
+                .addOnFailureListener { err ->
+                    Log.e("NotiEvent", "Lỗi đọc restaurant ${booking.restaurantId}: ${err.message}, gửi fallback owner", err)
+                    val fallbackOwner = auth.currentUser?.uid.orEmpty().ifEmpty { "owner" }
+                    sendNoti(fallbackOwner, TYPE_BOOKING_NEW, "Đơn đặt bàn mới #${booking.id}", "Có đơn đặt bàn mới #${booking.id}.")
+                }
+        } else {
+            val customerUserId = booking.userId.ifEmpty {
+                auth.currentUser?.uid.orEmpty().ifEmpty { "customer" }
+            }
+            val (type, title, body) = when (status) {
+                BookingStatus.CONFIRMED -> Triple(
+                    "booking_confirmed",
+                    "Đơn đặt bàn #${booking.id} đã được xác nhận",
+                    "Nhà hàng đã xác nhận đơn đặt bàn #${booking.id} của bạn."
+                )
+                BookingStatus.REJECTED -> Triple(
+                    "booking_rejected",
+                    "Đơn đặt bàn #${booking.id} đã bị từ chối",
+                    "Đơn đặt bàn #${booking.id} đã bị từ chối và tiền cọc sẽ được hoàn lại."
+                )
+                BookingStatus.EXPIRED -> Triple(
+                    TYPE_BOOKING_CANCELLED,
+                    "Đơn đặt bàn #${booking.id} đã hết hạn",
+                    "Đơn đặt bàn #${booking.id} đã hết hạn do quá thời gian giữ chỗ."
+                )
+                else -> Triple(TYPE_GENERAL, "Thông báo đơn #${booking.id}", "")
+            }
+            sendNoti(customerUserId, type, title, body)
+        }
+    }
+
+    /**
+     * Lấy danh sách thông báo của người dùng theo userId
+     * Sắp xếp giảm dần theo createdAt ở client.
+     */
     fun getNotifications(
         userId: String,
         onResult: (Result<List<AppNotification>>) -> Unit
     ) {
+        Log.e("NotiDebug", "getNotifications - current uid: $userId")
+        if (userId.isBlank()) {
+            onResult(Result.success(emptyList()))
+            return
+        }
+
         firestore.collection(NOTIFICATIONS_COLLECTION)
             .whereEqualTo("userId", userId)
             .get()
             .addOnSuccessListener { snapshot ->
-                val list = snapshot.toObjects(AppNotification::class.java)
-                if (list.isEmpty()) {
-                    // Nếu chưa có thông báo nào, tự động tạo mẫu vài bản ghi cho tài khoản demo
-                    seedDemoNotifications(userId) {
-                        firestore.collection(NOTIFICATIONS_COLLECTION)
-                            .whereEqualTo("userId", userId)
-                            .get()
-                            .addOnSuccessListener { snap2 ->
-                                val seededList = snap2.toObjects(AppNotification::class.java)
-                                onResult(Result.success(seededList.sortedByDescending { it.createdAt }))
-                            }
-                            .addOnFailureListener { onResult(Result.success(emptyList())) }
+                Log.e("NotiDebug", "Firestore returned ${snapshot.size()} docs for userId: $userId")
+                val list = snapshot.documents.mapNotNull { doc ->
+                    try {
+                        val obj = doc.toObject(AppNotification::class.java)
+                        val idVal = if (obj?.id.isNullOrBlank()) doc.id else obj.id
+                        val userIdVal = doc.getString("userId").orEmpty().ifEmpty { obj?.userId.orEmpty() }
+                        val titleVal = doc.getString("title").orEmpty().ifEmpty { obj?.title.orEmpty() }
+                        val bodyVal = doc.getString("body").orEmpty().ifEmpty { obj?.body.orEmpty() }
+                        val typeVal = doc.getString("type").orEmpty().ifEmpty { obj?.type.orEmpty() }
+                        val targetIdVal = doc.getString("targetId").orEmpty().ifEmpty { obj?.targetId.orEmpty() }
+                        val readVal = doc.getBoolean("read") ?: obj?.read ?: false
+                        val createdAtVal = doc.getLong("createdAt") ?: obj?.createdAt ?: 0L
+
+                        AppNotification(
+                            id = idVal,
+                            userId = userIdVal,
+                            type = typeVal,
+                            title = titleVal,
+                            body = bodyVal,
+                            read = readVal,
+                            createdAt = createdAtVal,
+                            targetId = targetIdVal
+                        )
+                    } catch (e: Exception) {
+                        Log.e("NotiDebug", "Error parsing doc ${doc.id}: ${e.message}", e)
+                        null
                     }
-                } else {
-                    onResult(Result.success(list.sortedByDescending { it.createdAt }))
-                }
+                }.sortedByDescending { it.createdAt }
+
+                Log.e("NotiDebug", "Parsed notifications count: ${list.size}")
+                onResult(Result.success(list))
             }
-            .addOnFailureListener { onResult(Result.failure(it)) }
+            .addOnFailureListener { err ->
+                Log.e("NotiDebug", "Lỗi query notifications: ${err.message}", err)
+                onResult(Result.failure(err))
+            }
     }
 
     // Đánh dấu một thông báo là đã đọc
@@ -77,7 +253,7 @@ class NotificationRepository(
             .addOnFailureListener { onResult(Result.failure(it)) }
     }
 
-    // Kiểm tra đơn đặt bàn có tồn tại hay không (tránh văng app khi đơn đã bị xóa)
+    // Kiểm tra đơn đặt bàn có tồn tại hay không
     fun checkBookingExists(
         bookingId: String,
         onResult: (Result<Boolean>) -> Unit
@@ -91,50 +267,6 @@ class NotificationRepository(
                 onResult(Result.success(snapshot.exists()))
             }
             .addOnFailureListener { onResult(Result.failure(it)) }
-    }
-
-    private fun seedDemoNotifications(userId: String, onDone: () -> Unit) {
-        val now = System.currentTimeMillis()
-        val demoItems = listOf(
-            AppNotification(
-                id = newId(),
-                userId = userId,
-                type = TYPE_BOOKING_NEW,
-                title = "Đơn đặt bàn mới #BK101",
-                body = "Khách hàng Nguyễn Văn An vừa đặt bàn 4 người vào 19:00 hôm nay.",
-                read = false,
-                createdAt = now - 5 * 60 * 1000L,
-                targetId = "bk_demo_101"
-            ),
-            AppNotification(
-                id = newId(),
-                userId = userId,
-                type = TYPE_GUEST_ARRIVED,
-                title = "Khách đã đến quán - Bàn 2",
-                body = "Khách hàng Trần Thị Mai đã check-in tại Bàn 2 (Tầng 1).",
-                read = false,
-                createdAt = now - 35 * 60 * 1000L,
-                targetId = "bk_demo_102"
-            ),
-            AppNotification(
-                id = newId(),
-                userId = userId,
-                type = TYPE_BOOKING_CANCELLED,
-                title = "Khách hủy đặt bàn #BK098",
-                body = "Khách hàng Lê Minh Tuấn đã hủy lịch hẹn lúc 18:30 do có việc bận.",
-                read = true,
-                createdAt = now - 2 * 3600 * 1000L,
-                targetId = "bk_demo_deleted"
-            )
-        )
-
-        val batch = firestore.batch()
-        demoItems.forEach { item ->
-            val ref = firestore.collection(NOTIFICATIONS_COLLECTION).document(item.id)
-            batch.set(ref, item)
-        }
-        batch.commit()
-            .addOnCompleteListener { onDone() }
     }
 
     companion object {
