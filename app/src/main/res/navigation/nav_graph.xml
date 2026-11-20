@@ -196,10 +196,10 @@
             android:defaultValue="@string/owner_preorder_title" />
     </fragment>
 
-    <!-- Owner Table Placeholder (T21) -->
+    <!-- Owner Table Map (T21) -->
     <fragment
         android:id="@+id/ownerTablePlaceholderFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.owner.table.OwnerTableMapFragment"
         android:label="@string/nav_owner_table">
         <argument
             android:name="screenTitle"

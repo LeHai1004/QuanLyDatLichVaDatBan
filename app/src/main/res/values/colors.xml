@@ -118,4 +118,11 @@
     <color name="history_status_cancelled_text">#B93825</color>
     <color name="history_status_serving_bg">#FEF3C7</color>
     <color name="history_status_serving_text">#D97706</color>
+
+    <!-- Owner Table Map & Manage (T21) -->
+    <color name="owner_table_available">#258C63</color>
+    <color name="owner_table_booked">#E8622C</color>
+    <color name="owner_table_serving">#D97706</color>
+    <color name="owner_table_room_tag_text">#D97706</color>
+    <color name="owner_table_room_tag_bg">#FEF3C7</color>
 </resources>
