@@ -126,6 +126,8 @@
     <color name="owner_table_room_tag_text">#D97706</color>
     <color name="owner_table_room_tag_bg">#FEF3C7</color>
 
+    <!-- Favorite & Rebook (T29) -->
+    <color name="favorite_heart_active">#E53E3E</color>
     <!-- Loyalty & Membership (T25) -->
     <color name="loyalty_bronze">#CD7F32</color>
     <color name="loyalty_silver">#94A3B8</color>

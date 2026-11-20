@@ -918,6 +918,21 @@
     <string name="table_qr_error_invalid">Mã bàn không hợp lệ, vui lòng thử lại</string>
     <string name="table_qr_error_empty">Vui lòng nhập mã bàn.</string>
 
+    <!-- Favorite & Rebook (T29) -->
+    <string name="favorite_title">Quán yêu thích</string>
+    <string name="favorite_empty_title">Chưa có quán yêu thích nào</string>
+    <string name="favorite_empty_desc">Hãy thả tim các nhà hàng bạn yêu thích để dễ dàng tìm kiếm và đặt bàn sau này!</string>
+    <string name="favorite_added_success">Đã thêm vào danh sách yêu thích</string>
+    <string name="favorite_removed_success">Đã xóa khỏi danh sách yêu thích</string>
+    <string name="favorite_error_toggle">Không thể cập nhật quán yêu thích. Vui lòng thử lại.</string>
+    <string name="favorite_btn_find_restaurants">Khám phá quán ngon</string>
+    <string name="favorite_login_required">Vui lòng đăng nhập để lưu quán yêu thích.</string>
+    <string name="history_btn_rebook">Đặt lại</string>
+    <string name="history_rebook_restaurant_closed">Nhà hàng này hiện không còn hoạt động hoặc đã ngừng nhận đặt bàn.</string>
+    <string name="history_rebook_items_changed">Một số món đã hết nên đã được bỏ qua, giá món đã cập nhật theo thực đơn hiện tại.</string>
+    <string name="history_rebook_items_all_unavailable">Các món trong đơn cũ hiện không còn phục vụ. Bạn có thể chọn món mới khi đặt bàn.</string>
+    <string name="history_rebook_loading">Đang kiểm tra thực đơn quán…</string>
+    <string name="history_rebook_error">Không thể kiểm tra thực đơn cũ. Vui lòng thử lại.</string>
     <!-- Loyalty & Membership (T25) -->
     <string name="loyalty_title">Tích điểm thành viên</string>
     <string name="loyalty_current_points_label">Điểm tích lũy hiện tại</string>

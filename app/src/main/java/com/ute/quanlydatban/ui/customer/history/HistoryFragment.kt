@@ -52,7 +52,7 @@ class HistoryFragment : Fragment() {
             onChangeSchedule = { booking -> handleActionChangeSchedule(booking) },
             onCancelBooking = { booking -> handleActionCancelBooking(booking) },
             onReview = { booking -> handleActionReview(booking) },
-            onReorder = { handleActionReorder() }
+            onReorder = { booking -> handleActionReorder(booking) }
         )
         binding.rvHistory.layoutManager = LinearLayoutManager(requireContext())
         binding.rvHistory.adapter = adapter
@@ -217,8 +217,41 @@ class HistoryFragment : Fragment() {
         startActivity(intent)
     }
 
-    private fun handleActionReorder() {
-        SnackbarHelper.show(binding.root, getString(R.string.history_reorder_coming_soon))
+    private val favoriteRepository by lazy { com.ute.quanlydatban.data.repository.FavoriteRepository() }
+
+    private fun handleActionReorder(booking: Booking) {
+        SnackbarHelper.show(binding.root, getString(R.string.history_rebook_loading))
+        favoriteRepository.checkRebookEligibility(booking.id) { result ->
+            result.onSuccess { rebook ->
+                if (!rebook.isRestaurantValid || rebook.restaurant == null) {
+                    val errMsg = rebook.statusMessage ?: getString(R.string.history_rebook_restaurant_closed)
+                    SnackbarHelper.show(binding.root, errMsg)
+                    return@onSuccess
+                }
+
+                if (rebook.droppedItemCount > 0 || rebook.hasPriceChanges) {
+                    android.widget.Toast.makeText(
+                        requireContext(),
+                        getString(R.string.history_rebook_items_changed),
+                        android.widget.Toast.LENGTH_LONG
+                    ).show()
+                }
+
+                val res = rebook.restaurant
+                val intent = Intent(requireContext(), com.ute.quanlydatban.ui.customer.booking.BookingActivity::class.java).apply {
+                    putExtra(com.ute.quanlydatban.ui.customer.booking.BookingActivity.EXTRA_RESTAURANT_ID, res.id)
+                    putExtra(com.ute.quanlydatban.ui.customer.booking.BookingActivity.EXTRA_RESTAURANT_NAME, res.name)
+                    putExtra(com.ute.quanlydatban.ui.customer.booking.BookingActivity.EXTRA_RESTAURANT_ADDRESS, res.address)
+                    putExtra(com.ute.quanlydatban.ui.customer.booking.BookingActivity.EXTRA_RESTAURANT_OPEN_TIME, res.openTime)
+                    putExtra(com.ute.quanlydatban.ui.customer.booking.BookingActivity.EXTRA_RESTAURANT_CLOSE_TIME, res.closeTime)
+                    putExtra(com.ute.quanlydatban.ui.customer.booking.BookingActivity.EXTRA_DEPOSIT_AMOUNT, res.depositAmount)
+                    putExtra("guests", rebook.guests)
+                }
+                startActivity(intent)
+            }.onFailure { err ->
+                SnackbarHelper.show(binding.root, err.message ?: getString(R.string.history_rebook_error))
+            }
+        }
     }
 
     private fun isPastTime(dateStr: String, timeStr: String): Boolean {

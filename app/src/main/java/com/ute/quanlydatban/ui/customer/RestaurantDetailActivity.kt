@@ -30,6 +30,9 @@ class RestaurantDetailActivity : AppCompatActivity() {
 
     private lateinit var menuAdapter: MenuItemPreviewAdapter
     private var restaurantId: String = ""
+    private var isFavorite: Boolean = false
+    private var isProcessingFavorite: Boolean = false
+    private val favoriteRepository by lazy { com.ute.quanlydatban.data.repository.FavoriteRepository() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,6 +72,7 @@ class RestaurantDetailActivity : AppCompatActivity() {
             return
         }
 
+        checkFavoriteStatus()
         viewModel.loadRestaurantDetail(restaurantId)
     }
 
@@ -79,9 +83,8 @@ class RestaurantDetailActivity : AppCompatActivity() {
     }
 
     private fun setupPlaceholders() {
-        // Chừa chỗ cho nút tim (T29) và nút danh sách chờ (T32)
         binding.ivFavorite.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.detail_favorite_desc))
+            handleToggleFavorite()
         }
 
         val openWaitlist = {
@@ -99,6 +102,55 @@ class RestaurantDetailActivity : AppCompatActivity() {
 
         binding.btnJoinWaitlist.setOnClickListener {
             openWaitlist()
+        }
+    }
+
+    private fun checkFavoriteStatus() {
+        val uid = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid
+        if (!uid.isNullOrBlank() && restaurantId.isNotBlank()) {
+            favoriteRepository.isFavorite(uid, restaurantId) { fav ->
+                isFavorite = fav
+                updateFavoriteIcon(isFavorite)
+            }
+        }
+    }
+
+    private fun handleToggleFavorite() {
+        val uid = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid
+        if (uid.isNullOrBlank()) {
+            SnackbarHelper.show(binding.root, getString(R.string.favorite_login_required))
+            return
+        }
+        if (restaurantId.isBlank() || isProcessingFavorite) return
+
+        val previousState = isFavorite
+        val targetState = !previousState
+        isFavorite = targetState
+        updateFavoriteIcon(targetState)
+        isProcessingFavorite = true
+
+        favoriteRepository.toggleFavorite(uid, restaurantId) { result ->
+            isProcessingFavorite = false
+            result.onSuccess { actualState ->
+                isFavorite = actualState
+                updateFavoriteIcon(actualState)
+                val msg = if (actualState) getString(R.string.favorite_added_success) else getString(R.string.favorite_removed_success)
+                SnackbarHelper.show(binding.root, msg)
+            }.onFailure {
+                isFavorite = previousState
+                updateFavoriteIcon(previousState)
+                SnackbarHelper.show(binding.root, getString(R.string.favorite_error_toggle))
+            }
+        }
+    }
+
+    private fun updateFavoriteIcon(fav: Boolean) {
+        if (fav) {
+            binding.ivFavorite.setImageResource(R.drawable.ic_heart_filled)
+            binding.ivFavorite.clearColorFilter()
+        } else {
+            binding.ivFavorite.setImageResource(R.drawable.ic_heart_outline)
+            binding.ivFavorite.setColorFilter(ContextCompat.getColor(this, R.color.booktable_dark))
         }
     }
 
