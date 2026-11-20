@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream">
+
+    <!-- Header Toolbar -->
+    <LinearLayout
+        android:id="@+id/llHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/payment_header_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/screen_padding"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/booking_back_btn_size"
+            android:layout_height="@dimen/booking_back_btn_size"
+            android:background="@drawable/bg_booking_back_btn"
+            android:contentDescription="@string/cd_back_button"
+            android:src="@drawable/ic_auth_back" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/profile_edit_title"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/booking_title_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llHeader">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/screen_padding">
+
+            <!-- Avatar section -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingVertical="16dp">
+
+                <FrameLayout
+                    android:id="@+id/flAvatarContainer"
+                    android:layout_width="88dp"
+                    android:layout_height="88dp"
+                    android:background="@drawable/bg_avatar_circle">
+
+                    <ImageView
+                        android:id="@+id/ivAvatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/profile_edit_title"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:id="@+id/tvAvatarInitial"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_orange"
+                        android:textSize="32sp"
+                        android:textStyle="bold"
+                        tools:text="H" />
+                </FrameLayout>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnChangeAvatar"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="Đổi ảnh đại diện"
+                    android:textColor="@color/booktable_orange"
+                    android:textSize="@dimen/auth_label_text_size" />
+            </LinearLayout>
+
+            <!-- Name Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="@string/profile_edit_label_name"
+                app:boxStrokeColor="@color/booktable_orange"
+                app:hintTextColor="@color/booktable_orange">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="@dimen/auth_body_text_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Email Input (Disabled/Read-only) -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilEmail"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/profile_edit_label_email"
+                app:boxStrokeColor="@color/booktable_muted"
+                app:hintTextColor="@color/booktable_muted">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="@dimen/auth_body_text_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Phone Input -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilPhone"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/profile_edit_label_phone"
+                app:boxStrokeColor="@color/booktable_orange"
+                app:hintTextColor="@color/booktable_orange">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:inputType="phone"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="@dimen/auth_body_text_size" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Save Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSave"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/auth_button_height"
+                android:layout_marginTop="28dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/profile_edit_btn_save"
+                android:textColor="@color/booktable_surface"
+                android:textSize="@dimen/auth_button_text_size"
+                android:textStyle="bold"
+                app:backgroundTint="@color/booktable_orange"
+                app:cornerRadius="@dimen/auth_button_radius" />
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Shared States -->
+    <include
+        android:id="@+id/layoutStates"
+        layout="@layout/layout_shared_states"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

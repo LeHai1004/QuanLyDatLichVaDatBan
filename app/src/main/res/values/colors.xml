@@ -81,4 +81,8 @@
     <color name="voucher_disabled_bg">#F3F4F6</color>
     <color name="voucher_disabled_text">#9CA3AF</color>
     <color name="voucher_card_bg">#FFFFFF</color>
+
+    <!-- Profile (T8) -->
+    <color name="profile_avatar_bg">#FFE3D4</color>
+    <color name="profile_stat_border">#EBDDD2</color>
 </resources>

@@ -58,6 +58,10 @@
         <activity
             android:name=".ui.owner.OwnerPreOrderActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.customer.profile.EditProfileActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

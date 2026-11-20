@@ -427,4 +427,29 @@
     <string name="voucher_min_order_format">Đơn từ %s</string>
     <string name="voucher_max_discount_format">Tối đa %s</string>
     <string name="voucher_expiry_format">HSD: %s</string>
+
+    <!-- Profile (T8) -->
+    <string name="profile_title">Hồ sơ cá nhân</string>
+    <string name="profile_edit_title">Chỉnh sửa hồ sơ</string>
+    <string name="profile_member_since_format">Thành viên từ %s</string>
+    <string name="profile_stat_bookings">Bữa hẹn</string>
+    <string name="profile_stat_favorites">Quán yêu thích</string>
+    <string name="profile_stat_reviews">Đánh giá</string>
+    <string name="profile_menu_info">Thông tin cá nhân</string>
+    <string name="profile_menu_history">Lịch sử đặt bàn</string>
+    <string name="profile_menu_vouchers">Voucher của tôi</string>
+    <string name="profile_menu_loyalty">Điểm thành viên</string>
+    <string name="profile_menu_favorites">Quán yêu thích</string>
+    <string name="profile_menu_settings">Cài đặt</string>
+    <string name="profile_btn_logout">Đăng xuất</string>
+    <string name="profile_edit_label_name">Họ và tên</string>
+    <string name="profile_edit_label_email">Email</string>
+    <string name="profile_edit_label_phone">Số điện thoại</string>
+    <string name="profile_edit_btn_save">Lưu thay đổi</string>
+    <string name="profile_edit_save_success">Cập nhật thông tin thành công.</string>
+    <string name="profile_edit_error_name_empty">Vui lòng nhập họ và tên.</string>
+    <string name="profile_edit_error_phone_invalid">Số điện thoại không đúng định dạng (10 số, bắt đầu bằng 0).</string>
+    <string name="profile_edit_error_save_failed">Cập nhật thất bại. Vui lòng thử lại.</string>
+    <string name="profile_rank_format">Hạng %s</string>
+    <string name="profile_points_format">%d điểm</string>
 </resources>
