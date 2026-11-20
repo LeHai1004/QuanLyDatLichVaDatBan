@@ -853,6 +853,48 @@
     <string name="active_bookings_btn_navigate">Chỉ đường</string>
     <string name="active_bookings_table_format">%1$s · Tầng %2$d</string>
     <string name="active_bookings_error">Không thể tải danh sách đặt bàn.</string>
+
+    <!-- Owner Menu & MenuEdit (T13) -->
+    <string name="owner_menu_title">Thực đơn quán</string>
+    <string name="owner_menu_subtitle">Quản lý món ăn và trạng thái phục vụ</string>
+    <string name="owner_menu_add_dish">Thêm món</string>
+    <string name="owner_menu_search_hint">Tìm kiếm món ăn…</string>
+    <string name="owner_menu_category_all">Tất cả</string>
+    <string name="owner_menu_empty_title">Chưa có món ăn nào</string>
+    <string name="owner_menu_empty_desc">Bấm nút \"Thêm món\" để bắt đầu cập nhật thực đơn cho quán.</string>
+    <string name="owner_menu_empty_category">Không có món nào trong danh mục này</string>
+    <string name="owner_menu_status_available">Còn món</string>
+    <string name="owner_menu_status_unavailable">Hết món</string>
+    <string name="owner_menu_switch_available">Đang phục vụ</string>
+    <string name="owner_menu_switch_unavailable">Tạm ngưng phục vụ</string>
+    <string name="owner_menu_toast_status_updated">Đã cập nhật trạng thái món</string>
+    <string name="owner_menu_error_status_update">Cập nhật trạng thái thất bại. Vui lòng thử lại.</string>
+    <string name="owner_menu_error_load">Không thể tải thực đơn quán. Vui lòng thử lại.</string>
+    <string name="owner_menu_edit_title_add">Thêm món mới</string>
+    <string name="owner_menu_edit_title_edit">Chỉnh sửa món</string>
+    <string name="owner_menu_edit_image_hint">Chạm để chọn hoặc thay đổi ảnh món ăn</string>
+    <string name="owner_menu_edit_name_label">Tên món ăn</string>
+    <string name="owner_menu_edit_name_hint">Ví dụ: Bò né hoa đăng</string>
+    <string name="owner_menu_edit_price_label">Giá bán (VNĐ)</string>
+    <string name="owner_menu_edit_price_hint">Ví dụ: 85000</string>
+    <string name="owner_menu_edit_category_label">Danh mục món</string>
+    <string name="owner_menu_edit_category_hint">Chọn hoặc nhập danh mục</string>
+    <string name="owner_menu_edit_status_label">Trạng thái phục vụ</string>
+    <string name="owner_menu_edit_btn_save">Lưu món ăn</string>
+    <string name="owner_menu_edit_btn_delete">Xóa món ăn</string>
+    <string name="owner_menu_edit_uploading_image">Đang tải ảnh lên…</string>
+    <string name="owner_menu_edit_saving_data">Đang lưu thông tin món…</string>
+    <string name="owner_menu_edit_error_empty_name">Tên món không được để trống</string>
+    <string name="owner_menu_edit_error_invalid_price">Giá món phải là số lớn hơn 0</string>
+    <string name="owner_menu_edit_error_empty_category">Vui lòng chọn hoặc nhập danh mục</string>
+    <string name="owner_menu_edit_save_success">Lưu món ăn thành công</string>
+    <string name="owner_menu_edit_save_failure">Không thể lưu món ăn. Vui lòng thử lại.</string>
+    <string name="owner_menu_delete_dialog_title">Xác nhận xóa món?</string>
+    <string name="owner_menu_delete_dialog_message">Bạn có chắc chắn muốn xóa món \"%s\" khỏi thực đơn? Thao tác này không thể hoàn tác.</string>
+    <string name="owner_menu_delete_dialog_confirm">Xóa món</string>
+    <string name="owner_menu_delete_dialog_cancel">Hủy</string>
+    <string name="owner_menu_delete_success">Đã xóa món ăn khỏi thực đơn</string>
+    <string name="owner_menu_delete_failure">Không thể xóa món ăn. Vui lòng thử lại.</string>
     <string name="active_bookings_btn_table_order">Gọi món tại bàn</string>
 
     <!-- Table Order & QR Scan (T26) -->
