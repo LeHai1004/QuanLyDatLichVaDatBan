@@ -346,41 +346,43 @@ class CheckoutRepository(
                 throw IllegalStateException("BOOKING_NOT_FOUND")
             }
 
-            val booking = bSnap.toObject(Booking::class.java)?.copy(id = bSnap.id)
+            val booking = bSnap.toObject(Booking::class.java)?.copy(id = bookingId)
                 ?: throw IllegalStateException("BOOKING_NOT_FOUND")
 
-            // Kiểm tra trạng thái đã thanh toán trước đó chưa (idempotent chống thanh toán 2 lần)
             val currentStatus = BookingStatus.from(booking.status)
-            if (currentStatus == BookingStatus.PAID || currentStatus == BookingStatus.COMPLETED) {
-                val existingPaySnap = tx.get(paymentRef)
-                if (existingPaySnap.exists()) {
-                    return@runTransaction existingPaySnap.toObject(Payment::class.java)!!
-                }
-            }
 
-            if (currentStatus != BookingStatus.SERVING && currentStatus != BookingStatus.CHECKED_IN) {
+            if (!currentStatus.canTransitionTo(BookingStatus.PAID) && 
+                currentStatus != BookingStatus.SERVING && 
+                currentStatus != BookingStatus.CHECKED_IN &&
+                currentStatus != BookingStatus.PAID && 
+                currentStatus != BookingStatus.COMPLETED
+            ) {
                 throw IllegalStateException("STATUS_CONFLICT")
             }
 
             val paySnap = tx.get(paymentRef)
-            if (paySnap.exists()) {
-                return@runTransaction paySnap.toObject(Payment::class.java)!!
+            val payment = if (paySnap.exists()) {
+                paySnap.toObject(Payment::class.java)!!
+            } else {
+                val now = System.currentTimeMillis()
+                val newPayment = Payment(
+                    id = paymentId,
+                    bookingId = bookingId,
+                    userId = booking.userId,
+                    type = "checkout",
+                    amount = maxOf(0L, finalAmount),
+                    method = method,
+                    status = "SUCCESS",
+                    paidAt = now
+                )
+                tx.set(paymentRef, newPayment)
+                newPayment
             }
 
-            val now = System.currentTimeMillis()
-            val payment = Payment(
-                id = paymentId,
-                bookingId = bookingId,
-                userId = booking.userId,
-                type = "checkout",
-                amount = maxOf(0L, finalAmount),
-                method = method,
-                status = "SUCCESS",
-                paidAt = now
-            )
+            if (booking.status != BookingStatus.PAID.name) {
+                tx.update(bookingRef, "status", BookingStatus.PAID.name)
+            }
 
-            tx.set(paymentRef, payment)
-            tx.update(bookingRef, "status", BookingStatus.PAID.name)
             payment
         }.addOnSuccessListener { payment ->
             Log.i(TAG, "Đã thanh toán checkout thành công đơn #${bookingId}")

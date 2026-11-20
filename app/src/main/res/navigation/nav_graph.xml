@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/customerBookingFragment"
-        android:name="com.ute.quanlydatban.ui.common.PlaceholderFragment"
+        android:name="com.ute.quanlydatban.ui.customer.booking.ActiveBookingsFragment"
         android:label="@string/nav_booking">
         <argument android:name="screenTitle" app:argType="reference" android:defaultValue="@string/nav_booking" />
     </fragment>
@@ -285,5 +285,25 @@
             android:name="restaurantId"
             app:argType="string"
             android:defaultValue="" />
+    <!-- Owner Kitchen Fragment (T27) -->
+    <fragment
+        android:id="@+id/ownerKitchenFragment"
+        android:name="com.ute.quanlydatban.ui.owner.OwnerKitchenFragment"
+        android:label="@string/owner_kitchen_title">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/owner_kitchen_title" />
+    </fragment>
+
+    <!-- Owner Service Request Fragment (T28) -->
+    <fragment
+        android:id="@+id/ownerServiceRequestFragment"
+        android:name="com.ute.quanlydatban.ui.owner.OwnerServiceRequestFragment"
+        android:label="@string/owner_service_request_title">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/owner_service_request_title" />
     </fragment>
 </navigation>

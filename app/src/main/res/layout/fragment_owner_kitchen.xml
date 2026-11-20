@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream">
+
+    <!-- Header Toolbar -->
+    <LinearLayout
+        android:id="@+id/llHeader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/payment_header_height"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/screen_padding"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/booking_back_btn_size"
+            android:layout_height="@dimen/booking_back_btn_size"
+            android:background="@drawable/bg_booking_back_btn"
+            android:contentDescription="@string/cd_back_button"
+            android:src="@drawable/ic_auth_back" />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_kitchen_title"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/booking_title_size"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Offline Banner -->
+    <TextView
+        android:id="@+id/tvOfflineBanner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/owner_stat_waiting_bg"
+        android:fontFamily="@font/be_vietnam_pro"
+        android:padding="8dp"
+        android:text="@string/order_tracking_offline_banner"
+        android:textAlignment="center"
+        android:textColor="@color/owner_stat_waiting"
+        android:textSize="@dimen/auth_label_text_size"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/llHeader" />
+
+    <!-- Kitchen RecyclerView -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvKitchen"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:padding="@dimen/screen_padding"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvOfflineBanner"
+        tools:listitem="@layout/item_kitchen" />
+
+    <!-- Shared States -->
+    <include
+        android:id="@+id/layoutStates"
+        layout="@layout/layout_shared_states"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/llHeader" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
