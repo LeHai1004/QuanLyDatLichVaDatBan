@@ -162,4 +162,158 @@ class OrderRepository(
                 onResult(Result.failure(error))
             }
     }
+
+    // Lưu các món gọi tại bàn vào collection orderItems trên Firestore với source = table, status = waiting
+    fun saveTableOrderItems(
+        bookingId: String,
+        items: List<OrderItem>,
+        onResult: (Result<Unit>) -> Unit
+    ) {
+        if (bookingId.isBlank()) {
+            val err = IllegalArgumentException("bookingId không được để trống")
+            Log.e(TAG, err.message ?: "")
+            onResult(Result.failure(err))
+            return
+        }
+
+        if (items.isEmpty()) {
+            onResult(Result.success(Unit))
+            return
+        }
+
+        val batch = firestore.batch()
+        for (item in items) {
+            val id = item.id.ifEmpty { firestore.collection("orderItems").document().id }
+            val itemRef = firestore.collection("orderItems").document(id)
+            val finalItem = item.copy(
+                id = id,
+                bookingId = bookingId,
+                source = SOURCE_TABLE,
+                status = OrderItemStatus.WAITING.name
+            )
+            batch.set(itemRef, finalItem)
+        }
+
+        batch.commit()
+            .addOnSuccessListener {
+                onResult(Result.success(Unit))
+            }
+            .addOnFailureListener { error ->
+                Log.e(TAG, "Lỗi saveTableOrderItems cho booking #$bookingId: ${error.message}", error)
+                onResult(Result.failure(error))
+            }
+    }
+
+    /**
+     * Lắng nghe danh sách các món đã gọi của đơn hàng theo bookingId realtime
+     */
+    fun listenOrderItemsForBooking(
+        bookingId: String,
+        onChange: (Result<List<OrderItem>>) -> Unit
+    ): com.google.firebase.firestore.ListenerRegistration {
+        if (bookingId.isBlank()) {
+            onChange(Result.success(emptyList()))
+            return collection.whereEqualTo("bookingId", "__NONE__").addSnapshotListener { _, _ -> }
+        }
+
+        return collection.whereEqualTo("bookingId", bookingId)
+            .addSnapshotListener { snap, error ->
+                when {
+                    error != null -> {
+                        Log.e(TAG, "Lỗi listenOrderItemsForBooking($bookingId): ${error.message}", error)
+                        onChange(Result.failure(error))
+                    }
+                    snap != null -> {
+                        val list = snap.documents.mapNotNull { doc ->
+                            try {
+                                val obj = doc.toObject(OrderItem::class.java)
+                                obj?.copy(id = doc.id)
+                            } catch (_: Exception) {
+                                null
+                            }
+                        }
+                        onChange(Result.success(list))
+                    }
+                }
+            }
+    }
+
+    /**
+     * Lắng nghe danh sách tất cả các món cần làm của bếp cho nhà hàng theo realtime
+     */
+    fun listenKitchenOrdersForRestaurant(
+        restaurantId: String,
+        onChange: (Result<List<OrderItem>>) -> Unit
+    ): com.google.firebase.firestore.ListenerRegistration {
+        if (restaurantId.isBlank()) {
+            onChange(Result.success(emptyList()))
+            return collection.whereEqualTo("bookingId", "__NONE__").addSnapshotListener { _, _ -> }
+        }
+
+        return collection.addSnapshotListener { snap, error ->
+            when {
+                error != null -> {
+                    Log.e(TAG, "Lỗi listenKitchenOrdersForRestaurant($restaurantId): ${error.message}", error)
+                    onChange(Result.failure(error))
+                }
+                snap != null -> {
+                    val list = snap.documents.mapNotNull { doc ->
+                        try {
+                            val obj = doc.toObject(OrderItem::class.java)
+                            obj?.copy(id = doc.id)
+                        } catch (_: Exception) {
+                            null
+                        }
+                    }.filter { item ->
+                        val status = OrderItemStatus.from(item.status)
+                        status != OrderItemStatus.SERVED
+                    }
+                    onChange(Result.success(list))
+                }
+            }
+        }
+    }
+
+    /**
+     * Đổi trạng thái món qua Firestore Transaction để tránh race condition (2 bếp bấm cùng lúc)
+     */
+    fun updateOrderItemStatusTransaction(
+        orderItemId: String,
+        expectedCurrentStatus: OrderItemStatus,
+        nextStatus: OrderItemStatus,
+        onResult: (Result<Unit>) -> Unit
+    ) {
+        if (orderItemId.isBlank()) {
+            onResult(Result.failure(IllegalArgumentException("orderItemId không được để trống")))
+            return
+        }
+
+        val itemRef = collection.document(orderItemId)
+
+        firestore.runTransaction { transaction ->
+            val snapshot = transaction.get(itemRef)
+            if (!snapshot.exists()) {
+                throw IllegalStateException("Không tìm thấy món #$orderItemId")
+            }
+
+            val currentStatusStr = snapshot.getString("status") ?: OrderItemStatus.WAITING.name
+            val currentStatus = OrderItemStatus.from(currentStatusStr)
+
+            if (currentStatus != expectedCurrentStatus) {
+                throw IllegalStateException("STATUS_CONFLICT")
+            }
+
+            if (!currentStatus.canTransitionTo(nextStatus)) {
+                throw IllegalStateException("STATUS_CONFLICT")
+            }
+
+            transaction.update(itemRef, "status", nextStatus.name)
+            null
+        }.addOnSuccessListener {
+            onResult(Result.success(Unit))
+        }.addOnFailureListener { error ->
+            Log.e(TAG, "Lỗi updateOrderItemStatusTransaction: ${error.message}", error)
+            onResult(Result.failure(error))
+        }
+    }
 }

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ute.quanlydatban.data.model.Booking
+import com.ute.quanlydatban.data.model.BookingStatus
 import com.ute.quanlydatban.data.model.Payment
 import com.ute.quanlydatban.data.model.Restaurant
 import com.ute.quanlydatban.data.repository.CheckoutData
@@ -71,13 +72,41 @@ class OwnerCheckoutViewModel(
                     return@onSuccess
                 }
 
-                // Chuyển sang SERVING
-                checkoutRepo.transitionToServing(booking.id, currentRestaurantId) { serveResult ->
+                if (currentRestaurantId.isNotBlank() && booking.restaurantId.isNotBlank() &&
+                    booking.restaurantId != currentRestaurantId
+                ) {
                     _isScanProcessing.value = false
-                    serveResult.onSuccess { updatedBooking ->
-                        _scanSuccessBooking.value = updatedBooking
-                    }.onFailure { err ->
-                        mapScanError(err.message)
+                    mapScanError("WRONG_RESTAURANT")
+                    return@onSuccess
+                }
+
+                val status = BookingStatus.from(booking.status)
+                when (status) {
+                    BookingStatus.PENDING, BookingStatus.CONFIRMED, BookingStatus.WAITING -> {
+                        _isScanProcessing.value = false
+                        mapScanError("NOT_CHECKED_IN")
+                    }
+                    BookingStatus.PAID, BookingStatus.COMPLETED -> {
+                        _isScanProcessing.value = false
+                        mapScanError("ALREADY_PAID")
+                    }
+                    BookingStatus.CANCELLED, BookingStatus.REJECTED, BookingStatus.EXPIRED, BookingStatus.NO_SHOW -> {
+                        _isScanProcessing.value = false
+                        mapScanError("BOOKING_CANCELLED")
+                    }
+                    BookingStatus.SERVING -> {
+                        _isScanProcessing.value = false
+                        _scanSuccessBooking.value = booking
+                    }
+                    BookingStatus.CHECKED_IN -> {
+                        checkoutRepo.transitionToServing(booking.id, currentRestaurantId) { serveResult ->
+                            _isScanProcessing.value = false
+                            serveResult.onSuccess { updatedBooking ->
+                                _scanSuccessBooking.value = updatedBooking
+                            }.onFailure { err ->
+                                mapScanError(err.message)
+                            }
+                        }
                     }
                 }
             }.onFailure { err ->

@@ -125,4 +125,14 @@
     <color name="owner_table_serving">#D97706</color>
     <color name="owner_table_room_tag_text">#D97706</color>
     <color name="owner_table_room_tag_bg">#FEF3C7</color>
+
+    <!-- Order Tracking & Kitchen (T27) -->
+    <color name="order_status_waiting_bg">#F3F4F6</color>
+    <color name="order_status_waiting_text">#6B7280</color>
+    <color name="order_status_cooking_bg">#FFE5D6</color>
+    <color name="order_status_cooking_text">#E8622C</color>
+    <color name="order_status_done_bg">#FEF3C7</color>
+    <color name="order_status_done_text">#D97706</color>
+    <color name="order_status_served_bg">#E8F8F0</color>
+    <color name="order_status_served_text">#258C63</color>
 </resources>
