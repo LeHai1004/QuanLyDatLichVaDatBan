@@ -84,6 +84,13 @@ class ActiveBookingsFragment : Fragment() {
                     putExtra(TableQRScanActivity.EXTRA_RESTAURANT_ID, item.booking.restaurantId)
                 }
                 startActivity(intent)
+            },
+            onTrackOrderClick = { item ->
+                val intent = Intent(requireContext(), OrderTrackingActivity::class.java).apply {
+                    putExtra(OrderTrackingActivity.EXTRA_BOOKING_ID, item.booking.id)
+                    putExtra(OrderTrackingActivity.EXTRA_RESTAURANT_ID, item.booking.restaurantId)
+                }
+                startActivity(intent)
             }
         )
 

@@ -699,4 +699,27 @@
     <string name="table_qr_dialog_manual_cancel">Hủy</string>
     <string name="table_qr_error_invalid">Mã bàn không hợp lệ, vui lòng thử lại</string>
     <string name="table_qr_error_empty">Vui lòng nhập mã bàn.</string>
+
+    <!-- Order Tracking & Kitchen (T27) -->
+    <string name="order_tracking_title">Tiến trình phục vụ</string>
+    <string name="order_tracking_subtitle">Theo dõi món ăn theo thời gian thực</string>
+    <string name="order_tracking_section_dishes">Danh sách món ăn</string>
+    <string name="order_tracking_status_waiting">Chờ nhận</string>
+    <string name="order_tracking_status_cooking">Đang nấu</string>
+    <string name="order_tracking_status_done">Đã xong</string>
+    <string name="order_tracking_status_served">Đã ra món</string>
+    <string name="order_tracking_service_completed">Hoàn tất phục vụ</string>
+    <string name="order_tracking_service_in_progress">Bếp đang chuẩn bị món</string>
+    <string name="order_tracking_btn_call_staff">Gọi phục vụ</string>
+    <string name="order_tracking_empty_title">Chưa có món nào được gọi</string>
+    <string name="order_tracking_empty_desc">Bạn chưa gọi món ăn nào cho đơn này.</string>
+    <string name="order_tracking_offline_banner">Đang offline. Tự động cập nhật khi có mạng.</string>
+    <string name="owner_kitchen_title">Bếp &amp; Điều phối món</string>
+    <string name="owner_kitchen_btn_start_cooking">Bắt đầu nấu</string>
+    <string name="owner_kitchen_btn_done">Đã xong</string>
+    <string name="owner_kitchen_btn_served">Đã ra món</string>
+    <string name="owner_kitchen_status_conflict">Món đã được cập nhật bởi người khác</string>
+    <string name="owner_kitchen_empty_title">Bếp chưa có món cần làm</string>
+    <string name="owner_kitchen_empty_desc">Hiện không có món nào đang chờ nấu hoặc phục vụ.</string>
+    <string name="active_bookings_btn_track_order">Theo dõi món</string>
 </resources>

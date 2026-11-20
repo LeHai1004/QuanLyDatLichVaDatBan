@@ -67,9 +67,13 @@ class OwnerDashboardFragment : Fragment() {
             }
         }
 
-        // Lối vào Bếp (thẻ sau)
+        // Lối vào Bếp & Điều phối món (T27)
         binding.cardActionKitchen.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.owner_feature_coming_soon))
+            try {
+                findNavController().navigate(R.id.ownerKitchenFragment)
+            } catch (e: Exception) {
+                SnackbarHelper.show(binding.root, getString(R.string.owner_kitchen_title))
+            }
         }
 
         // Lối vào Yêu cầu phục vụ (thẻ sau)

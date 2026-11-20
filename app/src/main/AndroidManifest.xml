@@ -99,6 +99,9 @@
         <activity
             android:name=".ui.customer.booking.TableOrderActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.customer.booking.OrderTrackingActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

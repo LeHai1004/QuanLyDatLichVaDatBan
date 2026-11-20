@@ -15,7 +15,8 @@ class ActiveBookingsAdapter(
     private val onCheckInClick: (ActiveBookingDisplay) -> Unit,
     private val onViewMapClick: (ActiveBookingDisplay) -> Unit,
     private val onNavigateMapClick: (ActiveBookingDisplay) -> Unit,
-    private val onTableOrderClick: (ActiveBookingDisplay) -> Unit
+    private val onTableOrderClick: (ActiveBookingDisplay) -> Unit,
+    private val onTrackOrderClick: (ActiveBookingDisplay) -> Unit
 ) : RecyclerView.Adapter<ActiveBookingsAdapter.ActiveBookingViewHolder>() {
 
     private val items = mutableListOf<ActiveBookingDisplay>()
@@ -59,7 +60,7 @@ class ActiveBookingsAdapter(
 
             binding.tvTableName.text = item.tableName.ifEmpty { "Bàn của bạn" }
 
-            val isCheckedIn = (booking.status == BookingStatus.CHECKED_IN.name)
+            val isCheckedIn = (booking.status == BookingStatus.CHECKED_IN.name || booking.status == BookingStatus.SERVING.name)
 
             if (isCheckedIn) {
                 binding.tvStatusBadge.text = context.getString(R.string.active_bookings_status_checked_in)
@@ -73,6 +74,7 @@ class ActiveBookingsAdapter(
 
                 binding.btnNavigateMap.setOnClickListener { onNavigateMapClick(item) }
                 binding.btnTableOrder.setOnClickListener { onTableOrderClick(item) }
+                binding.btnTrackOrder.setOnClickListener { onTrackOrderClick(item) }
             } else {
                 binding.tvStatusBadge.text = context.getString(R.string.active_bookings_status_confirmed)
                 binding.tvStatusBadge.setBackgroundResource(R.drawable.bg_status_badge_open)
