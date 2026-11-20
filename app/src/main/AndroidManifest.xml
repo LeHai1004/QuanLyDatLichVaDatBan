@@ -93,6 +93,13 @@
             android:name=".ui.owner.table.OwnerTableManageActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.owner.scan.OwnerQRScanActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.owner.checkout.OwnerCheckoutActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

@@ -1,5 +1,6 @@
 package com.ute.quanlydatban.ui.owner
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -72,9 +73,10 @@ class OwnerDashboardFragment : Fragment() {
             SnackbarHelper.show(binding.root, getString(R.string.owner_feature_coming_soon))
         }
 
-        // Lối vào Yêu cầu phục vụ (thẻ sau)
+        // Lối vào Quét vé phục vụ khách (T22)
         binding.cardActionService.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.owner_feature_coming_soon))
+            val intent = Intent(requireContext(), com.ute.quanlydatban.ui.owner.scan.OwnerQRScanActivity::class.java)
+            startActivity(intent)
         }
 
         // Lối vào Báo cáo doanh thu & Thống kê

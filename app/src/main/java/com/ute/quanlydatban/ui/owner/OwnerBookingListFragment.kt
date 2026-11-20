@@ -60,6 +60,11 @@ class OwnerBookingListFragment : Fragment() {
             findNavController().navigateUp()
         }
 
+        binding.btnScanQr.setOnClickListener {
+            val intent = Intent(requireContext(), com.ute.quanlydatban.ui.owner.scan.OwnerQRScanActivity::class.java)
+            startActivity(intent)
+        }
+
         binding.btnFilterOptions.setOnClickListener {
             // Mở màn PreOrder xem danh sách món đặt trước theo ngày
             findNavController().navigate(R.id.action_ownerBookingListFragment_to_ownerPreOrderFragment)

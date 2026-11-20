@@ -665,4 +665,50 @@
     <string name="owner_table_error_cannot_delete_active">Không thể xóa bàn đang có lịch đặt hoặc đang phục vụ khách.</string>
     <string name="owner_table_save_success">Đã lưu thông tin bàn thành công!</string>
     <string name="owner_table_delete_success">Đã xóa bàn thành công.</string>
+
+    <!-- Owner Scan & Checkout (T22) -->
+    <string name="owner_scan_title">Quét vé khách hàng</string>
+    <string name="owner_scan_subtitle">Hướng camera về phía mã QR trên vé của khách</string>
+    <string name="owner_scan_manual_button">Nhập mã vé thủ công</string>
+    <string name="owner_scan_manual_dialog_title">Nhập mã vé khách hàng</string>
+    <string name="owner_scan_manual_dialog_hint">Ví dụ: BT123456 hoặc dán mã QR</string>
+    <string name="owner_scan_manual_dialog_btn_confirm">Xác nhận vé</string>
+    <string name="owner_scan_manual_dialog_btn_cancel">Hủy</string>
+    <string name="owner_scan_success_dialog_title">Xác nhận thành công!</string>
+    <string name="owner_scan_success_dialog_msg">Vé #%s hợp lệ. Đơn đã chuyển sang trạng thái Đang phục vụ.</string>
+    <string name="owner_scan_success_btn_checkout">Đi tới Hóa đơn</string>
+    <string name="owner_scan_success_btn_continue">Quét tiếp</string>
+    <string name="owner_scan_permission_denied">Cần cấp quyền camera để quét vé. Bạn có thể sử dụng nút Nhập mã thủ công bên dưới.</string>
+    <string name="owner_scan_error_not_found">Không tìm thấy thông tin vé đặt bàn trên hệ thống.</string>
+    <string name="owner_scan_error_wrong_restaurant">Vé này không thuộc về quán của bạn.</string>
+    <string name="owner_scan_error_not_checked_in">Khách chưa thực hiện check-in tại quán.</string>
+    <string name="owner_scan_error_already_serving">Vé này đã được xác nhận và đang phục vụ.</string>
+    <string name="owner_scan_error_already_paid">Vé này đã hoàn tất thanh toán / kết thúc.</string>
+    <string name="owner_scan_error_cancelled">Vé này đã bị hủy hoặc hết hạn sử dụng.</string>
+
+    <string name="owner_checkout_title">Hóa đơn thanh toán</string>
+    <string name="owner_checkout_customer_card_title">Thông tin bàn &amp; Khách</string>
+    <string name="owner_checkout_dish_list_title">Danh sách món đã gọi</string>
+    <string name="owner_checkout_dish_empty">Chưa có món nào được gọi cho bàn này.</string>
+    <string name="owner_checkout_payment_details_title">Chi tiết thanh toán</string>
+    <string name="owner_checkout_label_dishes_total">Tổng tiền món</string>
+    <string name="owner_checkout_label_deposit_paid">Đã cọc trước</string>
+    <string name="owner_checkout_label_voucher">Ưu đãi Voucher (T24)</string>
+    <string name="owner_checkout_label_points">Điểm tích lũy (T25)</string>
+    <string name="owner_checkout_voucher_placeholder">Chưa áp dụng</string>
+    <string name="owner_checkout_points_placeholder">0 điểm</string>
+    <string name="owner_checkout_label_final_amount">Khách cần trả</string>
+    <string name="owner_checkout_payment_method_title">Phương thức thanh toán</string>
+    <string name="owner_checkout_method_cash">Tiền mặt</string>
+    <string name="owner_checkout_method_vietqr">Chuyển khoản (VietQR)</string>
+    <string name="owner_checkout_btn_split_bill">Chia hóa đơn (T30)</string>
+    <string name="owner_checkout_split_bill_notice">Tính năng chia hóa đơn đang được phát triển (T30).</string>
+    <string name="owner_checkout_btn_confirm">Xác nhận thanh toán</string>
+    <string name="owner_checkout_confirm_dialog_title">Xác nhận thanh toán?</string>
+    <string name="owner_checkout_confirm_dialog_msg">Xác nhận thu %1$s bằng hình thức %2$s và hoàn tất đơn đặt bàn?</string>
+    <string name="owner_checkout_confirm_dialog_btn_ok">Xác nhận thu tiền</string>
+    <string name="owner_checkout_confirm_dialog_btn_cancel">Quay lại</string>
+    <string name="owner_checkout_success">Thanh toán hóa đơn thành công!</string>
+    <string name="owner_checkout_error_not_serving">Đơn đặt bàn chưa ở trạng thái đang phục vụ.</string>
+    <string name="owner_checkout_error_already_paid">Đơn này đã được thanh toán trước đó.</string>
 </resources>
