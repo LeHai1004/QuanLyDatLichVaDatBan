@@ -72,6 +72,12 @@
         <activity
             android:name=".ui.customer.booking.CheckInSuccessActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.customer.booking.IndoorMapPreviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.customer.booking.IndoorMapActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

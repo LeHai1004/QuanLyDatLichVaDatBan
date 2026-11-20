@@ -62,9 +62,13 @@ class CheckInSuccessActivity : AppCompatActivity() {
             SnackbarHelper.show(binding.root, getString(R.string.feature_coming_soon))
         }
 
-        // Nút "Xem đường đến bàn" (T19) - KHÔNG LÀM trong thẻ này
+        // Nút "Xem đường đến bàn" -> Mở IndoorMapActivity (T19)
         binding.btnViewMap.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.checkin_success_map_coming_soon))
+            val intent = android.content.Intent(this, IndoorMapActivity::class.java).apply {
+                putExtra(IndoorMapActivity.EXTRA_BOOKING_ID, bookingId)
+                putExtra(IndoorMapActivity.EXTRA_RESTAURANT_ID, restaurantId)
+            }
+            startActivity(intent)
         }
 
         // Nút "Quét QR bàn gọi món" (T26) - KHÔNG LÀM trong thẻ này
