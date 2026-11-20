@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/booktable_cream"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvDialogTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_voucher_dialog_add_title"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/home_section_title_size"
+            android:textStyle="bold" />
+
+        <!-- Code -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_voucher_label_code"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/auth_label_text_size" />
+
+        <EditText
+            android:id="@+id/etCode"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/auth_register_field_height"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_owner_input_field"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:hint="@string/voucher_input_hint"
+            android:inputType="textCapCharacters"
+            android:paddingHorizontal="12dp"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/auth_body_text_size" />
+
+        <!-- Type -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_voucher_label_type"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/auth_label_text_size" />
+
+        <RadioGroup
+            android:id="@+id/rgType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rbAmount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/owner_voucher_type_amount"
+                android:textSize="@dimen/auth_label_text_size" />
+
+            <RadioButton
+                android:id="@+id/rbPercent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/owner_voucher_type_percent"
+                android:textSize="@dimen/auth_label_text_size" />
+        </RadioGroup>
+
+        <!-- Value -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_voucher_label_value"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/auth_label_text_size" />
+
+        <EditText
+            android:id="@+id/etValue"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/auth_register_field_height"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_owner_input_field"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:hint="@string/owner_voucher_label_value"
+            android:inputType="number"
+            android:paddingHorizontal="12dp"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/auth_body_text_size" />
+
+        <!-- Min Order -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_voucher_label_min_order"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/auth_label_text_size" />
+
+        <EditText
+            android:id="@+id/etMinOrder"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/auth_register_field_height"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_owner_input_field"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:hint="@string/owner_voucher_label_min_order"
+            android:inputType="number"
+            android:paddingHorizontal="12dp"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/auth_body_text_size" />
+
+        <!-- Max Discount -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_voucher_label_max_discount"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/auth_label_text_size" />
+
+        <EditText
+            android:id="@+id/etMaxDiscount"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/auth_register_field_height"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_owner_input_field"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:hint="@string/owner_voucher_label_max_discount"
+            android:inputType="number"
+            android:paddingHorizontal="12dp"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/auth_body_text_size" />
+
+        <!-- Expiry -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_voucher_label_expiry"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/auth_label_text_size" />
+
+        <EditText
+            android:id="@+id/etExpiry"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/auth_register_field_height"
+            android:layout_marginTop="4dp"
+            android:background="@drawable/bg_owner_input_field"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:hint="@string/owner_voucher_label_expiry"
+            android:inputType="date"
+            android:paddingHorizontal="12dp"
+            android:textColor="@color/booktable_dark"
+            android:textSize="@dimen/auth_body_text_size" />
+
+        <!-- Active Checkbox -->
+        <CheckBox
+            android:id="@+id/cbActive"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:checked="true"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:text="@string/owner_voucher_title"
+            android:textSize="@dimen/auth_label_text_size" />
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancel"
+                style="@style/Widget.MaterialComponents.Button.TextButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/owner_booking_reject_dialog_btn_cancel"
+                android:textColor="@color/booktable_muted" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/owner_btn_save"
+                android:textColor="@color/booktable_surface"
+                app:backgroundTint="@color/booktable_orange"
+                app:cornerRadius="@dimen/voucher_btn_radius" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -333,6 +333,35 @@
                         tools:text="100.000đ" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/llVoucherDiscountRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/payment_voucher_discount_label"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/tvVoucherDiscountAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_orange"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        tools:text="-20.000đ" />
+                </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"

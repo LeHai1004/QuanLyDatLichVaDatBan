@@ -336,6 +336,23 @@
                 app:backgroundTint="@color/booktable_orange"
                 app:cornerRadius="@dimen/owner_button_radius" />
 
+            <!-- Manage Vouchers Button -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnManageVouchers"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/owner_button_height"
+                android:layout_marginTop="@dimen/owner_form_gap"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/owner_profile_manage_vouchers"
+                android:textAllCaps="false"
+                android:textColor="@color/booktable_orange"
+                android:textSize="@dimen/owner_button_text_size"
+                android:textStyle="bold"
+                app:backgroundTint="@color/booktable_surface"
+                app:cornerRadius="@dimen/owner_button_radius"
+                app:strokeColor="@color/booktable_orange"
+                app:strokeWidth="1dp" />
+
             <!-- Logout Button -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnLogout"

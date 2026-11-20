@@ -63,15 +63,30 @@ data class Payment(
     val status: String = "pending", val paidAt: Long = 0
 )
 
+object VoucherType {
+    const val AMOUNT = "amount"
+    const val PERCENT = "percent"
+}
+
 data class Voucher(
-    val id: String = "", val code: String = "", val type: String = "amount",
-    val value: Long = 0, val minOrder: Long = 0, val expiry: Long = 0,
+    val id: String = "",
+    val restaurantId: String = "",       // rỗng = mọi quán
+    val code: String = "",
+    val type: String = VoucherType.AMOUNT,
+    val value: Long = 0,
+    val minOrder: Long = 0,
+    val maxDiscount: Long = 0,           // 0 = không giới hạn
+    val expiry: Long = 0,
+    val active: Boolean = true,
     val pointsCost: Long = 0
 )
 
 data class UserVoucher(
-    val id: String = "", val userId: String = "", val voucherId: String = "",
-    val used: Boolean = false
+    val id: String = "",
+    val userId: String = "",
+    val voucherId: String = "",
+    val used: Boolean = false,
+    val usedAt: Long = 0
 )
 
 data class LoyaltyTransaction(
