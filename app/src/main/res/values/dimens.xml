@@ -451,4 +451,9 @@
     <dimen name="owner_booking_btn_action_height">52dp</dimen>
     <dimen name="owner_booking_avatar_size">36dp</dimen>
     <dimen name="owner_detail_avatar_size">42dp</dimen>
+
+    <!-- Owner Bottom Navigation -->
+    <dimen name="nav_owner_pill_width">52dp</dimen>
+    <dimen name="nav_owner_pill_height">28dp</dimen>
+    <dimen name="nav_owner_pill_radius">14dp</dimen>
 </resources>

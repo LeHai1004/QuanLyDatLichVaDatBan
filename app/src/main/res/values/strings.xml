@@ -386,4 +386,9 @@
     <string name="owner_preorder_status_waiting">Chờ làm</string>
     <string name="owner_booking_today_format">Hôm nay, %s</string>
     <string name="cd_filter_options">Bộ lọc</string>
+
+    <!-- Owner Bottom Navigation -->
+    <string name="nav_owner_bookings">Lượt đặt</string>
+    <string name="nav_owner_table">Bàn</string>
+    <string name="nav_owner_menu">Thực đơn</string>
 </resources>

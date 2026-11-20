@@ -35,96 +35,256 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
-            android:id="@+id/llNavItem1"
-            android:layout_width="0dp"
+            android:id="@+id/llNavCustomer"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center"
-            tools:ignore="UseCompoundDrawables">
-            <ImageView
-                android:id="@+id/ivNav1"
-                android:layout_width="@dimen/nav_icon_size"
-                android:layout_height="@dimen/nav_icon_size"
-                android:src="@drawable/ic_nav_home"
-                android:contentDescription="@string/nav_home" />
-            <TextView
-                android:id="@+id/tvNav1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/nav_label_margin_top"
-                android:text="@string/nav_home"
-                android:textSize="@dimen/nav_label_text_size"
-                android:textColor="@color/booktable_muted" />
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/llNavItem1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                tools:ignore="UseCompoundDrawables">
+                <ImageView
+                    android:id="@+id/ivNav1"
+                    android:layout_width="@dimen/nav_icon_size"
+                    android:layout_height="@dimen/nav_icon_size"
+                    android:src="@drawable/ic_nav_home"
+                    android:contentDescription="@string/nav_home" />
+                <TextView
+                    android:id="@+id/tvNav1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/nav_label_margin_top"
+                    android:text="@string/nav_home"
+                    android:textSize="@dimen/nav_label_text_size"
+                    android:textColor="@color/booktable_muted" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llNavItem2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/ivNav2"
+                    android:layout_width="@dimen/nav_icon_size"
+                    android:layout_height="@dimen/nav_icon_size"
+                    android:src="@drawable/ic_nav_calendar"
+                    android:contentDescription="@string/nav_booking" />
+                <TextView
+                    android:id="@+id/tvNav2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/nav_label_margin_top"
+                    android:text="@string/nav_booking"
+                    android:textSize="@dimen/nav_label_text_size"
+                    android:textColor="@color/booktable_muted" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llNavItem3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/ivNav3"
+                    android:layout_width="@dimen/nav_icon_size"
+                    android:layout_height="@dimen/nav_icon_size"
+                    android:src="@drawable/ic_nav_history"
+                    android:contentDescription="@string/nav_history" />
+                <TextView
+                    android:id="@+id/tvNav3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/nav_label_margin_top"
+                    android:text="@string/nav_history"
+                    android:textSize="@dimen/nav_label_text_size"
+                    android:textColor="@color/booktable_muted" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llNavItem4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/ivNav4"
+                    android:layout_width="@dimen/nav_icon_size"
+                    android:layout_height="@dimen/nav_icon_size"
+                    android:src="@drawable/ic_nav_profile"
+                    android:contentDescription="@string/nav_profile" />
+                <TextView
+                    android:id="@+id/tvNav4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/nav_label_margin_top"
+                    android:text="@string/nav_profile"
+                    android:textSize="@dimen/nav_label_text_size"
+                    android:textColor="@color/booktable_muted" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/llNavItem2"
-            android:layout_width="0dp"
+            android:id="@+id/llNavOwner"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-            <ImageView
-                android:id="@+id/ivNav2"
-                android:layout_width="@dimen/nav_icon_size"
-                android:layout_height="@dimen/nav_icon_size"
-                android:src="@drawable/ic_nav_calendar"
-                android:contentDescription="@string/nav_booking" />
-            <TextView
-                android:id="@+id/tvNav2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/nav_label_margin_top"
-                android:text="@string/nav_booking"
-                android:textSize="@dimen/nav_label_text_size"
-                android:textColor="@color/booktable_muted" />
-        </LinearLayout>
+            android:orientation="horizontal"
+            android:visibility="gone">
 
-        <LinearLayout
-            android:id="@+id/llNavItem3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-            <ImageView
-                android:id="@+id/ivNav3"
-                android:layout_width="@dimen/nav_icon_size"
-                android:layout_height="@dimen/nav_icon_size"
-                android:src="@drawable/ic_nav_history"
-                android:contentDescription="@string/nav_history" />
-            <TextView
-                android:id="@+id/tvNav3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/nav_label_margin_top"
-                android:text="@string/nav_history"
-                android:textSize="@dimen/nav_label_text_size"
-                android:textColor="@color/booktable_muted" />
-        </LinearLayout>
+            <LinearLayout
+                android:id="@+id/llOwnerNavItem1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <FrameLayout
+                    android:id="@+id/flOwnerNavIcon1"
+                    android:layout_width="@dimen/nav_owner_pill_width"
+                    android:layout_height="@dimen/nav_owner_pill_height">
+                    <ImageView
+                        android:id="@+id/ivOwnerNav1"
+                        android:layout_width="@dimen/nav_icon_size"
+                        android:layout_height="@dimen/nav_icon_size"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_nav_owner_overview"
+                        android:contentDescription="@string/nav_owner_overview" />
+                </FrameLayout>
+                <TextView
+                    android:id="@+id/tvOwnerNav1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/nav_label_margin_top"
+                    android:text="@string/nav_owner_overview"
+                    android:textSize="@dimen/nav_label_text_size"
+                    android:textColor="@color/booktable_muted" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/llNavItem4"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:orientation="vertical"
-            android:gravity="center">
-            <ImageView
-                android:id="@+id/ivNav4"
-                android:layout_width="@dimen/nav_icon_size"
-                android:layout_height="@dimen/nav_icon_size"
-                android:src="@drawable/ic_nav_profile"
-                android:contentDescription="@string/nav_profile" />
-            <TextView
-                android:id="@+id/tvNav4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/nav_label_margin_top"
-                android:text="@string/nav_profile"
-                android:textSize="@dimen/nav_label_text_size"
-                android:textColor="@color/booktable_muted" />
+            <LinearLayout
+                android:id="@+id/llOwnerNavItem2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <FrameLayout
+                    android:id="@+id/flOwnerNavIcon2"
+                    android:layout_width="@dimen/nav_owner_pill_width"
+                    android:layout_height="@dimen/nav_owner_pill_height">
+                    <ImageView
+                        android:id="@+id/ivOwnerNav2"
+                        android:layout_width="@dimen/nav_icon_size"
+                        android:layout_height="@dimen/nav_icon_size"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_nav_calendar"
+                        android:contentDescription="@string/nav_owner_bookings" />
+                </FrameLayout>
+                <TextView
+                    android:id="@+id/tvOwnerNav2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/nav_label_margin_top"
+                    android:text="@string/nav_owner_bookings"
+                    android:textSize="@dimen/nav_label_text_size"
+                    android:textColor="@color/booktable_muted" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llOwnerNavItem3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <FrameLayout
+                    android:id="@+id/flOwnerNavIcon3"
+                    android:layout_width="@dimen/nav_owner_pill_width"
+                    android:layout_height="@dimen/nav_owner_pill_height">
+                    <ImageView
+                        android:id="@+id/ivOwnerNav3"
+                        android:layout_width="@dimen/nav_icon_size"
+                        android:layout_height="@dimen/nav_icon_size"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_nav_owner_table"
+                        android:contentDescription="@string/nav_owner_table" />
+                </FrameLayout>
+                <TextView
+                    android:id="@+id/tvOwnerNav3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/nav_label_margin_top"
+                    android:text="@string/nav_owner_table"
+                    android:textSize="@dimen/nav_label_text_size"
+                    android:textColor="@color/booktable_muted" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llOwnerNavItem4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <FrameLayout
+                    android:id="@+id/flOwnerNavIcon4"
+                    android:layout_width="@dimen/nav_owner_pill_width"
+                    android:layout_height="@dimen/nav_owner_pill_height">
+                    <ImageView
+                        android:id="@+id/ivOwnerNav4"
+                        android:layout_width="@dimen/nav_icon_size"
+                        android:layout_height="@dimen/nav_icon_size"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_nav_owner_menu"
+                        android:contentDescription="@string/nav_owner_menu" />
+                </FrameLayout>
+                <TextView
+                    android:id="@+id/tvOwnerNav4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/nav_label_margin_top"
+                    android:text="@string/nav_owner_menu"
+                    android:textSize="@dimen/nav_label_text_size"
+                    android:textColor="@color/booktable_muted" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llOwnerNavItem5"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+                <FrameLayout
+                    android:id="@+id/flOwnerNavIcon5"
+                    android:layout_width="@dimen/nav_owner_pill_width"
+                    android:layout_height="@dimen/nav_owner_pill_height">
+                    <ImageView
+                        android:id="@+id/ivOwnerNav5"
+                        android:layout_width="@dimen/nav_icon_size"
+                        android:layout_height="@dimen/nav_icon_size"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_nav_profile"
+                        android:contentDescription="@string/nav_profile" />
+                </FrameLayout>
+                <TextView
+                    android:id="@+id/tvOwnerNav5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/nav_label_margin_top"
+                    android:text="@string/nav_profile"
+                    android:textSize="@dimen/nav_label_text_size"
+                    android:textColor="@color/booktable_muted" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
