@@ -167,12 +167,26 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnTableOrder"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/booking_chip_height"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="4dp"
                 android:layout_weight="1"
                 android:fontFamily="@font/be_vietnam_pro"
                 android:text="@string/active_bookings_btn_table_order"
+                android:textColor="@color/booktable_orange"
+                android:textSize="@dimen/booking_chip_text_size"
+                app:cornerRadius="@dimen/booking_chip_radius"
+                app:strokeColor="@color/booktable_orange" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnTrackOrder"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/booking_chip_height"
+                android:layout_marginStart="4dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/active_bookings_btn_track_order"
                 android:textColor="@color/booktable_surface"
                 android:textSize="@dimen/booking_chip_text_size"
                 app:backgroundTint="@color/booktable_orange"

@@ -497,4 +497,8 @@
     <!-- Owner Table Map & Manage (T21) -->
     <dimen name="owner_table_grid_spacing">10dp</dimen>
     <dimen name="owner_table_card_radius">14dp</dimen>
+
+    <!-- Order Tracking & Kitchen (T27) -->
+    <dimen name="order_tracking_card_radius">16dp</dimen>
+    <dimen name="kitchen_card_radius">14dp</dimen>
 </resources>

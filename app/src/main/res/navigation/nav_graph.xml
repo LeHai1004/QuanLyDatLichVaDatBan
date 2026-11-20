@@ -265,4 +265,15 @@
             app:argType="reference"
             android:defaultValue="@string/profile_menu_favorites" />
     </fragment>
+
+    <!-- Owner Kitchen Fragment (T27) -->
+    <fragment
+        android:id="@+id/ownerKitchenFragment"
+        android:name="com.ute.quanlydatban.ui.owner.OwnerKitchenFragment"
+        android:label="@string/owner_kitchen_title">
+        <argument
+            android:name="screenTitle"
+            app:argType="reference"
+            android:defaultValue="@string/owner_kitchen_title" />
+    </fragment>
 </navigation>
