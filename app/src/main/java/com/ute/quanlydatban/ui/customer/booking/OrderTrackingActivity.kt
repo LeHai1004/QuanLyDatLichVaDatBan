@@ -66,7 +66,8 @@ class OrderTrackingActivity : AppCompatActivity() {
         binding.rvOrderTracking.adapter = adapter
 
         binding.btnCallStaff.setOnClickListener {
-            SnackbarHelper.show(binding.root, "Tính năng gọi phục vụ đang phát triển (T28)")
+            val bottomSheet = CustomerServiceRequestBottomSheet.newInstance(bookingId, restaurantId)
+            bottomSheet.show(supportFragmentManager, "SERVICE_REQUEST_BOTTOM_SHEET")
         }
 
         binding.layoutStates.btnRetry.setOnClickListener {
