@@ -92,6 +92,17 @@
     <color name="voucher_disabled_text">#9CA3AF</color>
     <color name="voucher_card_bg">#FFFFFF</color>
 
+    <!-- Indoor Map (T19) -->
+    <color name="map_corridor_bg">#FFF8F2</color>
+    <color name="map_room_bg">#FFF8F2</color>
+    <color name="map_room_border">#EBDDD2</color>
+    <color name="map_room_booked_bg">#FFE3D4</color>
+    <color name="map_room_booked_border">#E8622C</color>
+    <color name="map_route_line">#E8622C</color>
+    <color name="map_user_dot">#2E9E6B</color>
+    <color name="map_user_halo">#4D2E9E6B</color>
+    <color name="map_stairs_color">#8A7468</color>
+
     <!-- Profile (T8) -->
     <color name="profile_avatar_bg">#FFE3D4</color>
     <color name="profile_stat_border">#EBDDD2</color>

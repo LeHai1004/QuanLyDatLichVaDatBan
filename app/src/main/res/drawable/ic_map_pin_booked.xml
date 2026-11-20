@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="26dp"
+    android:height="34dp"
+    android:viewportWidth="26"
+    android:viewportHeight="34">
+    <!-- Pin icon màu cam viền sắc nét -->
+    <path
+        android:fillColor="@color/booktable_orange"
+        android:pathData="M13,0C5.82,0 0,5.82 0,13c0,9.75 13,21 13,21s13,-11.25 13,-21c0,-7.18 -5.82,-13 -13,-13z" />
+    <path
+        android:fillColor="@color/white"
+        android:pathData="M13,13m-5,0a5,5 0 1,0 10,0a5,5 0 1,0 -10,0" />
+</vector>

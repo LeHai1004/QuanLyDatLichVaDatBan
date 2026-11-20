@@ -485,6 +485,39 @@
     <string name="voucher_max_discount_format">Tối đa %s</string>
     <string name="voucher_expiry_format">HSD: %s</string>
 
+    <!-- Indoor Map (T19) -->
+    <string name="indoor_map_preview_title">Sơ đồ quán</string>
+    <string name="indoor_map_navigation_title">Đường đến bàn bạn</string>
+    <string name="indoor_map_select_floor">Chọn tầng</string>
+    <string name="indoor_map_floor_1">Tầng 1</string>
+    <string name="indoor_map_floor_2">Tầng 2</string>
+    <string name="indoor_map_legend_booked">Phòng đã đặt</string>
+    <string name="indoor_map_legend_table_booked">Bàn đã đặt</string>
+    <string name="indoor_map_legend_my_location">Vị trí của bạn</string>
+    <string name="indoor_map_legend_illustration">Sơ đồ minh họa</string>
+    <string name="indoor_map_preview_note">Khi đến quán, quét mã QR ở cửa để được chỉ đường</string>
+    <string name="indoor_map_btn_arrived">Tôi đã đến quán</string>
+    <string name="indoor_map_instruction_walk_stairs">Đi thẳng từ cầu thang</string>
+    <string name="indoor_map_instruction_follow_dots">Theo đường nét đứt để đến phòng của bạn</string>
+    <string name="indoor_map_instruction_go_stairs">Đi theo hướng cầu thang để lên Tầng 2</string>
+    <string name="indoor_map_instruction_stairs_down">Đi theo hướng cầu thang để xuống Tầng 1</string>
+    <string name="indoor_map_detail_format">Còn %1$dm · %2$s</string>
+    <string name="indoor_map_turn_right">Đi dọc hành lang, rẽ vào bàn của bạn.</string>
+    <string name="indoor_map_call_staff">Cần hỗ trợ? Gọi nhân viên nhà Bếp</string>
+    <string name="indoor_map_btn_scan_location">Quét vị trí mới</string>
+    <string name="indoor_map_btn_manual_location">Nhập mã vị trí</string>
+    <string name="indoor_map_error_not_checked_in">Đơn đặt bàn chưa check-in. Đang hiển thị chế độ xem trước sơ đồ quán.</string>
+    <string name="indoor_map_error_no_path">Không tìm được đường đi tới bàn</string>
+    <string name="indoor_map_error_load_failed">Không thể tải dữ liệu bản đồ. Vui lòng thử lại.</string>
+    <string name="indoor_map_btn_retry">Thử lại</string>
+    <string name="indoor_map_dialog_manual_title">Cập nhật vị trí hiện tại</string>
+    <string name="indoor_map_dialog_manual_message">Nhập mã vị trí QR (ví dụ: LOC_01, BAN_01 hoặc dán nội dung QR) để chỉ đường:</string>
+    <string name="indoor_map_dialog_manual_hint">Ví dụ: LOC_01 hoặc BAN_01</string>
+    <string name="indoor_map_dialog_manual_confirm">Cập nhật đường đi</string>
+    <string name="indoor_map_dialog_manual_cancel">Hủy</string>
+    <string name="indoor_map_stairs_label">CẦU THANG</string>
+    <string name="indoor_map_you_are_here">Bạn đang ở đây</string>
+
     <!-- Profile (T8) -->
     <string name="profile_title">Hồ sơ cá nhân</string>
     <string name="profile_edit_title">Chỉnh sửa hồ sơ</string>

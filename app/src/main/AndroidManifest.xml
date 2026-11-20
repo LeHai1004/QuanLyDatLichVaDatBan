@@ -72,6 +72,13 @@
         <activity
             android:name=".ui.customer.booking.CheckInSuccessActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.customer.booking.IndoorMapPreviewActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.customer.booking.IndoorMapActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.customer.profile.EditProfileActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />

@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llIndoorMapRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/booktable_cream"
+    android:orientation="vertical">
+
+    <!-- Page Header (h=72dp) -->
+    <LinearLayout
+        android:id="@+id/llHeader"
+        android:layout_width="match_parent"
+        android:layout_height="72dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
+
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/booking_back_btn_size"
+            android:layout_height="@dimen/booking_back_btn_size"
+            android:background="@drawable/bg_booking_back_btn"
+            android:contentDescription="@string/cd_back_button"
+            android:src="@drawable/ic_auth_back" />
+
+        <LinearLayout
+            android:id="@+id/llPageTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvBrandAndRestaurant"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:maxLines="1"
+                android:textColor="@color/booktable_active"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                tools:text="BookTable · Bếp Nhà · Thảo Điền" />
+
+            <TextView
+                android:id="@+id/tvHeaderTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:text="@string/indoor_map_navigation_title"
+                android:textColor="@color/booktable_dark"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Nút quét vị trí QR mới dọc đường -->
+        <ImageButton
+            android:id="@+id/btnScanQr"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:background="@drawable/bg_booking_back_btn"
+            android:contentDescription="@string/indoor_map_btn_scan_location"
+            android:src="@drawable/ic_map_qr_scan" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/svContent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="16dp">
+
+            <!-- Chọn tầng (Floor selector) -->
+            <RelativeLayout
+                android:id="@+id/rlFloorSelector"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvFloorSelectLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/indoor_map_select_floor"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/llFloorTabs"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/btnFloor1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:background="@drawable/bg_filter_chip"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:gravity="center"
+                        android:paddingHorizontal="14dp"
+                        android:text="@string/indoor_map_floor_1"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/btnFloor2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="36dp"
+                        android:layout_marginStart="8dp"
+                        android:background="@drawable/bg_booking_btn_primary"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:gravity="center"
+                        android:paddingHorizontal="14dp"
+                        android:text="@string/indoor_map_floor_2"
+                        android:textColor="@color/white"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <!-- Navigation instruction card (hộp cam nhạt #FFE3D4) -->
+            <LinearLayout
+                android:id="@+id/llInstructionCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_checkin_room_badge"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="12dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:contentDescription="@string/indoor_map_instruction_walk_stairs"
+                    android:src="@drawable/ic_map_direction_walk" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvInstructionTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_active"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        tools:text="Đi thẳng từ cầu thang" />
+
+                    <TextView
+                        android:id="@+id/tvInstructionSub"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/indoor_map_instruction_follow_dots"
+                        android:textColor="@color/booktable_active"
+                        android:textSize="10sp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Khung vẽ bản đồ sàn -->
+            <FrameLayout
+                android:id="@+id/flMapContainer"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/indoor_map_canvas_height"
+                android:layout_marginTop="14dp">
+
+                <com.ute.quanlydatban.ui.customer.booking.IndoorMapView
+                    android:id="@+id/indoorMapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white" />
+
+                <ProgressBar
+                    android:id="@+id/pbLoading"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:indeterminateTint="@color/booktable_orange"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <!-- Map legend -->
+            <RelativeLayout
+                android:id="@+id/rlLegend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <!-- Vị trí của bạn -->
+                    <ImageView
+                        android:layout_width="10dp"
+                        android:layout_height="10dp"
+                        android:contentDescription="@string/indoor_map_legend_my_location"
+                        android:src="@drawable/ic_map_my_location" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/indoor_map_legend_my_location"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="10sp" />
+
+                    <!-- Bàn đã đặt -->
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="18dp"
+                        android:layout_marginStart="12dp"
+                        android:contentDescription="@string/indoor_map_legend_booked"
+                        android:src="@drawable/ic_map_pin_booked" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/indoor_map_legend_booked"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/indoor_map_legend_illustration"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="10sp" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom action (h=98dp) -->
+    <LinearLayout
+        android:id="@+id/llBottomAction"
+        android:layout_width="match_parent"
+        android:layout_height="98dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingHorizontal="20dp"
+        android:paddingVertical="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="42dp"
+                android:layout_height="46dp"
+                android:background="@drawable/bg_checkin_room_badge">
+
+                <ImageView
+                    android:layout_width="22dp"
+                    android:layout_height="22dp"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/indoor_map_navigation_title"
+                    android:src="@drawable/ic_map_direction_walk" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="11dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvRemainingDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    tools:text="Còn 25m · Phòng VIP 2 · Tầng 2" />
+
+                <TextView
+                    android:id="@+id/tvTurnNote"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/indoor_map_turn_right"
+                    android:textColor="@color/booktable_muted"
+                    android:textSize="10sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvCallStaff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/be_vietnam_pro"
+            android:gravity="center"
+            android:text="@string/indoor_map_call_staff"
+            android:textColor="@color/booktable_active"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+</LinearLayout>
