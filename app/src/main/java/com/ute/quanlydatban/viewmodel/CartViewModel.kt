@@ -5,12 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.auth.FirebaseAuth
 import com.ute.quanlydatban.data.model.MenuItem
 import com.ute.quanlydatban.data.model.OrderItem
 import com.ute.quanlydatban.data.model.OrderItemStatus
 import com.ute.quanlydatban.data.model.Restaurant
+import com.ute.quanlydatban.data.model.Voucher
 import com.ute.quanlydatban.data.repository.BookingRepository
 import com.ute.quanlydatban.data.repository.OrderRepository
+import com.ute.quanlydatban.data.repository.VoucherRepository
 
 data class CartItemUiModel(
     val menuItem: MenuItem,
@@ -22,7 +25,8 @@ data class CartItemUiModel(
 
 class CartViewModel(
     private val orderRepository: OrderRepository = OrderRepository(),
-    private val bookingRepository: BookingRepository = BookingRepository()
+    private val bookingRepository: BookingRepository = BookingRepository(),
+    private val voucherRepository: VoucherRepository = VoucherRepository()
 ) : ViewModel() {
 
     var bookingId: String = ""
@@ -50,6 +54,12 @@ class CartViewModel(
     private val _cartItems = MutableLiveData<Map<String, CartItemUiModel>>(emptyMap())
     val cartItems: LiveData<Map<String, CartItemUiModel>> = _cartItems
 
+    private val _appliedVoucher = MutableLiveData<Voucher?>()
+    val appliedVoucher: LiveData<Voucher?> = _appliedVoucher
+
+    private val _discountAmount = MutableLiveData<Long>(0L)
+    val discountAmount: LiveData<Long> = _discountAmount
+
     private val _isLoading = MutableLiveData<Boolean>(false)
     val isLoading: LiveData<Boolean> = _isLoading
 
@@ -66,14 +76,14 @@ class CartViewModel(
         guests: Long? = null,
         deposit: Long? = null
     ) {
-        bookingId = bId
-        restaurantId = rId
-        tableName = tName.orEmpty()
-        bookingDate = date.orEmpty()
-        bookingTime = time.orEmpty()
-        bookingGuests = guests ?: 2L
+        if (bId.isNotBlank()) bookingId = bId
+        if (rId.isNotBlank()) restaurantId = rId
+        if (!tName.isNullOrBlank()) tableName = tName
+        if (!date.isNullOrBlank()) bookingDate = date
+        if (!time.isNullOrBlank()) bookingTime = time
+        if (guests != null && guests > 0) bookingGuests = guests
 
-        if (rName != null && _restaurant.value == null) {
+        if (!rName.isNullOrBlank() && (_restaurant.value == null || _restaurant.value?.name.isNullOrBlank())) {
             _restaurant.value = Restaurant(
                 id = rId,
                 name = rName,
@@ -81,15 +91,17 @@ class CartViewModel(
             )
         }
 
-        if (rId.isNotBlank()) {
-            bookingRepository.getRestaurant(rId) { resResult ->
+        if (restaurantId.isNotBlank()) {
+            bookingRepository.getRestaurant(restaurantId) { resResult ->
                 resResult.onSuccess { res ->
                     if (res != null) {
                         _restaurant.value = res
                     }
                 }
             }
-            loadMenu(rId)
+            if (_menuItems.value.isNullOrEmpty()) {
+                loadMenu(restaurantId)
+            }
         }
     }
 
@@ -113,7 +125,6 @@ class CartViewModel(
         _selectedCategory.value = category
     }
 
-    // Thêm món vào giỏ
     fun addItem(item: MenuItem): Boolean {
         if (!item.available) {
             _errorMessage.value = "Món này hiện đang tạm hết."
@@ -125,7 +136,6 @@ class CartViewModel(
         if (existing != null) {
             current[item.id] = existing.copy(quantity = existing.quantity + 1)
         } else {
-            // Chụp giá unitPrice tại thời điểm gọi để sau này giá menu đổi không làm sai đơn
             current[item.id] = CartItemUiModel(
                 menuItem = item,
                 quantity = 1,
@@ -133,10 +143,10 @@ class CartViewModel(
             )
         }
         _cartItems.value = current
+        revalidateVoucher()
         return true
     }
 
-    // Giảm số lượng món
     fun decreaseItem(menuItemId: String) {
         val current = _cartItems.value?.toMutableMap() ?: return
         val existing = current[menuItemId] ?: return
@@ -146,42 +156,83 @@ class CartViewModel(
             current.remove(menuItemId)
         }
         _cartItems.value = current
+        revalidateVoucher()
     }
 
-    // Xóa hoàn toàn món khỏi giỏ
     fun removeItem(menuItemId: String) {
         val current = _cartItems.value?.toMutableMap() ?: return
         current.remove(menuItemId)
         _cartItems.value = current
+        revalidateVoucher()
     }
 
-    // Tổng số lượng món
+    private fun revalidateVoucher() {
+        val voucher = _appliedVoucher.value ?: return
+        val subtotal = getSubtotal()
+        if (subtotal < voucher.minOrder) {
+            _appliedVoucher.value = null
+            _discountAmount.value = 0L
+            _errorMessage.value = "Tạm tính đơn hàng chưa đạt điều kiện tối thiểu của voucher."
+        } else {
+            val discount = voucherRepository.calculateDiscount(voucher, subtotal)
+            _discountAmount.value = discount
+        }
+    }
+
+    fun applyVoucherCode(code: String) {
+        val userId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
+        val subtotal = getSubtotal()
+        _isLoading.value = true
+        _errorMessage.value = null
+
+        voucherRepository.applyVoucherCode(userId, code, subtotal, restaurantId) { result ->
+            _isLoading.value = false
+            result.onSuccess { voucher ->
+                val discount = voucherRepository.calculateDiscount(voucher, subtotal)
+                _appliedVoucher.value = voucher
+                _discountAmount.value = discount
+            }.onFailure { err ->
+                _errorMessage.value = err.message ?: "Mã voucher không hợp lệ."
+            }
+        }
+    }
+
+    fun removeVoucher() {
+        _appliedVoucher.value = null
+        _discountAmount.value = 0L
+    }
+
     fun getTotalQuantity(): Long {
         return _cartItems.value?.values?.sumOf { it.quantity } ?: 0L
     }
 
-    // Tổng tiền tạm tính của giỏ
     fun getSubtotal(): Long {
         return _cartItems.value?.values?.sumOf { it.totalPrice } ?: 0L
     }
 
-    // Tiền đặt cọc của quán
+    fun getDiscount(): Long {
+        return _discountAmount.value ?: 0L
+    }
+
+    fun getFinalTotal(): Long {
+        return maxOf(0L, getSubtotal() - getDiscount())
+    }
+
     fun getDeposit(): Long {
         return _restaurant.value?.depositAmount ?: 100_000L
     }
 
-    // Lưu món ăn đặt trước lên Firestore
     fun submitPreOrder(onComplete: (Boolean) -> Unit) {
         val currentCart = _cartItems.value.orEmpty()
-        // Giỏ trống: vẫn cho tiếp tục sang bước cọc/thanh toán (không bắt buộc chọn món)
-        if (currentCart.isEmpty()) {
-            onComplete(true)
+
+        if (bookingId.isBlank() || restaurantId.isBlank()) {
+            _errorMessage.value = "Thiếu thông tin đơn đặt bàn hoặc nhà hàng."
+            onComplete(false)
             return
         }
 
-        if (bookingId.isBlank()) {
-            _errorMessage.value = "Không tìm thấy mã đơn đặt bàn."
-            onComplete(false)
+        if (currentCart.isEmpty()) {
+            onComplete(true)
             return
         }
 
@@ -218,11 +269,12 @@ class CartViewModel(
 
     class Factory(
         private val orderRepo: OrderRepository = OrderRepository(),
-        private val bookingRepo: BookingRepository = BookingRepository()
+        private val bookingRepo: BookingRepository = BookingRepository(),
+        private val voucherRepo: VoucherRepository = VoucherRepository()
     ) : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            return CartViewModel(orderRepo, bookingRepo) as T
+            return CartViewModel(orderRepo, bookingRepo, voucherRepo) as T
         }
     }
 }

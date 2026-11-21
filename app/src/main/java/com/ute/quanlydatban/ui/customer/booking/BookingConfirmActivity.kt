@@ -3,6 +3,7 @@ package com.ute.quanlydatban.ui.customer.booking
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -76,14 +77,9 @@ class BookingConfirmActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // Nút "Mời bạn bè" (T31)
+        // Nút "Mời bạn bè"
         binding.btnInviteFriends.setOnClickListener {
-            val intent = com.ute.quanlydatban.ui.customer.invite.InviteFriendsActivity.newIntent(
-                this,
-                bookingId,
-                restaurantId
-            )
-            startActivity(intent)
+            SnackbarHelper.show(binding.root, getString(R.string.feature_coming_soon))
         }
     }
 
@@ -110,6 +106,16 @@ class BookingConfirmActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.voucherDiscount.observe(this) { discount ->
+            if (discount != null && discount > 0L) {
+                binding.llVoucherDiscountRow.visibility = View.VISIBLE
+                binding.tvVoucherDiscountAmount.text = "−${formatMoney(discount)}"
+            } else {
+                binding.llVoucherDiscountRow.visibility = View.GONE
+            }
+            binding.tvRemainingAmount.text = formatMoney(viewModel.calculateRemainingAmount())
+        }
+
         viewModel.orderItems.observe(this) { items ->
             val container = binding.llDishesContainer
             container.removeAllViews()
@@ -126,6 +132,14 @@ class BookingConfirmActivity : AppCompatActivity() {
                     dishBinding.tvDishTotalPrice.text = formatMoney(item.qty * item.unitPrice)
                     container.addView(dishBinding.root)
                 }
+            }
+
+            val discount = viewModel.voucherDiscount.value ?: 0L
+            if (discount > 0L) {
+                binding.llVoucherDiscountRow.visibility = View.VISIBLE
+                binding.tvVoucherDiscountAmount.text = "−${formatMoney(discount)}"
+            } else {
+                binding.llVoucherDiscountRow.visibility = View.GONE
             }
 
             val remaining = viewModel.calculateRemainingAmount()

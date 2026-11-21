@@ -99,6 +99,7 @@
             android:name=".ui.owner.menu.OwnerMenuEditActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".ui.owner.scan.OwnerQRScanActivity"
             android:exported="false" />
         <activity
@@ -117,6 +118,7 @@
             android:name=".ui.customer.waitlist.WaitlistActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".ui.customer.booking.TableQRScanActivity"
             android:exported="false" />
         <activity

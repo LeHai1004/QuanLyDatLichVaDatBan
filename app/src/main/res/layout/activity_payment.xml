@@ -280,9 +280,70 @@
                 android:orientation="vertical"
                 android:padding="@dimen/payment_card_padding">
 
+                <!-- Subtotal Row -->
+                <LinearLayout
+                    android:id="@+id/llSubtotalRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/cart_subtotal_format"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/tvSubtotalAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        tools:text="867.000đ" />
+                </LinearLayout>
+
+                <!-- Discount Row -->
+                <LinearLayout
+                    android:id="@+id/llVoucherDiscountRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/payment_voucher_discount_label"
+                        android:textColor="@color/booktable_muted"
+                        android:textSize="11sp" />
+
+                    <TextView
+                        android:id="@+id/tvVoucherDiscountAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_orange"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        tools:text="-86.700đ" />
+                </LinearLayout>
+
+                <!-- Total Row -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
 
@@ -303,9 +364,10 @@
                         android:textColor="@color/booktable_dark"
                         android:textSize="12sp"
                         android:textStyle="bold"
-                        tools:text="357.000đ" />
+                        tools:text="780.300đ" />
                 </LinearLayout>
 
+                <!-- Deposit Row -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -333,41 +395,13 @@
                         tools:text="100.000đ" />
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/llVoucherDiscountRow"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/be_vietnam_pro"
-                        android:text="@string/payment_voucher_discount_label"
-                        android:textColor="@color/booktable_muted"
-                        android:textSize="11sp" />
-
-                    <TextView
-                        android:id="@+id/tvVoucherDiscountAmount"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/be_vietnam_pro"
-                        android:textColor="@color/booktable_orange"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        tools:text="-20.000đ" />
-                </LinearLayout>
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginVertical="8dp"
                     android:background="@color/payment_divider" />
 
+                <!-- Remaining Row -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -391,7 +425,7 @@
                         android:textColor="@color/booktable_active"
                         android:textSize="12sp"
                         android:textStyle="bold"
-                        tools:text="257.000đ" />
+                        tools:text="680.300đ" />
                 </LinearLayout>
             </LinearLayout>
 

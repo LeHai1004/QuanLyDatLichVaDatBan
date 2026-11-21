@@ -52,7 +52,7 @@ class VoucherFragment : Fragment() {
 
     private fun setupUI() {
         binding.btnBack.setOnClickListener {
-            findNavController().navigateUp()
+            goBack()
         }
 
         adapter = VoucherAdapter { voucher ->
@@ -63,7 +63,7 @@ class VoucherFragment : Fragment() {
                     RESULT_VOUCHER_CODE to voucher.code
                 )
             )
-            findNavController().navigateUp()
+            goBack()
         }
 
         binding.rvVouchers.layoutManager = LinearLayoutManager(requireContext())
@@ -80,6 +80,18 @@ class VoucherFragment : Fragment() {
 
         binding.layoutStates.btnRetry.setOnClickListener {
             viewModel.loadVouchers(restaurantId)
+        }
+    }
+
+    private fun goBack() {
+        if (parentFragmentManager.backStackEntryCount > 0) {
+            parentFragmentManager.popBackStack()
+        } else {
+            try {
+                findNavController().navigateUp()
+            } catch (_: Exception) {
+                activity?.finish()
+            }
         }
     }
 
@@ -111,7 +123,7 @@ class VoucherFragment : Fragment() {
                         RESULT_VOUCHER_CODE to voucher.code
                     )
                 )
-                findNavController().navigateUp()
+                goBack()
             }
         }
 

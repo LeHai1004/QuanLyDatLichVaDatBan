@@ -185,6 +185,71 @@
                 android:nestedScrollingEnabled="false"
                 tools:listitem="@layout/item_cart" />
 
+            <!-- Voucher Card -->
+            <LinearLayout
+                android:id="@+id/llVoucherCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/booking_screen_padding"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/bg_cart_summary_card"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/cart_summary_padding">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="@string/voucher_title"
+                    android:src="@drawable/ic_voucher_ticket"
+                    app:tint="@color/booktable_orange" />
+
+                <TextView
+                    android:id="@+id/tvVoucherTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:text="@string/voucher_title"
+                    android:textColor="@color/booktable_dark"
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvVoucherSelected"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/be_vietnam_pro"
+                    android:textColor="@color/booktable_orange"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:visibility="gone"
+                    tools:text="-20.000đ"
+                    tools:visibility="visible" />
+
+                <ImageButton
+                    android:id="@+id/btnRemoveVoucher"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="6dp"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/voucher_title"
+                    android:src="@drawable/ic_minus"
+                    android:visibility="gone"
+                    app:tint="@color/booktable_muted"
+                    tools:visibility="visible" />
+
+                <ImageView
+                    android:id="@+id/ivVoucherArrow"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="6dp"
+                    android:contentDescription="@string/voucher_title"
+                    android:src="@drawable/ic_auth_arrow"
+                    app:tint="@color/booktable_muted" />
+            </LinearLayout>
+
             <!-- Price Summary Card -->
             <LinearLayout
                 android:id="@+id/llPriceSummary"
@@ -223,6 +288,38 @@
                         android:textSize="@dimen/cart_summary_text_size"
                         android:textStyle="bold"
                         tools:text="357.000đ" />
+                </LinearLayout>
+
+                <!-- Discount Row -->
+                <LinearLayout
+                    android:id="@+id/llDiscountRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="7dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        android:id="@+id/tvDiscountLabel"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/payment_voucher_discount_label"
+                        android:textColor="@color/booktable_orange"
+                        android:textSize="@dimen/cart_summary_text_size" />
+
+                    <TextView
+                        android:id="@+id/tvDiscountAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:textColor="@color/booktable_orange"
+                        android:textSize="@dimen/cart_summary_text_size"
+                        android:textStyle="bold"
+                        tools:text="-50.000đ" />
                 </LinearLayout>
 
                 <!-- Room Surcharge Row -->
