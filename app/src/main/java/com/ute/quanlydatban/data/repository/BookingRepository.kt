@@ -19,6 +19,7 @@ class BookingRepository(
         const val ROLE_CUSTOMER = "customer"
         const val ROLE_OWNER = "owner"
         const val BOOKING_HOLD_TIMEOUT_MS = 10 * 60 * 1000L // 10 phút giữ bàn
+        const val REVIEW_WINDOW_MS = 7L * 24 * 60 * 60 * 1000L // 7 ngày
         const val DEFAULT_DEPOSIT_AMOUNT = 100_000L
         private const val TAG = "BookingRepository"
     }
@@ -666,6 +667,8 @@ class BookingRepository(
             return
         }
 
+        cleanupExpiredPaidBookings(userId)
+
         collection.whereEqualTo("userId", userId).get()
             .addOnSuccessListener { snapshot ->
                 val bookings = snapshot.toObjects(Booking::class.java)
@@ -674,6 +677,33 @@ class BookingRepository(
             .addOnFailureListener { error ->
                 Log.e(TAG, "Lỗi getUserBookings: ${error.message}", error)
                 onResult(Result.failure(error))
+            }
+    }
+
+    private fun cleanupExpiredPaidBookings(userId: String) {
+        if (userId.isBlank()) return
+        val now = System.currentTimeMillis()
+        val expiredThreshold = now - REVIEW_WINDOW_MS
+
+        collection
+            .whereEqualTo("userId", userId)
+            .whereEqualTo("status", BookingStatus.PAID.name)
+            .get()
+            .addOnSuccessListener { snapshot ->
+                for (doc in snapshot.documents) {
+                    val booking = doc.toObject(Booking::class.java)?.copy(id = doc.id) ?: continue
+                    val baseTime = if (booking.checkedInAt > 0) booking.checkedInAt else booking.createdAt
+                    if (baseTime in 1..expiredThreshold) {
+                        updateBookingStatus(booking.id, BookingStatus.COMPLETED) { result ->
+                            result.onSuccess {
+                                Log.i(TAG, "Đã tự động chuyển đơn PAID quá hạn đánh giá sang COMPLETED: #${booking.id}")
+                            }
+                        }
+                    }
+                }
+            }
+            .addOnFailureListener { error ->
+                Log.e(TAG, "Lỗi cleanupExpiredPaidBookings: ${error.message}", error)
             }
     }
 

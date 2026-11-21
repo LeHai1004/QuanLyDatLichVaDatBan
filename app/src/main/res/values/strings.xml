@@ -1008,4 +1008,7 @@
     <!-- Service Request BILL lock (T28 Fix) -->
     <string name="service_request_error_bill_requested">Bạn đã yêu cầu tính tiền, không thể gửi thêm yêu cầu.</string>
     <string name="service_request_bill_handled">Đã tính tiền</string>
+
+    <!-- Review Expired (Review Fix) -->
+    <string name="review_expired_error">Đơn đã hết hạn đánh giá</string>
 </resources>
