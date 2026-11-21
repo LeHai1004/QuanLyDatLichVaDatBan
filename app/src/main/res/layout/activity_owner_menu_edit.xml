@@ -148,7 +148,7 @@
                             android:fontFamily="@font/be_vietnam_pro"
                             android:hint="@string/owner_menu_edit_name_label"
                             android:importantForAutofill="no"
-                            android:inputType="textCapSentences"
+                            android:inputType="text|textCapSentences"
                             android:textColor="@color/booktable_dark" />
                     </com.google.android.material.textfield.TextInputLayout>
 
