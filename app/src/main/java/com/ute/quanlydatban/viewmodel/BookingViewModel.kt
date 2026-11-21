@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ListenerRegistration
 import com.ute.quanlydatban.data.model.Booking
 import com.ute.quanlydatban.data.model.DiningTable
 import com.ute.quanlydatban.data.model.Restaurant
@@ -186,27 +187,45 @@ class BookingViewModel(
         return h * 60 + m
     }
 
-    // Tải danh sách bàn của quán
-    fun loadTables(restaurantId: String) {
+    private var tablesListener: ListenerRegistration? = null
+
+    fun startListeningTables(restaurantId: String) {
         if (restaurantId.isBlank()) return
 
         _isLoading.value = true
         _errorMessage.value = null
 
-        bookingRepository.getTables(restaurantId) { result ->
-            _isLoading.value = false
-            result.onSuccess { tableList ->
+        tablesListener?.remove()
+        tablesListener = bookingRepository.observeTables(
+            restaurantId = restaurantId,
+            onChange = { tableList ->
+                _isLoading.value = false
                 _tables.value = tableList
-                // Thiết lập tầng ban đầu nếu chưa có
                 val availableFloors = tableList.map { it.floor }.distinct().sorted()
                 if (availableFloors.isNotEmpty() && !availableFloors.contains(_selectedFloor.value)) {
                     _selectedFloor.value = availableFloors.first()
                 }
-            }.onFailure { error ->
-                Log.e("BookingViewModel", "Lỗi loadTables: ${error.message}", error)
+            },
+            onError = { error ->
+                _isLoading.value = false
+                Log.e("BookingViewModel", "Lỗi observeTables: ${error.message}", error)
                 _errorMessage.value = "Không thể tải danh sách bàn. Vui lòng thử lại."
             }
-        }
+        )
+    }
+
+    fun stopListeningTables() {
+        tablesListener?.remove()
+        tablesListener = null
+    }
+
+    fun clearSelectedTable() {
+        _selectedTable.value = null
+    }
+
+    // Tải danh sách bàn của quán
+    fun loadTables(restaurantId: String) {
+        startListeningTables(restaurantId)
     }
 
     // Xác nhận đặt bàn (gọi Transaction Firestore)
@@ -263,6 +282,11 @@ class BookingViewModel(
     fun clearMessages() {
         _errorMessage.value = null
         _conflictMessage.value = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stopListeningTables()
     }
 
     class Factory(

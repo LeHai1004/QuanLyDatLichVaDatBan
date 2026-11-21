@@ -199,6 +199,35 @@ class BookingRepository(
             }
     }
 
+    fun observeTables(
+        restaurantId: String,
+        onChange: (List<DiningTable>) -> Unit,
+        onError: (Exception) -> Unit
+    ): com.google.firebase.firestore.ListenerRegistration {
+        if (restaurantId.isBlank()) {
+            onChange(emptyList())
+            return firestore.collection("restaurants").whereEqualTo("id", "__NONE__").addSnapshotListener { _, _ -> }
+        }
+
+        cleanupExpiredBookings(restaurantId)
+
+        return firestore.collection("restaurants").document(restaurantId)
+            .collection("tables")
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Log.e(TAG, "observeTables error: ${error.message}", error)
+                    onError(error)
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    val tables = snapshot.documents.mapNotNull { doc ->
+                        doc.toObject(DiningTable::class.java)?.copy(id = doc.id)
+                    }
+                    onChange(tables)
+                }
+            }
+    }
+
     // Giải phóng bàn cho các đơn quá 10 phút chưa hoàn tất cọc
     private fun cleanupExpiredBookings(restaurantId: String) {
         val now = System.currentTimeMillis()
