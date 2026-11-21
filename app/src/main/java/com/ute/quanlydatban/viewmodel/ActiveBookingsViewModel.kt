@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ListenerRegistration
 import com.ute.quanlydatban.data.model.Booking
 import com.ute.quanlydatban.data.repository.BookingRepository
 
@@ -28,7 +29,9 @@ class ActiveBookingsViewModel(
     private val _errorMessage = MutableLiveData<String?>()
     val errorMessage: LiveData<String?> = _errorMessage
 
-    fun loadActiveBookings() {
+    private var activeBookingsListener: ListenerRegistration? = null
+
+    fun startListening() {
         val userId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
         if (userId.isBlank()) {
             _activeBookings.value = emptyList()
@@ -39,12 +42,14 @@ class ActiveBookingsViewModel(
         _errorMessage.value = null
 
         bookingRepository.cleanupNoShowBookings(userId = userId)
-        bookingRepository.getActiveBookingsForCustomer(userId) { result ->
-            result.onSuccess { bookings ->
+        activeBookingsListener?.remove()
+        activeBookingsListener = bookingRepository.observeActiveBookingsForCustomer(
+            userId = userId,
+            onResult = { bookings ->
+                _isLoading.value = false
                 if (bookings.isEmpty()) {
-                    _isLoading.value = false
                     _activeBookings.value = emptyList()
-                    return@onSuccess
+                    return@observeActiveBookingsForCustomer
                 }
 
                 val items = mutableListOf<ActiveBookingDisplay>()
@@ -61,8 +66,6 @@ class ActiveBookingsViewModel(
                                     items.add(ActiveBookingDisplay(b, rName, tName))
                                     counter++
                                     if (counter == total) {
-                                        _isLoading.postValue(false)
-                                        // Giữ nguyên thứ tự ban đầu
                                         val mapOrder = bookings.associateBy { it.id }
                                         val sorted = items.sortedByDescending { mapOrder[it.booking.id]?.createdAt ?: 0L }
                                         _activeBookings.postValue(sorted)
@@ -74,7 +77,6 @@ class ActiveBookingsViewModel(
                                 items.add(ActiveBookingDisplay(b, rName, "Chưa xếp bàn"))
                                 counter++
                                 if (counter == total) {
-                                    _isLoading.postValue(false)
                                     val mapOrder = bookings.associateBy { it.id }
                                     val sorted = items.sortedByDescending { mapOrder[it.booking.id]?.createdAt ?: 0L }
                                     _activeBookings.postValue(sorted)
@@ -83,16 +85,31 @@ class ActiveBookingsViewModel(
                         }
                     }
                 }
-            }.onFailure { err ->
+            },
+            onError = { err ->
                 _isLoading.value = false
-                Log.e("ActiveBookingsVM", "Lỗi loadActiveBookings: ${err.message}", err)
+                Log.e("ActiveBookingsVM", "Lỗi observeActiveBookings: ${err.message}", err)
                 _errorMessage.value = err.message ?: "Không thể tải danh sách đặt bàn."
             }
-        }
+        )
+    }
+
+    fun stopListening() {
+        activeBookingsListener?.remove()
+        activeBookingsListener = null
+    }
+
+    fun loadActiveBookings() {
+        startListening()
     }
 
     fun clearError() {
         _errorMessage.value = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stopListening()
     }
 
     class Factory(

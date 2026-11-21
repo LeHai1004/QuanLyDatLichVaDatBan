@@ -43,9 +43,14 @@ class ActiveBookingsFragment : Fragment() {
         observeViewModel()
     }
 
-    override fun onResume() {
-        super.onResume()
-        viewModel.loadActiveBookings()
+    override fun onStart() {
+        super.onStart()
+        viewModel.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.stopListening()
     }
 
     private fun setupRecyclerView() {
