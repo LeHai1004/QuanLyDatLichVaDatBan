@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.ute.quanlydatban.R
+import com.ute.quanlydatban.data.model.BookingStatus
 import com.ute.quanlydatban.databinding.ActivityReviewBinding
 import com.ute.quanlydatban.util.SnackbarHelper
 import com.ute.quanlydatban.viewmodel.ReviewViewModel
@@ -121,6 +122,10 @@ class ReviewActivity : AppCompatActivity() {
 
         viewModel.booking.observe(this) { b ->
             if (b != null) {
+                if (b.status == BookingStatus.COMPLETED.name) {
+                    SnackbarHelper.show(binding.root, getString(R.string.review_expired_error))
+                    binding.btnSubmitReview.isEnabled = false
+                }
                 binding.tvBookingSummary.text = "Bữa ăn ngày ${b.date} · ${b.time} · Bàn ${b.tableId}"
             }
         }
