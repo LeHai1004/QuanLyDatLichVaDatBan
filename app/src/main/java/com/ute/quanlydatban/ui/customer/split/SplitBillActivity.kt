@@ -73,6 +73,18 @@ class SplitBillActivity : AppCompatActivity() {
         viewModel.initialize(currentBookingId, totalAmount)
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (currentBookingId.isNotBlank()) {
+            viewModel.startObserving(currentBookingId)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.stopObserving()
+    }
+
     private fun setupToolbar() {
         binding.ivBack.setOnClickListener {
             finish()
