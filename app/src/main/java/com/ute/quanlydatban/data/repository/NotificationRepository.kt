@@ -220,6 +220,56 @@ class NotificationRepository(
             }
     }
 
+    fun observeNotifications(
+        userId: String,
+        onResult: (List<AppNotification>) -> Unit,
+        onError: (Exception) -> Unit
+    ): com.google.firebase.firestore.ListenerRegistration {
+        if (userId.isBlank()) {
+            onResult(emptyList())
+            return firestore.collection(NOTIFICATIONS_COLLECTION).whereEqualTo("userId", "__NONE__").addSnapshotListener { _, _ -> }
+        }
+
+        return firestore.collection(NOTIFICATIONS_COLLECTION)
+            .whereEqualTo("userId", userId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Log.e("NotiRepo", "observeNotifications error: ${error.message}", error)
+                    onError(error)
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    val list = snapshot.documents.mapNotNull { doc ->
+                        try {
+                            val obj = doc.toObject(AppNotification::class.java)
+                            val idVal = if (obj?.id.isNullOrBlank()) doc.id else obj.id
+                            val userIdVal = doc.getString("userId").orEmpty().ifEmpty { obj?.userId.orEmpty() }
+                            val titleVal = doc.getString("title").orEmpty().ifEmpty { obj?.title.orEmpty() }
+                            val bodyVal = doc.getString("body").orEmpty().ifEmpty { obj?.body.orEmpty() }
+                            val typeVal = doc.getString("type").orEmpty().ifEmpty { obj?.type.orEmpty() }
+                            val targetIdVal = doc.getString("targetId").orEmpty().ifEmpty { obj?.targetId.orEmpty() }
+                            val readVal = doc.getBoolean("read") ?: obj?.read ?: false
+                            val createdAtVal = doc.getLong("createdAt") ?: obj?.createdAt ?: 0L
+
+                            AppNotification(
+                                id = idVal,
+                                userId = userIdVal,
+                                type = typeVal,
+                                title = titleVal,
+                                body = bodyVal,
+                                read = readVal,
+                                createdAt = createdAtVal,
+                                targetId = targetIdVal
+                            )
+                        } catch (e: Exception) {
+                            null
+                        }
+                    }.sortedByDescending { it.createdAt }
+                    onResult(list)
+                }
+            }
+    }
+
     // Đánh dấu một thông báo là đã đọc
     fun markAsRead(
         notificationId: String,

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.firestore.ListenerRegistration
 import com.ute.quanlydatban.R
 import com.ute.quanlydatban.data.model.AppNotification
 import com.ute.quanlydatban.data.repository.NotificationRepository
@@ -30,11 +31,13 @@ class NotificationViewModel(
     private val _navigationRequest = MutableLiveData<NavigationRequest?>()
     val navigationRequest: LiveData<NavigationRequest?> = _navigationRequest
 
+    private var notificationsListener: ListenerRegistration? = null
+
     init {
-        loadNotifications()
+        startListening()
     }
 
-    fun loadNotifications() {
+    fun startListening() {
         val userId = repository.currentUserId
         if (userId.isNullOrBlank()) {
             _isLoading.value = false
@@ -45,18 +48,33 @@ class NotificationViewModel(
 
         _isLoading.value = true
         _errorMessage.value = null
-        repository.getWhere("userId", userId) { result ->
-            _isLoading.value = false
-            result.fold(
-                onSuccess = { list ->
-                    _notifications.value =
-                        list.filter { it.userId == userId }.sortedByDescending { it.createdAt }
-                },
-                onFailure = { error ->
-                    _errorMessage.value = error.toViMessage()
-                }
-            )
-        }
+
+        notificationsListener?.remove()
+        notificationsListener = repository.observeNotifications(
+            userId = userId,
+            onResult = { list ->
+                _isLoading.value = false
+                _notifications.value = list
+            },
+            onError = { error ->
+                _isLoading.value = false
+                _errorMessage.value = error.toViMessage()
+            }
+        )
+    }
+
+    fun stopListening() {
+        notificationsListener?.remove()
+        notificationsListener = null
+    }
+
+    fun loadNotifications() {
+        startListening()
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stopListening()
     }
 
     fun markAsRead(notification: AppNotification) {

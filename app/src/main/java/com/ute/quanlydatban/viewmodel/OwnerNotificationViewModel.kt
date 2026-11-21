@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.firestore.ListenerRegistration
 import com.ute.quanlydatban.data.model.AppNotification
 import com.ute.quanlydatban.data.repository.NotificationRepository
 import com.ute.quanlydatban.util.toViMessage
@@ -38,28 +39,40 @@ class OwnerNotificationViewModel(
     private val _navigateToBookingId = MutableLiveData<String?>(null)
     val navigateToBookingId: LiveData<String?> = _navigateToBookingId
 
+    private var notificationsListener: ListenerRegistration? = null
+
     init {
-        loadNotifications()
+        startListening()
     }
 
-    // Tải danh sách thông báo cho chủ quán
-    fun loadNotifications() {
+    fun startListening() {
         val userId = repository.currentUserId ?: "demo_owner_id"
         _isLoading.value = true
         _errorMessage.value = null
 
-        repository.getNotifications(userId) { result ->
-            _isLoading.value = false
-            result.fold(
-                onSuccess = { list ->
-                    rawList = list
-                    applyFilter(_selectedFilter.value ?: "all")
-                },
-                onFailure = { error ->
-                    _errorMessage.value = error.toViMessage()
-                }
-            )
-        }
+        notificationsListener?.remove()
+        notificationsListener = repository.observeNotifications(
+            userId = userId,
+            onResult = { list ->
+                _isLoading.value = false
+                rawList = list
+                applyFilter(_selectedFilter.value ?: "all")
+            },
+            onError = { error ->
+                _isLoading.value = false
+                _errorMessage.value = error.toViMessage()
+            }
+        )
+    }
+
+    fun stopListening() {
+        notificationsListener?.remove()
+        notificationsListener = null
+    }
+
+    // Tải danh sách thông báo cho chủ quán
+    fun loadNotifications() {
+        startListening()
     }
 
     // Lọc danh sách theo "Tất cả" hoặc "Chưa đọc"
@@ -132,6 +145,11 @@ class OwnerNotificationViewModel(
         _navigateToBookingId.value = null
         _bookingDeletedWarning.value = null
         _actionMessage.value = null
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stopListening()
     }
 
     companion object {
