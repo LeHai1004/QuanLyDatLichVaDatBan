@@ -116,9 +116,6 @@ class PaymentActivity : AppCompatActivity() {
                 .addToBackStack(null)
                 .commit()
         }
-        binding.llPointsRow.setOnClickListener {
-            SnackbarHelper.show(binding.root, getString(R.string.feature_coming_soon))
-        }
     }
 
     private fun observeViewModel() {
