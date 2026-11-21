@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.ute.quanlydatban.data.model.Booking
 import com.ute.quanlydatban.data.model.BookingStatus
 import com.ute.quanlydatban.data.model.OrderItem
@@ -365,67 +366,83 @@ class OwnerBookingViewModel(
         }
     }
 
-    // Tải chi tiết 1 đơn cụ thể
-    fun loadBookingDetail(bookingId: String) {
+    private var bookingDetailListener: ListenerRegistration? = null
+
+    fun startListeningBooking(bookingId: String) {
         if (bookingId.isBlank()) return
         _isLoading.value = true
+        _errorMessage.value = null
 
-        bookingRepo.get(bookingId) { bResult ->
-            bResult.onSuccess { booking ->
+        bookingDetailListener?.remove()
+        bookingDetailListener = bookingRepo.observeBooking(
+            bookingId = bookingId,
+            onChange = { booking ->
+                _isLoading.value = false
                 if (booking != null) {
-                    orderRepo.getWhere("bookingId", bookingId) { oResult ->
-                        _isLoading.value = false
-                        val orderItems = oResult.getOrDefault(emptyList())
-
-                        // Lấy thông tin user
-                        val firestore = FirebaseFirestore.getInstance()
-                        var cName = "Khách hàng"
-                        var cPhone = "090 123 4567"
-
-                        val initialDetail = BookingWithDetails(
-                            booking = booking,
-                            customerName = cName,
-                            customerPhone = cPhone,
-                            tableName = booking.tableId,
-                            roomType = "Bàn ăn",
-                            preOrderItems = orderItems
-                        )
-                        _currentBookingDetail.value = initialDetail
-
-                        if (booking.userId.isNotBlank()) {
-                            firestore.collection("users").document(booking.userId).get().addOnSuccessListener { uSnap ->
-                                val u = uSnap.toObject(User::class.java)
-                                if (u != null) {
-                                    _currentBookingDetail.value = _currentBookingDetail.value?.copy(
-                                        customerName = u.name.ifEmpty { "Khách #${booking.id.takeLast(4)}" },
-                                        customerPhone = u.phone.ifEmpty { "090 123 4567" }
-                                    )
-                                }
-                            }
-                        }
-
-                        if (booking.restaurantId.isNotBlank() && booking.tableId.isNotBlank()) {
-                            firestore.collection("restaurants").document(booking.restaurantId)
-                                .collection("tables").document(booking.tableId).get().addOnSuccessListener { tSnap ->
-                                    val tName = tSnap.getString("name") ?: booking.tableId
-                                    val tType = tSnap.getString("type") ?: "table"
-                                    _currentBookingDetail.value = _currentBookingDetail.value?.copy(
-                                        tableName = tName,
-                                        roomType = if (tType == "room") "Phòng VIP" else "Khu bàn ăn"
-                                    )
-                                }
-                        }
-                    }
+                    loadBookingDetailInternal(booking)
                 } else {
-                    _isLoading.value = false
                     _errorMessage.value = "Không tìm thấy đơn đặt bàn #$bookingId"
                 }
-            }.onFailure { err ->
+            },
+            onError = { err ->
                 _isLoading.value = false
-                Log.e(TAG, "Lỗi loadBookingDetail: ${err.message}", err)
-                _errorMessage.value = "Lỗi khi tải thông tin đơn đặt bàn."
+                _errorMessage.value = err.message ?: "Lỗi khi tải thông tin đơn đặt bàn."
+            }
+        )
+    }
+
+    fun stopListeningBooking() {
+        bookingDetailListener?.remove()
+        bookingDetailListener = null
+    }
+
+    private fun loadBookingDetailInternal(booking: Booking) {
+        orderRepo.getWhere("bookingId", booking.id) { oResult ->
+            val orderItems = oResult.getOrDefault(emptyList())
+
+            val firestore = FirebaseFirestore.getInstance()
+            val cName = "Khách hàng"
+            val cPhone = "090 123 4567"
+
+            val initialDetail = BookingWithDetails(
+                booking = booking,
+                customerName = cName,
+                customerPhone = cPhone,
+                tableName = booking.tableId,
+                roomType = "Bàn ăn",
+                preOrderItems = orderItems
+            )
+            _currentBookingDetail.value = initialDetail
+
+            if (booking.userId.isNotBlank()) {
+                firestore.collection("users").document(booking.userId).get().addOnSuccessListener { uSnap ->
+                    val u = uSnap.toObject(User::class.java)
+                    if (u != null) {
+                        _currentBookingDetail.value = _currentBookingDetail.value?.copy(
+                            customerName = u.name.ifEmpty { "Khách #${booking.id.takeLast(4)}" },
+                            customerPhone = u.phone.ifEmpty { "090 123 4567" }
+                        )
+                    }
+                }
+            }
+
+            if (booking.restaurantId.isNotBlank() && booking.tableId.isNotBlank()) {
+                firestore.collection("restaurants").document(booking.restaurantId)
+                    .collection("tables").document(booking.tableId).get().addOnSuccessListener { tSnap ->
+                        val tName = tSnap.getString("name") ?: booking.tableId
+                        val tType = tSnap.getString("type") ?: "table"
+                        _currentBookingDetail.value = _currentBookingDetail.value?.copy(
+                            tableName = tName,
+                            roomType = if (tType == "room") "Phòng VIP" else "Khu bàn ăn"
+                        )
+                    }
             }
         }
+    }
+
+    // Tải chi tiết 1 đơn cụ thể
+    fun loadBookingDetail(bookingId: String) {
+        startListeningBooking(bookingId)
     }
 
     // Xác nhận đơn
@@ -492,6 +509,7 @@ class OwnerBookingViewModel(
         super.onCleared()
         bookingsListenerRegistration?.remove()
         bookingsListenerRegistration = null
+        stopListeningBooking()
     }
 
     class Factory(

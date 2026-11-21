@@ -53,8 +53,18 @@ class OwnerBookingDetailActivity : AppCompatActivity() {
         setupTopBar()
         setupListeners()
         observeViewModel()
+    }
 
-        viewModel.loadBookingDetail(bookingId)
+    override fun onStart() {
+        super.onStart()
+        if (bookingId.isNotBlank()) {
+            viewModel.startListeningBooking(bookingId)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.stopListeningBooking()
     }
 
     private fun setupTopBar() {
@@ -69,18 +79,6 @@ class OwnerBookingDetailActivity : AppCompatActivity() {
     }
 
     private fun setupListeners() {
-        binding.btnConfirm.setOnClickListener {
-            viewModel.confirmBooking(bookingId) { success ->
-                if (success) {
-                    SnackbarHelper.show(binding.root, getString(R.string.owner_booking_confirm_success))
-                }
-            }
-        }
-
-        binding.btnReject.setOnClickListener {
-            showRejectConfirmDialog()
-        }
-
         // Bấm khối "Món đặt trước" (cả tiêu đề và thẻ danh sách) -> mở OwnerPreOrderActivity truyền bookingId
         binding.llPreOrderHeading.setOnClickListener {
             openPreOrderScreen()
@@ -143,8 +141,13 @@ class OwnerBookingDetailActivity : AppCompatActivity() {
         }
 
         viewModel.errorMessage.observe(this) { err ->
-            if (err != null) {
-                SnackbarHelper.show(binding.root, err)
+            if (!err.isNullOrBlank()) {
+                val msg = if (err.contains("STATUS_CONFLICT") || err.contains("thay đổi")) {
+                    "Đơn đã thay đổi bởi khách hoặc hệ thống."
+                } else {
+                    err
+                }
+                SnackbarHelper.show(binding.root, msg)
                 viewModel.clearMessages()
             }
         }
@@ -162,60 +165,8 @@ class OwnerBookingDetailActivity : AppCompatActivity() {
 
         binding.tvBookingCode.text = "#BT-${booking.id.takeLast(4)}"
 
-        // Trạng thái
-        val status = BookingStatus.from(booking.status)
-        val statusText = when (status) {
-            BookingStatus.WAITING, BookingStatus.PENDING -> "Chờ duyệt"
-            BookingStatus.CONFIRMED -> "Đã xác nhận"
-            BookingStatus.CHECKED_IN, BookingStatus.SERVING -> "Đang phục vụ"
-            BookingStatus.CANCELLED, BookingStatus.REJECTED -> "Đã hủy"
-            BookingStatus.EXPIRED -> "Hết hạn"
-            else -> booking.status
-        }
-        binding.tvStatusText.text = statusText
-
-        // Điều khiển các nút hành động theo trạng thái đơn
-        val isWaiting = (status == BookingStatus.WAITING || status == BookingStatus.PENDING)
-        val isServing = (status == BookingStatus.SERVING)
-        val isCheckedIn = (status == BookingStatus.CHECKED_IN)
-
-        when {
-            isWaiting -> {
-                binding.llBottomActions.visibility = View.VISIBLE
-                binding.btnReject.visibility = View.VISIBLE
-                binding.btnConfirm.text = getString(R.string.owner_booking_btn_confirm)
-                binding.btnConfirm.setOnClickListener {
-                    viewModel.confirmBooking(bookingId) { success ->
-                        if (success) {
-                            SnackbarHelper.show(binding.root, getString(R.string.owner_booking_confirm_success))
-                        }
-                    }
-                }
-            }
-            isServing -> {
-                binding.llBottomActions.visibility = View.VISIBLE
-                binding.btnReject.visibility = View.GONE
-                binding.btnConfirm.text = "Thanh toán (Checkout)"
-                binding.btnConfirm.setOnClickListener {
-                    val intent = Intent(this, com.ute.quanlydatban.ui.owner.checkout.OwnerCheckoutActivity::class.java).apply {
-                        putExtra(com.ute.quanlydatban.ui.owner.checkout.OwnerCheckoutActivity.EXTRA_BOOKING_ID, bookingId)
-                    }
-                    startActivity(intent)
-                }
-            }
-            isCheckedIn -> {
-                binding.llBottomActions.visibility = View.VISIBLE
-                binding.btnReject.visibility = View.GONE
-                binding.btnConfirm.text = "Quét vé bắt đầu phục vụ"
-                binding.btnConfirm.setOnClickListener {
-                    val intent = Intent(this, com.ute.quanlydatban.ui.owner.scan.OwnerQRScanActivity::class.java)
-                    startActivity(intent)
-                }
-            }
-            else -> {
-                binding.llBottomActions.visibility = View.GONE
-            }
-        }
+        // Trạng thái & Nút hành động
+        renderStatus(detail)
 
         // Khách hàng
         val name = detail.customerName.ifBlank { "Khách hàng" }
@@ -272,6 +223,79 @@ class OwnerBookingDetailActivity : AppCompatActivity() {
                 container.addView(itemBinding.root)
             }
             binding.tvPreOrderSubtotal.text = formatMoney(subtotal)
+        }
+    }
+
+    private fun renderStatus(detail: BookingWithDetails) {
+        val booking = detail.booking
+        val status = BookingStatus.from(booking.status)
+
+        val statusText = when (status) {
+            BookingStatus.PENDING, BookingStatus.WAITING -> "Chờ duyệt"
+            BookingStatus.CONFIRMED -> "Đã xác nhận"
+            BookingStatus.CHECKED_IN -> "Đã nhận bàn"
+            BookingStatus.SERVING -> "Đang phục vụ"
+            BookingStatus.PAID -> "Đã thanh toán"
+            BookingStatus.COMPLETED -> "Đã hoàn tất"
+            BookingStatus.REJECTED -> "Đã từ chối"
+            BookingStatus.EXPIRED -> "Đã hết hạn"
+            BookingStatus.CANCELLED -> "Đã hủy"
+            BookingStatus.NO_SHOW -> "Không đến (No-show)"
+        }
+        binding.tvStatusText.text = statusText
+
+        when (status) {
+            BookingStatus.PENDING, BookingStatus.WAITING -> {
+                binding.llBottomActions.visibility = View.VISIBLE
+                binding.btnReject.visibility = View.VISIBLE
+                binding.btnConfirm.visibility = View.VISIBLE
+                binding.btnConfirm.text = getString(R.string.owner_booking_btn_confirm)
+                binding.btnConfirm.setOnClickListener {
+                    viewModel.confirmBooking(bookingId) { success ->
+                        if (success) {
+                            SnackbarHelper.show(binding.root, getString(R.string.owner_booking_confirm_success))
+                        }
+                    }
+                }
+                binding.btnReject.setOnClickListener {
+                    showRejectConfirmDialog()
+                }
+            }
+            BookingStatus.CONFIRMED -> {
+                binding.llBottomActions.visibility = View.VISIBLE
+                binding.btnReject.visibility = View.GONE
+                binding.btnConfirm.visibility = View.VISIBLE
+                binding.btnConfirm.text = "Quét vé / Check-in"
+                binding.btnConfirm.setOnClickListener {
+                    val intent = Intent(this, com.ute.quanlydatban.ui.owner.scan.OwnerQRScanActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+            BookingStatus.CHECKED_IN -> {
+                binding.llBottomActions.visibility = View.VISIBLE
+                binding.btnReject.visibility = View.GONE
+                binding.btnConfirm.visibility = View.VISIBLE
+                binding.btnConfirm.text = "Quét vé bắt đầu phục vụ"
+                binding.btnConfirm.setOnClickListener {
+                    val intent = Intent(this, com.ute.quanlydatban.ui.owner.scan.OwnerQRScanActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+            BookingStatus.SERVING -> {
+                binding.llBottomActions.visibility = View.VISIBLE
+                binding.btnReject.visibility = View.GONE
+                binding.btnConfirm.visibility = View.VISIBLE
+                binding.btnConfirm.text = "Thanh toán (Checkout)"
+                binding.btnConfirm.setOnClickListener {
+                    val intent = Intent(this, com.ute.quanlydatban.ui.owner.checkout.OwnerCheckoutActivity::class.java).apply {
+                        putExtra(com.ute.quanlydatban.ui.owner.checkout.OwnerCheckoutActivity.EXTRA_BOOKING_ID, bookingId)
+                    }
+                    startActivity(intent)
+                }
+            }
+            else -> {
+                binding.llBottomActions.visibility = View.GONE
+            }
         }
     }
 

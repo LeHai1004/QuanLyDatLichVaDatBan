@@ -154,6 +154,27 @@ class BookingRepository(
             }
     }
 
+    fun observeBooking(
+        bookingId: String,
+        onChange: (Booking?) -> Unit,
+        onError: (Exception) -> Unit
+    ): com.google.firebase.firestore.ListenerRegistration {
+        if (bookingId.isBlank()) {
+            onChange(null)
+            return collection.whereEqualTo("id", "__NONE__").addSnapshotListener { _, _ -> }
+        }
+        return collection.document(bookingId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Log.e(TAG, "observeBooking error: ${error.message}", error)
+                    onError(error)
+                    return@addSnapshotListener
+                }
+                val booking = snapshot?.toObject(Booking::class.java)?.copy(id = snapshot.id)
+                onChange(booking)
+            }
+    }
+
     // Lấy danh sách bàn theo quán và tự động giải phóng các bàn giữ chỗ quá 10 phút
     fun getTables(restaurantId: String, onResult: (Result<List<DiningTable>>) -> Unit) {
         if (restaurantId.isBlank()) {
