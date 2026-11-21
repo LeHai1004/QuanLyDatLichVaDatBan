@@ -111,7 +111,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/be_vietnam_pro"
-                    android:inputType="textPersonName"
+                    android:inputType="textPersonName|textCapWords"
                     android:textColor="@color/booktable_dark"
                     android:textSize="@dimen/auth_body_text_size" />
             </com.google.android.material.textfield.TextInputLayout>

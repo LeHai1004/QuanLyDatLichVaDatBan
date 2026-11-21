@@ -95,7 +95,7 @@
                             android:layout_height="wrap_content"
                             android:hint="@string/owner_table_manage_name_label"
                             android:importantForAutofill="no"
-                            android:inputType="textCapWords"
+                            android:inputType="text|textCapWords"
                             android:textColor="@color/booktable_dark" />
                     </com.google.android.material.textfield.TextInputLayout>
 
