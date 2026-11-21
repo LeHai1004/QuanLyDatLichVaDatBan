@@ -1,9 +1,11 @@
 package com.ute.quanlydatban.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.firestore.ListenerRegistration
 import com.ute.quanlydatban.data.model.Booking
 import com.ute.quanlydatban.data.model.BookingGuest
 import com.ute.quanlydatban.data.model.OrderItem
@@ -62,6 +64,50 @@ class SplitBillViewModel(
 
     private val _allPaid = MutableLiveData<Boolean>(false)
     val allPaid: LiveData<Boolean> = _allPaid
+
+    private var guestsListener: ListenerRegistration? = null
+
+    fun startObserving(bookingId: String) {
+        if (bookingId.isBlank()) return
+        guestsListener?.remove()
+        guestsListener = repository.observeGuests(
+            bookingId = bookingId,
+            onChange = { guests ->
+                updateGuestsRealtime(guests)
+            },
+            onError = { err ->
+                Log.e("SplitBillVM", "Lỗi observeGuests: ${err.message}", err)
+            }
+        )
+    }
+
+    fun stopObserving() {
+        guestsListener?.remove()
+        guestsListener = null
+    }
+
+    private fun updateGuestsRealtime(guests: List<BookingGuest>) {
+        val currentPersons = _persons.value.orEmpty()
+        if (currentPersons.isEmpty() || guests.isEmpty()) return
+
+        val guestMap = guests.associateBy { it.id }
+        var changed = false
+        val updated = currentPersons.map { person ->
+            val match = guestMap[person.guestId]
+            if (match != null && (match.paid != person.isPaid || match.shareAmount != person.shareAmount)) {
+                changed = true
+                person.copy(isPaid = match.paid, shareAmount = match.shareAmount)
+            } else {
+                person
+            }
+        }
+
+        if (changed) {
+            _persons.postValue(updated)
+            val allPaidNow = updated.isNotEmpty() && updated.all { it.isPaid }
+            _allPaid.postValue(allPaidNow)
+        }
+    }
 
     fun initialize(bookingId: String, initialTotal: Long) {
         currentBookingId = bookingId
@@ -255,9 +301,12 @@ class SplitBillViewModel(
     }
 
     /**
-     * Xác nhận thanh toán phần chia của một người:
-     * - Chống double-tap: khóa isProcessing
-     * - Cập nhật repository
+     * Xác nhận thanh toán phần tiền (shareAmount) của một người:
+     * - Chống double-tap: kiểm tra doc bookingGuests xem đã paid chưa
+     * - Tạo 1 bản ghi Payment type = "split"
+     * - Cập nhật paid = true
+     * - Kiểm tra nếu toàn bộ người chia đã thanh toán xong -> đổi bookings.status = "PAID"
+     * Trả về Boolean (true nếu tất cả đã thanh toán xong, false nếu còn người chưa thanh toán).
      */
     fun payPersonShare(
         person: SplitPersonUiModel,
@@ -273,15 +322,13 @@ class SplitBillViewModel(
 
         val target = currentList[index]
         if (target.isPaid) {
-            onResult(false, "Người này đã thanh toán phần tiền rồi")
+            onResult(false, "Phần này đã được thanh toán")
             return
         }
         if (target.isProcessing) {
-            // Chống double-tap
             return
         }
 
-        // Đánh dấu isProcessing để khóa nút thanh toán
         currentList[index] = target.copy(isProcessing = true)
         _persons.value = currentList
 
@@ -315,8 +362,14 @@ class SplitBillViewModel(
                     refreshedList[targetIdx] = refreshedList[targetIdx].copy(isProcessing = false)
                     _persons.postValue(refreshedList)
                 }
-                onResult(false, err.message ?: "Lỗi xử lý thanh toán")
+                val msg = if (err.message == "ALREADY_PAID") "Phần này đã được thanh toán" else (err.message ?: "Lỗi xử lý thanh toán")
+                onResult(false, msg)
             }
         }
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        stopObserving()
     }
 }

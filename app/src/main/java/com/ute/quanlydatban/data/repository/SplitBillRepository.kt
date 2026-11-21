@@ -150,6 +150,33 @@ class SplitBillRepository(
             }
     }
 
+    fun observeGuests(
+        bookingId: String,
+        onChange: (List<BookingGuest>) -> Unit,
+        onError: (Exception) -> Unit
+    ): com.google.firebase.firestore.ListenerRegistration {
+        if (bookingId.isBlank()) {
+            onChange(emptyList())
+            return firestore.collection("bookingGuests").whereEqualTo("bookingId", "__NONE__").addSnapshotListener { _, _ -> }
+        }
+
+        return firestore.collection("bookingGuests")
+            .whereEqualTo("bookingId", bookingId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Log.e(TAG, "observeGuests error: ${error.message}", error)
+                    onError(error)
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    val guests = snapshot.documents.mapNotNull {
+                        it.toObject(BookingGuest::class.java)?.copy(id = it.id)
+                    }
+                    onChange(guests)
+                }
+            }
+    }
+
     fun syncGuestsList(
         bookingId: String,
         guests: List<BookingGuest>,
