@@ -49,6 +49,19 @@ class OwnerDashboardFragment : Fragment() {
         observeViewModel()
     }
 
+    override fun onStart() {
+        super.onStart()
+        val resId = viewModel.restaurant.value?.id
+        if (!resId.isNullOrBlank()) {
+            viewModel.startObserving(resId)
+        }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.stopObserving()
+    }
+
     private fun setupQuickActions() {
         // Thẻ "Chờ xác nhận" (thống kê) chuyển sang màn Lượt đặt bàn
         binding.cardWaitingOrders.setOnClickListener {
@@ -148,6 +161,7 @@ class OwnerDashboardFragment : Fragment() {
             if (restaurant != null) {
                 binding.tvRestaurantName.text = restaurant.name
                 updateOpenStatusBadge(viewModel.isOpenNow.value ?: true)
+                viewModel.startObserving(restaurant.id)
             }
         }
 
