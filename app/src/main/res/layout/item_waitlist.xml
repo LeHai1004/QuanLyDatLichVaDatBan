@@ -159,6 +159,24 @@
                 app:icon="@drawable/ic_waitlist_done"
                 app:iconSize="14dp"
                 app:iconTint="@color/white" />
+
+            <!-- Customer Action: Cancel Waitlist -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancel"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:fontFamily="@font/be_vietnam_pro"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:paddingHorizontal="10dp"
+                android:text="@string/waitlist_btn_cancel"
+                android:textAllCaps="false"
+                android:textColor="@color/booktable_error"
+                android:textSize="12sp"
+                app:cornerRadius="8dp"
+                app:strokeColor="@color/booktable_error"
+                android:visibility="gone" />
         </LinearLayout>
 
     </LinearLayout>

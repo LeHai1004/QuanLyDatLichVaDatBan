@@ -17,7 +17,8 @@ import java.util.Locale
 class WaitlistAdapter(
     private val isOwnerMode: Boolean = false,
     private val onCallClicked: ((String) -> Unit)? = null,
-    private val onMarkHandledClicked: ((WaitlistEntry) -> Unit)? = null
+    private val onMarkHandledClicked: ((WaitlistEntry) -> Unit)? = null,
+    private val onCancelClicked: ((WaitlistEntry) -> Unit)? = null
 ) : ListAdapter<WaitlistEntry, WaitlistAdapter.WaitlistViewHolder>(DiffCallback) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WaitlistViewHolder {
@@ -69,6 +70,7 @@ class WaitlistAdapter(
                         onMarkHandledClicked?.invoke(entry)
                     }
                 }
+                binding.btnCancel.visibility = View.GONE
             } else {
                 binding.tvTitle.text = entry.restaurantName.ifBlank {
                     context.getString(R.string.waitlist_field_restaurant)
@@ -76,6 +78,15 @@ class WaitlistAdapter(
                 binding.llPhoneRow.visibility = View.GONE
                 binding.btnCall.visibility = View.GONE
                 binding.btnMarkHandled.visibility = View.GONE
+
+                if (entry.status == "waiting" || entry.status == "notified") {
+                    binding.btnCancel.visibility = View.VISIBLE
+                    binding.btnCancel.setOnClickListener {
+                        onCancelClicked?.invoke(entry)
+                    }
+                } else {
+                    binding.btnCancel.visibility = View.GONE
+                }
             }
 
             // Time & Guests
@@ -110,6 +121,11 @@ class WaitlistAdapter(
                     }
                     "expired" -> {
                         binding.tvStatusBadge.text = context.getString(R.string.waitlist_status_expired)
+                        binding.tvStatusBadge.setBackgroundResource(R.drawable.bg_waitlist_badge_expired)
+                        binding.tvStatusBadge.setTextColor(ContextCompat.getColor(context, R.color.waitlist_badge_expired_text))
+                    }
+                    "cancelled" -> {
+                        binding.tvStatusBadge.text = context.getString(R.string.waitlist_status_cancelled)
                         binding.tvStatusBadge.setBackgroundResource(R.drawable.bg_waitlist_badge_expired)
                         binding.tvStatusBadge.setTextColor(ContextCompat.getColor(context, R.color.waitlist_badge_expired_text))
                     }

@@ -20,6 +20,7 @@ class WaitlistRepository(
         const val WAITLIST_COLLECTION = "waitlist"
         const val NOTIFICATIONS_COLLECTION = "notifications"
         const val TYPE_WAITLIST_AVAILABLE = "WAITLIST_AVAILABLE"
+        const val STATUS_CANCELLED = "cancelled"
     }
 
     val currentUserId: String?
@@ -301,5 +302,47 @@ class WaitlistRepository(
                 Log.e(TAG, "Lỗi truy vấn waitlist để notify: ${error.message}", error)
                 onResult(Result.failure(error))
             }
+    }
+
+    /**
+     * Hủy lượt đăng ký chờ của khách hàng
+     */
+    fun cancelWaitlist(
+        waitlistId: String,
+        onResult: (Result<Unit>) -> Unit
+    ) {
+        if (waitlistId.isBlank()) {
+            onResult(Result.failure(IllegalArgumentException("waitlistId rỗng")))
+            return
+        }
+
+        val uid = currentUserId.orEmpty()
+        val docRef = waitlistCollection.document(waitlistId)
+
+        firestore.runTransaction { tx ->
+            val snap = tx.get(docRef)
+            if (!snap.exists()) {
+                throw IllegalStateException("Không tìm thấy lượt đăng ký chờ")
+            }
+
+            val entry = snap.toObject(WaitlistEntry::class.java)
+                ?: throw IllegalStateException("Không đọc được dữ liệu")
+
+            if (uid.isNotBlank() && entry.userId != uid) {
+                throw IllegalStateException("UNAUTHORIZED")
+            }
+
+            if (entry.status == "expired" || entry.status == STATUS_CANCELLED) {
+                throw IllegalStateException("ALREADY_CLOSED")
+            }
+
+            tx.update(docRef, "status", STATUS_CANCELLED)
+            null
+        }.addOnSuccessListener {
+            onResult(Result.success(Unit))
+        }.addOnFailureListener { err ->
+            Log.e(TAG, "Lỗi cancelWaitlist: ${err.message}", err)
+            onResult(Result.failure(err))
+        }
     }
 }

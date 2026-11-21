@@ -144,6 +144,25 @@ class WaitlistViewModel(
         }
     }
 
+    fun cancelWaitlist(waitlistId: String, onResult: (Boolean, String?) -> Unit) {
+        repository.cancelWaitlist(waitlistId) { result ->
+            result.fold(
+                onSuccess = {
+                    onResult(true, null)
+                },
+                onFailure = { err ->
+                    val msg = when (err.message) {
+                        "UNAUTHORIZED" -> "Bạn không có quyền hủy lượt đăng ký này."
+                        "ALREADY_CLOSED" -> "Lượt đăng ký đã hết hạn hoặc đã bị hủy trước đó."
+                        else -> err.message ?: "Không thể hủy đăng ký chờ."
+                    }
+                    _errorMessage.value = msg
+                    onResult(false, msg)
+                }
+            )
+        }
+    }
+
     override fun onCleared() {
         super.onCleared()
         myWaitlistRegistration?.remove()
