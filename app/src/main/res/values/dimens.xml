@@ -45,7 +45,7 @@
     <dimen name="splash_prompt_text_size">11sp</dimen>
     <dimen name="splash_caption_margin_top">14dp</dimen>
     <dimen name="splash_caption_text_size">12sp</dimen>
-    <dimen name="splash_dots_margin_top">36dp</dimen>
+    <dimen name="splash_dots_margin_top">16dp</dimen>
     <dimen name="splash_dot_size">6dp</dimen>
     <dimen name="splash_dot_spacing">6dp</dimen>
 

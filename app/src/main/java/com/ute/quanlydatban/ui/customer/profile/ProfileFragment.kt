@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.ute.quanlydatban.R
-import com.ute.quanlydatban.BuildConfig
 import com.ute.quanlydatban.databinding.FragmentProfileBinding
 import com.ute.quanlydatban.ui.auth.LoginActivity
 import com.ute.quanlydatban.util.SnackbarHelper
@@ -51,11 +50,13 @@ class ProfileFragment : Fragment() {
     }
 
     private fun setupReminderDemoSwitch() {
-        if (BuildConfig.DEBUG) {
+        val context = requireContext()
+        val isDebug = (context.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE) != 0
+        if (isDebug) {
             binding.llReminderDemoRow.visibility = View.VISIBLE
             binding.vReminderDemoDivider.visibility = View.VISIBLE
 
-            val prefs = requireContext().getSharedPreferences(
+            val prefs = context.getSharedPreferences(
                 com.ute.quanlydatban.work.ReminderScheduler.PREF_REMINDER_DEMO,
                 android.content.Context.MODE_PRIVATE
             )

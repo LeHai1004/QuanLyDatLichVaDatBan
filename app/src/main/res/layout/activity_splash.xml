@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/splashRoot"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/booktable_cream">
+    android:background="@color/booktable_cream"
+    android:fillViewport="true">
 
     <LinearLayout
         android:id="@+id/llSplashContent"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:paddingStart="@dimen/splash_horizontal_padding"
+        android:paddingHorizontal="@dimen/splash_horizontal_padding"
         android:paddingTop="@dimen/splash_top_padding"
-        android:paddingEnd="@dimen/splash_horizontal_padding"
-        android:paddingBottom="@dimen/splash_bottom_padding"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:paddingBottom="@dimen/splash_bottom_padding">
 
         <!-- Brand introduction -->
         <ImageView
@@ -58,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/splash_meal_card_height"
             android:layout_marginTop="@dimen/splash_meal_margin_top"
+            app:cardBackgroundColor="@color/booktable_surface"
             app:cardCornerRadius="@dimen/splash_meal_radius"
             app:cardElevation="@dimen/splash_meal_elevation"
             app:strokeWidth="0dp">
@@ -137,4 +135,4 @@
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

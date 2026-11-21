@@ -85,6 +85,7 @@ class OwnerMenuFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
             if (loading) {
                 UiStateHelper.showLoading(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.rvOwnerMenu.visibility = View.GONE
             }
         }
@@ -92,6 +93,7 @@ class OwnerMenuFragment : Fragment() {
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
             if (!error.isNullOrBlank()) {
                 UiStateHelper.showError(binding.layoutStates.root, error)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.rvOwnerMenu.visibility = View.GONE
             }
         }
@@ -103,11 +105,14 @@ class OwnerMenuFragment : Fragment() {
         viewModel.displayItems.observe(viewLifecycleOwner) { items ->
             if (viewModel.isLoading.value == true) return@observe
 
+            binding.layoutStates.root.visibility = View.GONE
             if (items.isEmpty()) {
                 UiStateHelper.showEmpty(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.rvOwnerMenu.visibility = View.GONE
             } else {
                 UiStateHelper.hideAll(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.GONE
                 binding.rvOwnerMenu.visibility = View.VISIBLE
                 menuAdapter.submitList(items)
             }

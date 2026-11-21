@@ -89,6 +89,7 @@ class OwnerProfileFragment : Fragment() {
         viewModel.isDashboardLoading.observe(viewLifecycleOwner) { loading ->
             if (loading) {
                 UiStateHelper.showLoading(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.llProfileBody.visibility = View.GONE
             }
         }
@@ -96,18 +97,26 @@ class OwnerProfileFragment : Fragment() {
         viewModel.dashboardErrorMessage.observe(viewLifecycleOwner) { error ->
             if (error != null) {
                 UiStateHelper.showError(binding.layoutStates.root, error)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.llProfileBody.visibility = View.GONE
                 SnackbarHelper.show(binding.root, error) {
                     viewModel.loadRestaurantAndData()
                 }
+            } else {
+                binding.layoutStates.root.visibility = View.GONE
             }
         }
 
         viewModel.restaurant.observe(viewLifecycleOwner) { res ->
             if (res != null && viewModel.isDashboardLoading.value == false && viewModel.dashboardErrorMessage.value == null) {
                 UiStateHelper.hideAll(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.GONE
                 binding.llProfileBody.visibility = View.VISIBLE
                 bindData(res)
+            } else if (res == null && viewModel.isDashboardLoading.value == false) {
+                UiStateHelper.showEmpty(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.VISIBLE
+                binding.llProfileBody.visibility = View.GONE
             }
         }
 

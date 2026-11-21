@@ -19,6 +19,7 @@ class BookingRepository(
         const val ROLE_CUSTOMER = "customer"
         const val ROLE_OWNER = "owner"
         const val BOOKING_HOLD_TIMEOUT_MS = 10 * 60 * 1000L // 10 phút giữ bàn
+        const val NO_SHOW_GRACE_MS = 15 * 60 * 1000L // 15 phút dung sai
         const val REVIEW_WINDOW_MS = 7L * 24 * 60 * 60 * 1000L // 7 ngày
         const val DEFAULT_DEPOSIT_AMOUNT = 100_000L
         private const val TAG = "BookingRepository"
@@ -232,6 +233,8 @@ class BookingRepository(
     private fun cleanupExpiredBookings(restaurantId: String) {
         val now = System.currentTimeMillis()
         val expiredThreshold = now - BOOKING_HOLD_TIMEOUT_MS
+
+        cleanupNoShowBookings(restaurantId = restaurantId)
 
         collection
             .whereEqualTo("restaurantId", restaurantId)
@@ -749,6 +752,7 @@ class BookingRepository(
         }
 
         cleanupExpiredPaidBookings(userId)
+        cleanupNoShowBookings(userId = userId)
 
         collection.whereEqualTo("userId", userId).get()
             .addOnSuccessListener { snapshot ->
@@ -759,6 +763,58 @@ class BookingRepository(
                 Log.e(TAG, "Lỗi getUserBookings: ${error.message}", error)
                 onResult(Result.failure(error))
             }
+    }
+
+    fun cleanupNoShowBookings(restaurantId: String = "", userId: String = "") {
+        val now = System.currentTimeMillis()
+
+        val query = if (restaurantId.isNotBlank()) {
+            collection.whereEqualTo("restaurantId", restaurantId)
+                .whereEqualTo("status", BookingStatus.CONFIRMED.name)
+        } else if (userId.isNotBlank()) {
+            collection.whereEqualTo("userId", userId)
+                .whereEqualTo("status", BookingStatus.CONFIRMED.name)
+        } else {
+            collection.whereEqualTo("status", BookingStatus.CONFIRMED.name)
+        }
+
+        query.get()
+            .addOnSuccessListener { snapshot ->
+                for (doc in snapshot.documents) {
+                    val booking = doc.toObject(Booking::class.java)?.copy(id = doc.id) ?: continue
+                    val apptTime = parseAppointmentTime(booking.date, booking.time) ?: continue
+                    if (apptTime + NO_SHOW_GRACE_MS < now) {
+                        updateBookingStatus(booking.id, BookingStatus.NO_SHOW) { result ->
+                            result.onSuccess {
+                                Log.i(TAG, "Đã tự động chuyển đơn CONFIRMED quá giờ 15 phút sang NO_SHOW: #${booking.id}")
+                                NotificationRepository().createEventNotification(
+                                    booking.copy(status = BookingStatus.NO_SHOW.name),
+                                    BookingStatus.NO_SHOW
+                                )
+                                // TODO(T32): Báo danh sách chờ khi có bàn trống (nhả bàn)
+                            }
+                        }
+                    }
+                }
+            }
+            .addOnFailureListener { error ->
+                Log.e(TAG, "Lỗi cleanupNoShowBookings: ${error.message}", error)
+            }
+    }
+
+    private fun parseAppointmentTime(dateStr: String, timeStr: String): Long? {
+        if (dateStr.isBlank() || timeStr.isBlank()) return null
+        val formats = listOf("dd/MM/yyyy HH:mm", "yyyy-MM-dd HH:mm", "d/M/yyyy H:m")
+        for (pattern in formats) {
+            try {
+                val sdf = SimpleDateFormat(pattern, Locale.getDefault())
+                val parsed = sdf.parse("$dateStr $timeStr")
+                if (parsed != null) {
+                    return parsed.time
+                }
+            } catch (_: Exception) {}
+        }
+        return null
     }
 
     private fun cleanupExpiredPaidBookings(userId: String) {

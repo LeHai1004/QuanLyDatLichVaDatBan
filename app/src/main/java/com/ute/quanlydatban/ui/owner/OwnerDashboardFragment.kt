@@ -186,22 +186,27 @@ class OwnerDashboardFragment : Fragment() {
             isAuthorized == false -> {
                 val errorMsg = viewModel.unauthorizedMessage.value ?: getString(R.string.owner_error_unauthorized)
                 UiStateHelper.showError(binding.layoutStates.root, errorMsg)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.llDashboardBody.visibility = View.GONE
             }
             isLoading -> {
                 UiStateHelper.showLoading(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.llDashboardBody.visibility = View.GONE
             }
             error != null -> {
                 UiStateHelper.showError(binding.layoutStates.root, error)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.llDashboardBody.visibility = View.GONE
             }
             restaurant == null -> {
                 UiStateHelper.showEmpty(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.llDashboardBody.visibility = View.GONE
             }
             else -> {
                 UiStateHelper.hideAll(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.GONE
                 binding.llDashboardBody.visibility = View.VISIBLE
                 binding.tvRestaurantName.text = restaurant.name
             }

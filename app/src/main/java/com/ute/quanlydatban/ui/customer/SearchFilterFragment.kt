@@ -166,6 +166,7 @@ class SearchFilterFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
             if (loading) {
                 UiStateHelper.showLoading(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.rvSearchResults.visibility = View.GONE
             }
         }
@@ -173,6 +174,7 @@ class SearchFilterFragment : Fragment() {
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
             if (error != null) {
                 UiStateHelper.showError(binding.layoutStates.root, error)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.rvSearchResults.visibility = View.GONE
                 SnackbarHelper.show(binding.root, error) {
                     viewModel.loadRestaurants()
@@ -183,11 +185,14 @@ class SearchFilterFragment : Fragment() {
         viewModel.filteredRestaurants.observe(viewLifecycleOwner) { list ->
             if (viewModel.isLoading.value == false && viewModel.errorMessage.value == null) {
                 binding.tvResultCount.text = getString(R.string.search_result_count_format, list.size)
+                binding.layoutStates.root.visibility = View.GONE
                 if (list.isEmpty()) {
                     UiStateHelper.showEmpty(binding.layoutStates.root)
+                    binding.layoutStates.root.visibility = View.VISIBLE
                     binding.rvSearchResults.visibility = View.GONE
                 } else {
                     UiStateHelper.hideAll(binding.layoutStates.root)
+                    binding.layoutStates.root.visibility = View.GONE
                     binding.rvSearchResults.visibility = View.VISIBLE
                     restaurantAdapter.submitList(list)
                 }
