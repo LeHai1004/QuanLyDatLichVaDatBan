@@ -7,7 +7,6 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.ute.quanlydatban.BookTableApplication
-import com.ute.quanlydatban.BuildConfig
 import com.ute.quanlydatban.data.model.Booking
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -25,7 +24,8 @@ object ReminderScheduler {
     fun getWorkName(bookingId: String): String = "${WORK_NAME_PREFIX}${bookingId}"
 
     fun getReminderLeadTimeMs(context: Context): Long {
-        if (!BuildConfig.DEBUG) return REMINDER_LEAD_TIME_MS
+        val isDebug = (context.applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE) != 0
+        if (!isDebug) return REMINDER_LEAD_TIME_MS
         val prefs = context.getSharedPreferences(PREF_REMINDER_DEMO, Context.MODE_PRIVATE)
         return if (prefs.getBoolean(KEY_REMINDER_DEMO_ENABLED, false)) {
             REMINDER_LEAD_TIME_DEBUG_MS

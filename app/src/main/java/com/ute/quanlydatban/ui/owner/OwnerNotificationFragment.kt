@@ -113,6 +113,7 @@ class OwnerNotificationFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
             if (loading) {
                 UiStateHelper.showLoading(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.rvNotifications.visibility = View.GONE
                 binding.tvEmptyNotifications.visibility = View.GONE
             }
@@ -121,6 +122,7 @@ class OwnerNotificationFragment : Fragment() {
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
             if (error != null) {
                 UiStateHelper.showError(binding.layoutStates.root, error)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.rvNotifications.visibility = View.GONE
                 binding.tvEmptyNotifications.visibility = View.GONE
                 SnackbarHelper.show(binding.root, error) {
@@ -131,6 +133,7 @@ class OwnerNotificationFragment : Fragment() {
 
         viewModel.notifications.observe(viewLifecycleOwner) { list ->
             if (viewModel.isLoading.value == false && viewModel.errorMessage.value == null) {
+                binding.layoutStates.root.visibility = View.GONE
                 if (list.isNullOrEmpty()) {
                     UiStateHelper.hideAll(binding.layoutStates.root)
                     binding.rvNotifications.visibility = View.GONE

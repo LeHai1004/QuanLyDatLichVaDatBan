@@ -238,18 +238,22 @@ class RestaurantDetailActivity : AppCompatActivity() {
         when {
             isLoading -> {
                 UiStateHelper.showLoading(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.llDetailBody.visibility = View.GONE
             }
             error != null -> {
                 UiStateHelper.showError(binding.layoutStates.root, error)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.llDetailBody.visibility = View.GONE
             }
             restaurant == null -> {
                 UiStateHelper.showEmpty(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.llDetailBody.visibility = View.GONE
             }
             else -> {
                 UiStateHelper.hideAll(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.GONE
                 binding.llDetailBody.visibility = View.VISIBLE
             }
         }

@@ -119,6 +119,7 @@ class HomeFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner) { loading ->
             if (loading) {
                 UiStateHelper.showLoading(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.rvRestaurants.visibility = View.GONE
             }
         }
@@ -126,6 +127,7 @@ class HomeFragment : Fragment() {
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
             if (error != null) {
                 UiStateHelper.showError(binding.layoutStates.root, error)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.rvRestaurants.visibility = View.GONE
                 SnackbarHelper.show(binding.root, error) {
                     viewModel.loadRestaurants()
@@ -136,17 +138,21 @@ class HomeFragment : Fragment() {
         viewModel.isEmpty.observe(viewLifecycleOwner) { empty ->
             if (empty && viewModel.isLoading.value == false && viewModel.errorMessage.value == null) {
                 UiStateHelper.showEmpty(binding.layoutStates.root)
+                binding.layoutStates.root.visibility = View.VISIBLE
                 binding.rvRestaurants.visibility = View.GONE
             }
         }
 
         viewModel.filteredRestaurants.observe(viewLifecycleOwner) { list ->
             if (viewModel.isLoading.value == false && viewModel.errorMessage.value == null) {
+                binding.layoutStates.root.visibility = View.GONE
                 if (list.isEmpty()) {
                     UiStateHelper.showEmpty(binding.layoutStates.root)
+                    binding.layoutStates.root.visibility = View.VISIBLE
                     binding.rvRestaurants.visibility = View.GONE
                 } else {
                     UiStateHelper.hideAll(binding.layoutStates.root)
+                    binding.layoutStates.root.visibility = View.GONE
                     binding.rvRestaurants.visibility = View.VISIBLE
                     restaurantAdapter.submitList(list)
                 }
