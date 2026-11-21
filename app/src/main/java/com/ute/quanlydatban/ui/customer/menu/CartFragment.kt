@@ -1,15 +1,19 @@
 package com.ute.quanlydatban.ui.customer.menu
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ute.quanlydatban.R
 import com.ute.quanlydatban.databinding.FragmentCartBinding
+import com.ute.quanlydatban.ui.customer.booking.PaymentActivity
+import com.ute.quanlydatban.ui.customer.voucher.VoucherFragment
 import com.ute.quanlydatban.util.SnackbarHelper
 import com.ute.quanlydatban.util.formatMoney
 import com.ute.quanlydatban.viewmodel.CartViewModel
@@ -40,18 +44,27 @@ class CartFragment : Fragment() {
         setupHeader()
         setupRestaurantInfo()
         setupRecyclerView()
+        setupVoucherCard()
         setupCheckoutButton()
+        setupFragmentResultListener()
         observeViewModel()
+    }
+
+    private fun setupFragmentResultListener() {
+        setFragmentResultListener(VoucherFragment.REQUEST_KEY) { _, bundle ->
+            val voucherCode = bundle.getString(VoucherFragment.RESULT_VOUCHER_CODE).orEmpty()
+            if (voucherCode.isNotBlank()) {
+                viewModel.applyVoucherCode(voucherCode)
+            }
+        }
     }
 
     private fun setupHeader() {
         binding.btnBack.setOnClickListener {
-            // Nút quay lại: Cart về Menu
             findNavController().navigateUp()
         }
 
         binding.btnCartAddMore.setOnClickListener {
-            // Thêm món: quay lại Menu
             findNavController().navigateUp()
         }
     }
@@ -95,16 +108,36 @@ class CartFragment : Fragment() {
         }
     }
 
+    private fun setupVoucherCard() {
+        binding.llVoucherCard.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString(VoucherFragment.ARG_RESTAURANT_ID, viewModel.restaurantId)
+                putLong(VoucherFragment.ARG_TOTAL_BILL, viewModel.getSubtotal())
+            }
+            findNavController().navigate(R.id.action_cartFragment_to_voucherFragment, bundle)
+        }
+
+        binding.btnRemoveVoucher.setOnClickListener {
+            viewModel.removeVoucher()
+        }
+    }
+
     private fun setupCheckoutButton() {
         binding.btnContinueDeposit.setOnClickListener {
+            if (viewModel.bookingId.isBlank() || viewModel.restaurantId.isBlank()) {
+                SnackbarHelper.show(binding.root, "Thiếu thông tin đơn đặt bàn hoặc nhà hàng.")
+                return@setOnClickListener
+            }
+
             binding.btnContinueDeposit.isEnabled = false
             viewModel.submitPreOrder { success ->
                 binding.btnContinueDeposit.isEnabled = true
                 if (success) {
-                    // Chuyển sang PaymentActivity thật (T11)
-                    val intent = android.content.Intent(requireContext(), com.ute.quanlydatban.ui.customer.booking.PaymentActivity::class.java).apply {
-                        putExtra(com.ute.quanlydatban.ui.customer.booking.PaymentActivity.EXTRA_BOOKING_ID, viewModel.bookingId)
-                        putExtra(com.ute.quanlydatban.ui.customer.booking.PaymentActivity.EXTRA_RESTAURANT_ID, viewModel.restaurantId)
+                    val voucherId = viewModel.appliedVoucher.value?.id.orEmpty()
+                    val intent = Intent(requireContext(), PaymentActivity::class.java).apply {
+                        putExtra(PaymentActivity.EXTRA_BOOKING_ID, viewModel.bookingId)
+                        putExtra(PaymentActivity.EXTRA_RESTAURANT_ID, viewModel.restaurantId)
+                        putExtra("extra_voucher_id", voucherId)
                     }
                     startActivity(intent)
                 } else {
@@ -146,12 +179,42 @@ class CartFragment : Fragment() {
 
             binding.tvSubtotalLabel.text = getString(R.string.cart_subtotal_format, totalQty)
             binding.tvSubtotalAmount.text = formatMoney(subtotal)
-            binding.tvTotalAmount.text = formatMoney(subtotal)
+            binding.tvTotalAmount.text = formatMoney(viewModel.getFinalTotal())
             binding.tvDepositAmount.text = formatMoney(deposit)
             binding.tvBottomHint.text = getString(
                 R.string.cart_bottom_hint_format,
                 formatMoney(deposit)
             )
+        }
+
+        viewModel.appliedVoucher.observe(viewLifecycleOwner) { voucher ->
+            if (voucher != null) {
+                val discount = viewModel.getDiscount()
+                binding.tvVoucherTitle.text = getString(R.string.payment_voucher_discount_label)
+                binding.tvVoucherSelected.text = "-${formatMoney(discount)}"
+                binding.tvVoucherSelected.visibility = View.VISIBLE
+                binding.btnRemoveVoucher.visibility = View.VISIBLE
+                binding.ivVoucherArrow.visibility = View.GONE
+
+                binding.llDiscountRow.visibility = View.VISIBLE
+                binding.tvDiscountAmount.text = "-${formatMoney(discount)}"
+            } else {
+                binding.tvVoucherTitle.text = getString(R.string.voucher_title)
+                binding.tvVoucherSelected.visibility = View.GONE
+                binding.btnRemoveVoucher.visibility = View.GONE
+                binding.ivVoucherArrow.visibility = View.VISIBLE
+
+                binding.llDiscountRow.visibility = View.GONE
+            }
+            binding.tvTotalAmount.text = formatMoney(viewModel.getFinalTotal())
+        }
+
+        viewModel.discountAmount.observe(viewLifecycleOwner) { discount ->
+            if (viewModel.appliedVoucher.value != null) {
+                binding.tvDiscountAmount.text = "-${formatMoney(discount)}"
+                binding.tvVoucherSelected.text = "-${formatMoney(discount)}"
+            }
+            binding.tvTotalAmount.text = formatMoney(viewModel.getFinalTotal())
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) { error ->

@@ -82,6 +82,9 @@ class PaymentViewModel(
                         loadRestaurant(rId)
                     }
                     startCountdown(b.createdAt)
+                    if (b.voucherId.isNotBlank() && _selectedVoucher.value == null) {
+                        applyVoucherById(b.voucherId)
+                    }
                 }
             }.onFailure { error ->
                 Log.e(TAG, "Lỗi tải booking: ${error.message}", error)
@@ -195,6 +198,17 @@ class PaymentViewModel(
         _voucherDiscount.value = discount
     }
 
+    fun applyVoucherById(voucherId: String) {
+        if (voucherId.isBlank()) return
+        voucherRepository.get(voucherId) { result ->
+            result.onSuccess { voucher ->
+                if (voucher != null) {
+                    applyVoucher(voucher)
+                }
+            }
+        }
+    }
+
     fun applyVoucherByCode(code: String) {
         val raw = calculateRawTotalBill()
         val userId = FirebaseAuth.getInstance().currentUser?.uid.orEmpty()
@@ -208,20 +222,26 @@ class PaymentViewModel(
         }
     }
 
+    fun getSubtotalAmount(): Long {
+        return _orderItems.value?.sumOf { it.qty * it.unitPrice } ?: 0L
+    }
+
     fun calculateRawTotalBill(): Long {
-        val itemsTotal = _orderItems.value?.sumOf { it.qty * it.unitPrice } ?: 0L
-        val deposit = getDepositAmount()
-        return if (itemsTotal > 0L) itemsTotal else deposit
+        val subtotal = getSubtotalAmount()
+        return if (subtotal > 0L) subtotal else getDepositAmount()
     }
 
     /**
      * Tính tổng hóa đơn (tiền món + cọc/phụ thu nếu có, đã trừ voucher)
      */
     fun calculateTotalBill(): Long {
-        val raw = calculateRawTotalBill()
+        val subtotal = getSubtotalAmount()
         val discount = _voucherDiscount.value ?: 0L
-        val net = raw - discount
-        return if (net > 0L) net else 0L
+        return if (subtotal > 0L) {
+            maxOf(0L, subtotal - discount)
+        } else {
+            getDepositAmount()
+        }
     }
 
     fun getDepositAmount(): Long {
@@ -233,10 +253,14 @@ class PaymentViewModel(
     }
 
     fun calculateRemainingAmount(): Long {
-        val total = calculateTotalBill()
+        val subtotal = getSubtotalAmount()
+        val discount = _voucherDiscount.value ?: 0L
         val deposit = getDepositAmount()
-        val rem = total - deposit
-        return if (rem > 0L) rem else 0L
+        return if (subtotal > 0L) {
+            maxOf(0L, subtotal - discount - deposit)
+        } else {
+            0L
+        }
     }
 
     fun clearMessages() {

@@ -321,8 +321,8 @@
     <string name="payment_deposit_note">Tiền cọc được trừ vào hóa đơn</string>
     <string name="payment_btn_paid">Tôi đã chuyển khoản</string>
     <string name="payment_btn_change_method">Đổi phương thức</string>
-    <string name="payment_voucher_placeholder">Mã ưu đãi (T24)</string>
-    <string name="payment_points_placeholder">Dùng điểm thưởng (T25)</string>
+    <string name="payment_voucher_placeholder">Mã ưu đãi</string>
+    <string name="payment_points_placeholder">Dùng điểm thưởng</string>
     <string name="payment_expired_error">Thời gian thanh toán đã hết (quá 10 phút). Đơn đặt bàn đã bị hủy.</string>
     <string name="payment_failed_error">Thanh toán thất bại hoặc mất kết nối. Vui lòng thử lại.</string>
     <string name="payment_missing_booking_id">Không tìm thấy mã đơn đặt bàn.</string>
@@ -343,7 +343,7 @@
     <string name="confirm_arrival_reminder">Bạn nhớ đến đúng giờ nhé. Bếp giữ phòng trong 15 phút kể từ giờ hẹn.</string>
     <string name="confirm_btn_view_qr">Xem mã QR đặt bàn</string>
     <string name="confirm_booking_code_format">Mã đặt bàn: %s</string>
-    <string name="confirm_btn_invite_friends">Mời bạn bè (T31)</string>
+    <string name="confirm_btn_invite_friends">Mời bạn bè</string>
 
     <string name="qr_breadcrumb">BookTable · Mã đặt bàn của bạn</string>
     <string name="qr_header_title">Vé hẹn nhà Bếp</string>

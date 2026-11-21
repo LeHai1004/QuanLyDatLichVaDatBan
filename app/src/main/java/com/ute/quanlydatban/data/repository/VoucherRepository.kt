@@ -153,7 +153,12 @@ class VoucherRepository(
                     return@addOnSuccessListener
                 }
 
-                if (totalBill > 0L && totalBill < voucher.minOrder) {
+                if (totalBill == 0L) {
+                    onResult(Result.failure(IllegalArgumentException("Giỏ hàng trống. Vui lòng chọn món trước khi áp dụng mã.")))
+                    return@addOnSuccessListener
+                }
+
+                if (totalBill < voucher.minOrder) {
                     onResult(Result.failure(IllegalArgumentException("Đơn hàng chưa đạt giá trị tối thiểu ${formatMoney(voucher.minOrder)}.")))
                     return@addOnSuccessListener
                 }

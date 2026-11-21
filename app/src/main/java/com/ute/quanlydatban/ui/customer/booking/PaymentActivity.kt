@@ -58,6 +58,14 @@ class PaymentActivity : AppCompatActivity() {
             return
         }
 
+        val initialVoucherCode = intent.getStringExtra("extra_voucher_code").orEmpty()
+        val initialVoucherId = intent.getStringExtra(EXTRA_VOUCHER_ID).orEmpty()
+        if (initialVoucherCode.isNotBlank()) {
+            viewModel.applyVoucherByCode(initialVoucherCode)
+        } else if (initialVoucherId.isNotBlank()) {
+            viewModel.applyVoucherById(initialVoucherId)
+        }
+
         // Tạo mã QR VietQR mẫu hiển thị
         val transferMemo = "BT$bookingId".take(12)
         binding.tvTransferContent.text = getString(R.string.payment_content_format, transferMemo)
@@ -104,7 +112,7 @@ class PaymentActivity : AppCompatActivity() {
             }
 
             supportFragmentManager.beginTransaction()
-                .replace(android.R.id.content, fragment)
+                .add(android.R.id.content, fragment)
                 .addToBackStack(null)
                 .commit()
         }
@@ -161,6 +169,10 @@ class PaymentActivity : AppCompatActivity() {
             updatePriceBreakdown()
         }
 
+        viewModel.orderItems.observe(this) {
+            updatePriceBreakdown()
+        }
+
         // Khi cọc thành công: chuyển sang BookingConfirmActivity
         viewModel.isPaymentSuccess.observe(this) { success ->
             if (success) {
@@ -175,11 +187,13 @@ class PaymentActivity : AppCompatActivity() {
     }
 
     private fun updatePriceBreakdown() {
+        val subtotal = viewModel.getSubtotalAmount()
         val totalBill = viewModel.calculateTotalBill()
         val deposit = viewModel.getDepositAmount()
         val remaining = viewModel.calculateRemainingAmount()
         val discount = viewModel.voucherDiscount.value ?: 0L
 
+        binding.tvSubtotalAmount.text = formatMoney(if (subtotal > 0L) subtotal else deposit)
         binding.tvDepositAmount.text = formatMoney(deposit)
         binding.tvDepositAmountRow.text = formatMoney(deposit)
         binding.tvTotalBillAmount.text = formatMoney(totalBill)
@@ -196,6 +210,7 @@ class PaymentActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_BOOKING_ID = "extra_booking_id"
         const val EXTRA_RESTAURANT_ID = "extra_restaurant_id"
+        const val EXTRA_VOUCHER_ID = "extra_voucher_id"
         const val ROLE_CUSTOMER = "customer"
         const val ROLE_OWNER = "owner"
     }
