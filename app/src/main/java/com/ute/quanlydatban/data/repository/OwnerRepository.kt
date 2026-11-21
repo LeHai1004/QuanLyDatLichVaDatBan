@@ -199,6 +199,33 @@ class OwnerRepository(
             }
     }
 
+    fun observeBookingsByRestaurant(
+        restaurantId: String,
+        onChange: (List<Booking>) -> Unit,
+        onError: (Exception) -> Unit
+    ): com.google.firebase.firestore.ListenerRegistration {
+        if (restaurantId.isBlank()) {
+            onChange(emptyList())
+            return firestore.collection(BOOKINGS_COLLECTION).whereEqualTo("restaurantId", "__NONE__").addSnapshotListener { _, _ -> }
+        }
+
+        return firestore.collection(BOOKINGS_COLLECTION)
+            .whereEqualTo("restaurantId", restaurantId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Log.e("OwnerRepository", "observeBookingsByRestaurant error: ${error.message}", error)
+                    onError(error)
+                    return@addSnapshotListener
+                }
+                if (snapshot != null) {
+                    val bookings = snapshot.documents.mapNotNull { doc ->
+                        doc.toObject(Booking::class.java)?.copy(id = doc.id)
+                    }
+                    onChange(bookings)
+                }
+            }
+    }
+
     fun signOut() {
         auth.signOut()
     }

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.firestore.ListenerRegistration
 import com.ute.quanlydatban.data.model.Booking
 import com.ute.quanlydatban.data.model.BookingStatus
 import com.ute.quanlydatban.data.model.Restaurant
@@ -94,8 +95,54 @@ class OwnerDashboardViewModel(
     private val _depositError = MutableLiveData<String?>(null)
     val depositError: LiveData<String?> = _depositError
 
+    private var dashboardListener: ListenerRegistration? = null
+
     init {
         checkAuthorizationAndLoad()
+    }
+
+    fun startObserving(restaurantId: String) {
+        if (restaurantId.isBlank()) return
+        dashboardListener?.remove()
+        dashboardListener = repository.observeBookingsByRestaurant(
+            restaurantId = restaurantId,
+            onChange = { bookings ->
+                computeDashboardCountsFromList(bookings)
+            },
+            onError = { err ->
+                Log.e("OwnerDashboard", "Lỗi observeBookings: ${err.message}", err)
+                _dashboardErrorMessage.value = err.toViMessage()
+            }
+        )
+    }
+
+    fun stopObserving() {
+        dashboardListener?.remove()
+        dashboardListener = null
+    }
+
+    private fun computeDashboardCountsFromList(bookings: List<Booking>) {
+        val todayStr1 = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(Date())
+        val todayStr2 = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+
+        var waiting = 0L
+        var today = 0L
+        var serving = 0L
+
+        bookings.forEach { b ->
+            val status = BookingStatus.from(b.status)
+            if (status == BookingStatus.WAITING || status == BookingStatus.PENDING) {
+                waiting++
+            }
+            if (b.date == todayStr1 || b.date == todayStr2) {
+                today++
+            }
+            if (status == BookingStatus.SERVING || status == BookingStatus.CHECKED_IN) {
+                serving++
+            }
+        }
+
+        _dashboardCounts.postValue(DashboardCounts(waiting, today, serving))
     }
 
     // Kiểm tra quyền chủ quán trước khi tải dữ liệu
@@ -131,6 +178,7 @@ class OwnerDashboardViewModel(
                     _restaurant.value = res
                     _isOpenNow.value = isCurrentlyOpen(res.openTime, res.closeTime)
                     loadDashboardCounts(res.id)
+                    startObserving(res.id)
                     loadStats(res.id)
                 },
                 onFailure = { error ->
@@ -362,13 +410,16 @@ class OwnerDashboardViewModel(
         repository.signOut()
     }
 
+    override fun onCleared() {
+        super.onCleared()
+        stopObserving()
+    }
+
     companion object {
         val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+            @Suppress("UNCHECKED_CAST")
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                if (!modelClass.isAssignableFrom(OwnerDashboardViewModel::class.java)) {
-                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-                }
-                return checkNotNull(modelClass.cast(OwnerDashboardViewModel(OwnerRepository())))
+                return OwnerDashboardViewModel(OwnerRepository()) as T
             }
         }
     }
