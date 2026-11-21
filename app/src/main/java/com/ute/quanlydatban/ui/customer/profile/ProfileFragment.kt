@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
 import com.ute.quanlydatban.R
+import com.ute.quanlydatban.BuildConfig
 import com.ute.quanlydatban.databinding.FragmentProfileBinding
 import com.ute.quanlydatban.ui.auth.LoginActivity
 import com.ute.quanlydatban.util.SnackbarHelper
@@ -45,7 +46,34 @@ class ProfileFragment : Fragment() {
         }
 
         setupListeners()
+        setupReminderDemoSwitch()
         observeViewModel()
+    }
+
+    private fun setupReminderDemoSwitch() {
+        if (BuildConfig.DEBUG) {
+            binding.llReminderDemoRow.visibility = View.VISIBLE
+            binding.vReminderDemoDivider.visibility = View.VISIBLE
+
+            val prefs = requireContext().getSharedPreferences(
+                com.ute.quanlydatban.work.ReminderScheduler.PREF_REMINDER_DEMO,
+                android.content.Context.MODE_PRIVATE
+            )
+            binding.swReminderDemo.isChecked = prefs.getBoolean(
+                com.ute.quanlydatban.work.ReminderScheduler.KEY_REMINDER_DEMO_ENABLED,
+                false
+            )
+
+            binding.swReminderDemo.setOnCheckedChangeListener { _, isChecked ->
+                prefs.edit().putBoolean(
+                    com.ute.quanlydatban.work.ReminderScheduler.KEY_REMINDER_DEMO_ENABLED,
+                    isChecked
+                ).apply()
+            }
+        } else {
+            binding.llReminderDemoRow.visibility = View.GONE
+            binding.vReminderDemoDivider.visibility = View.GONE
+        }
     }
 
     override fun onResume() {

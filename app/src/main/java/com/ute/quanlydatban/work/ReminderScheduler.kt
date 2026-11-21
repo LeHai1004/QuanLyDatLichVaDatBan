@@ -7,6 +7,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
 import com.ute.quanlydatban.BookTableApplication
+import com.ute.quanlydatban.BuildConfig
 import com.ute.quanlydatban.data.model.Booking
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -16,11 +17,25 @@ object ReminderScheduler {
 
     const val TAG = "BookingReminder"
     const val REMINDER_LEAD_TIME_MS = 60 * 60 * 1000L // 1 giờ trước giờ hẹn
+    const val REMINDER_LEAD_TIME_DEBUG_MS = 2 * 60 * 1000L // 2 phút trước giờ hẹn
+    const val PREF_REMINDER_DEMO = "pref_reminder_demo"
+    const val KEY_REMINDER_DEMO_ENABLED = "key_reminder_demo_enabled"
     const val WORK_NAME_PREFIX = "booking_reminder_"
 
     fun getWorkName(bookingId: String): String = "${WORK_NAME_PREFIX}${bookingId}"
 
+    fun getReminderLeadTimeMs(context: Context): Long {
+        if (!BuildConfig.DEBUG) return REMINDER_LEAD_TIME_MS
+        val prefs = context.getSharedPreferences(PREF_REMINDER_DEMO, Context.MODE_PRIVATE)
+        return if (prefs.getBoolean(KEY_REMINDER_DEMO_ENABLED, false)) {
+            REMINDER_LEAD_TIME_DEBUG_MS
+        } else {
+            REMINDER_LEAD_TIME_MS
+        }
+    }
+
     fun calculateDelay(
+        context: Context = BookTableApplication.appContext,
         dateStr: String,
         timeStr: String,
         nowMillis: Long = System.currentTimeMillis()
@@ -54,12 +69,13 @@ object ReminderScheduler {
             return null
         }
 
-        val reminderTargetMillis = targetTimeMillis - REMINDER_LEAD_TIME_MS
+        val leadTime = getReminderLeadTimeMs(context)
+        val reminderTargetMillis = targetTimeMillis - leadTime
         return if (nowMillis >= reminderTargetMillis) {
-            // Đặt gấp trong vòng chưa tới 1 giờ (0 < timeUntilBooking < 1 giờ) -> nhắc ngay
+            // Đặt gấp trong vòng chưa tới thời gian nhắc -> nhắc ngay
             0L
         } else {
-            // Còn trên 1 giờ -> lên lịch nhắc trước đúng 1 giờ
+            // Còn trên thời gian nhắc -> lên lịch nhắc trước đúng hạn
             reminderTargetMillis - nowMillis
         }
     }
@@ -73,7 +89,7 @@ object ReminderScheduler {
             return
         }
 
-        val delay = calculateDelay(booking.date, booking.time)
+        val delay = calculateDelay(context, booking.date, booking.time)
         if (delay == null) {
             Log.d(TAG, "Đơn #${booking.id} (${booking.date} ${booking.time}) đã qua giờ, bỏ qua lên lịch nhắc")
             return

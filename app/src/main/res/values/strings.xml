@@ -1020,4 +1020,7 @@
     <string name="waitlist_cancel_dialog_btn_confirm">Đồng ý hủy</string>
     <string name="waitlist_cancel_success">Đã hủy đăng ký chờ</string>
     <string name="waitlist_cancel_error">Không thể hủy đăng ký chờ. Vui lòng thử lại.</string>
+
+    <!-- Reminder Demo Switch (Debug) -->
+    <string name="profile_reminder_demo_switch">Chế độ demo nhắc lịch (2 phút)</string>
 </resources>
