@@ -107,11 +107,12 @@ class OwnerWaitlistFragment : Fragment() {
     }
 
     private fun applyFilter() {
+        val activeEntries = fullEntries.filter { it.status != "cancelled" }
         val filtered = when (currentFilter) {
-            "waiting" -> fullEntries.filter { it.status == "waiting" && !it.handled }
-            "notified" -> fullEntries.filter { it.status == "notified" && !it.handled }
-            "handled" -> fullEntries.filter { it.handled }
-            else -> fullEntries
+            "waiting" -> activeEntries.filter { it.status == "waiting" && !it.handled }
+            "notified" -> activeEntries.filter { it.status == "notified" && !it.handled }
+            "handled" -> activeEntries.filter { it.handled }
+            else -> activeEntries
         }
 
         waitlistAdapter.submitList(filtered)

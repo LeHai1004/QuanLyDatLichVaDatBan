@@ -253,11 +253,34 @@ class WaitlistActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        myAdapter = WaitlistAdapter(isOwnerMode = false)
+        myAdapter = WaitlistAdapter(
+            isOwnerMode = false,
+            onCancelClicked = { entry ->
+                showCancelConfirmDialog(entry)
+            }
+        )
         binding.rvMyWaitlist.apply {
             layoutManager = LinearLayoutManager(this@WaitlistActivity)
             adapter = myAdapter
         }
+    }
+
+    private fun showCancelConfirmDialog(entry: WaitlistEntry) {
+        AlertDialog.Builder(this)
+            .setTitle(getString(R.string.waitlist_cancel_dialog_title))
+            .setMessage(getString(R.string.waitlist_cancel_dialog_msg))
+            .setPositiveButton(getString(R.string.waitlist_cancel_dialog_btn_confirm)) { dialog, _ ->
+                dialog.dismiss()
+                viewModel.cancelWaitlist(entry.id) { success, msg ->
+                    if (success) {
+                        SnackbarHelper.show(binding.root, getString(R.string.waitlist_cancel_success))
+                    } else {
+                        SnackbarHelper.show(binding.root, msg ?: getString(R.string.waitlist_cancel_error))
+                    }
+                }
+            }
+            .setNegativeButton(getString(R.string.split_bill_dialog_btn_cancel), null)
+            .show()
     }
 
     private fun observeViewModel() {

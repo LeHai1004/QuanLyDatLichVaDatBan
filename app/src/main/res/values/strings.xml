@@ -1011,4 +1011,13 @@
 
     <!-- Review Expired (Review Fix) -->
     <string name="review_expired_error">Đơn đã hết hạn đánh giá</string>
+
+    <!-- Waitlist Cancel (Waitlist Fix) -->
+    <string name="waitlist_status_cancelled">Đã hủy</string>
+    <string name="waitlist_btn_cancel">Hủy chờ</string>
+    <string name="waitlist_cancel_dialog_title">Xác nhận hủy đăng ký chờ?</string>
+    <string name="waitlist_cancel_dialog_msg">Bạn có chắc chắn muốn hủy lượt đăng ký chờ này?</string>
+    <string name="waitlist_cancel_dialog_btn_confirm">Đồng ý hủy</string>
+    <string name="waitlist_cancel_success">Đã hủy đăng ký chờ</string>
+    <string name="waitlist_cancel_error">Không thể hủy đăng ký chờ. Vui lòng thử lại.</string>
 </resources>
