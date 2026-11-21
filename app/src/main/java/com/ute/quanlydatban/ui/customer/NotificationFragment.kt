@@ -47,6 +47,16 @@ class NotificationFragment : Fragment() {
         observeViewModel()
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.stopListening()
+    }
+
     private fun setupRecyclerView() {
         notificationAdapter = NotificationAdapter { notification ->
             viewModel.markAsRead(notification)

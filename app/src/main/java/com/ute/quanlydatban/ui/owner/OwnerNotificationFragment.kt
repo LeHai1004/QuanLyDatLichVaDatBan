@@ -45,6 +45,16 @@ class OwnerNotificationFragment : Fragment() {
         observeViewModel()
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.startListening()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.stopListening()
+    }
+
     private fun setupToolbar() {
         binding.ivBack.setOnClickListener {
             findNavController().navigateUp()
