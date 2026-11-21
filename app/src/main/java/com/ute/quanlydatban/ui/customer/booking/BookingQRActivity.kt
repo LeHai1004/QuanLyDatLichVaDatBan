@@ -1,6 +1,7 @@
 package com.ute.quanlydatban.ui.customer.booking
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -8,6 +9,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.ute.quanlydatban.R
+import com.ute.quanlydatban.data.model.Booking
+import com.ute.quanlydatban.data.model.BookingStatus
 import com.ute.quanlydatban.databinding.ActivityBookingQrBinding
 import com.ute.quanlydatban.util.QrCodeGenerator
 import com.ute.quanlydatban.util.SnackbarHelper
@@ -39,10 +42,18 @@ class BookingQRActivity : AppCompatActivity() {
         initIntentData()
         setupListeners()
         observeViewModel()
+    }
 
+    override fun onStart() {
+        super.onStart()
         if (bookingId.isNotBlank()) {
-            viewModel.loadData(bookingId, restaurantId)
+            viewModel.startListeningBooking(bookingId)
         }
+    }
+
+    override fun onStop() {
+        super.onStop()
+        viewModel.stopListeningBooking()
     }
 
     private fun initIntentData() {
@@ -102,6 +113,8 @@ class BookingQRActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.booking.observe(this) { b ->
             if (b != null) {
+                renderStatus(b)
+
                 val guestsStr = getString(R.string.booking_guest_format, b.guests)
                 val summary = listOf(b.date, b.time, guestsStr).filter { it.isNotBlank() }.joinToString(" · ")
                 binding.tvBookingDateTimeGuests.text = summary
@@ -119,6 +132,61 @@ class BookingQRActivity : AppCompatActivity() {
             if (res != null) {
                 binding.tvRestaurantName.text = res.name
                 binding.tvWelcomeBottom.text = getString(R.string.qr_restaurant_welcome_format, res.name)
+            }
+        }
+
+        viewModel.errorMessage.observe(this) { err ->
+            if (!err.isNullOrBlank()) {
+                SnackbarHelper.show(binding.root, err) {
+                    if (bookingId.isNotBlank()) {
+                        viewModel.startListeningBooking(bookingId)
+                    }
+                }
+                viewModel.clearMessages()
+            }
+        }
+    }
+
+    private fun renderStatus(b: Booking) {
+        val status = BookingStatus.from(b.status)
+        val statusText = when (status) {
+            BookingStatus.PENDING, BookingStatus.WAITING -> "Chờ xác nhận"
+            BookingStatus.CONFIRMED -> "Đã xác nhận"
+            BookingStatus.CHECKED_IN -> "Đã nhận bàn (Check-in)"
+            BookingStatus.SERVING -> "Đang phục vụ"
+            BookingStatus.PAID -> "Đã thanh toán"
+            BookingStatus.COMPLETED -> "Đã hoàn tất"
+            BookingStatus.REJECTED -> "Đã bị từ chối"
+            BookingStatus.EXPIRED -> "Đã hết hạn"
+            BookingStatus.CANCELLED -> "Đã hủy"
+            BookingStatus.NO_SHOW -> "Không đến (No-show)"
+        }
+        binding.tvTicketStatus.text = statusText
+
+        when (status) {
+            BookingStatus.PENDING, BookingStatus.WAITING -> {
+                binding.ivQrTicket.visibility = View.VISIBLE
+                binding.btnManualInput.visibility = View.VISIBLE
+                binding.btnArrived.visibility = View.GONE
+                binding.btnViewMap.visibility = View.VISIBLE
+            }
+            BookingStatus.CONFIRMED -> {
+                binding.ivQrTicket.visibility = View.VISIBLE
+                binding.btnManualInput.visibility = View.VISIBLE
+                binding.btnArrived.visibility = View.VISIBLE
+                binding.btnViewMap.visibility = View.VISIBLE
+            }
+            BookingStatus.CHECKED_IN, BookingStatus.SERVING -> {
+                binding.ivQrTicket.visibility = View.VISIBLE
+                binding.btnManualInput.visibility = View.VISIBLE
+                binding.btnArrived.visibility = View.GONE
+                binding.btnViewMap.visibility = View.VISIBLE
+            }
+            else -> {
+                binding.ivQrTicket.visibility = View.GONE
+                binding.btnManualInput.visibility = View.GONE
+                binding.btnArrived.visibility = View.GONE
+                binding.btnViewMap.visibility = View.GONE
             }
         }
     }

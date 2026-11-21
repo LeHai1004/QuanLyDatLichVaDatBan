@@ -124,6 +124,27 @@ class PaymentRepository(
         bookingRepository.get(bookingId, onResult)
     }
 
+    fun observeBooking(
+        bookingId: String,
+        onChange: (Booking?) -> Unit,
+        onError: (Exception) -> Unit
+    ): com.google.firebase.firestore.ListenerRegistration {
+        if (bookingId.isBlank()) {
+            onChange(null)
+            return firestore.collection("bookings").whereEqualTo("id", "__NONE__").addSnapshotListener { _, _ -> }
+        }
+        return firestore.collection("bookings").document(bookingId)
+            .addSnapshotListener { snapshot, error ->
+                if (error != null) {
+                    Log.e(TAG, "observeBooking error: ${error.message}", error)
+                    onError(error)
+                    return@addSnapshotListener
+                }
+                val booking = snapshot?.toObject(Booking::class.java)?.copy(id = snapshot.id)
+                onChange(booking)
+            }
+    }
+
     /**
      * Đánh dấu booking hết hạn (EXPIRED) khi quá 10 phút chưa cọc
      */

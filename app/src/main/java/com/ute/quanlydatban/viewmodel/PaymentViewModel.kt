@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.ListenerRegistration
 import com.ute.quanlydatban.data.model.Booking
 import com.ute.quanlydatban.data.model.BookingStatus
 import com.ute.quanlydatban.data.model.OrderItem
@@ -267,9 +268,40 @@ class PaymentViewModel(
         _errorMessage.value = null
     }
 
+    private var bookingListener: ListenerRegistration? = null
+
+    fun startListeningBooking(bookingId: String) {
+        if (bookingId.isBlank()) return
+        _isLoading.value = true
+        _errorMessage.value = null
+
+        bookingListener?.remove()
+        bookingListener = paymentRepository.observeBooking(
+            bookingId = bookingId,
+            onChange = { b ->
+                _isLoading.value = false
+                _booking.value = b
+                if (b != null && b.restaurantId.isNotBlank() && _restaurant.value == null) {
+                    loadRestaurant(b.restaurantId)
+                    startCountdown(b.createdAt)
+                }
+            },
+            onError = { err ->
+                _isLoading.value = false
+                _errorMessage.value = err.message ?: "Không thể tải thông tin đơn đặt bàn."
+            }
+        )
+    }
+
+    fun stopListeningBooking() {
+        bookingListener?.remove()
+        bookingListener = null
+    }
+
     override fun onCleared() {
         super.onCleared()
         countDownTimer?.cancel()
+        stopListeningBooking()
     }
 
     class Factory(
