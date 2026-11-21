@@ -214,6 +214,50 @@
                 android:orientation="vertical"
                 android:padding="8dp">
 
+                <!-- Reminder Demo Switch (Debug Only) -->
+                <LinearLayout
+                    android:id="@+id/llReminderDemoRow"
+                    android:layout_width="match_parent"
+                    android:layout_height="52dp"
+                    android:background="?attr/selectableItemBackground"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="12dp"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <ImageView
+                        android:layout_width="@dimen/profile_menu_icon_size"
+                        android:layout_height="@dimen/profile_menu_icon_size"
+                        android:contentDescription="@string/profile_reminder_demo_switch"
+                        android:src="@drawable/ic_clock"
+                        app:tint="@color/booktable_orange" />
+
+                    <TextView
+                        android:id="@+id/tvReminderDemo"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/be_vietnam_pro"
+                        android:text="@string/profile_reminder_demo_switch"
+                        android:textColor="@color/booktable_dark"
+                        android:textSize="@dimen/auth_body_text_size" />
+
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/swReminderDemo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/vReminderDemoDivider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/booktable_border"
+                    android:visibility="gone"
+                    tools:visibility="visible" />
+
                 <!-- 1. Thông tin cá nhân -->
                 <LinearLayout
                     android:id="@+id/llMenuInfo"
