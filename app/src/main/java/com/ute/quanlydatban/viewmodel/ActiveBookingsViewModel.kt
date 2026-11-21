@@ -38,6 +38,7 @@ class ActiveBookingsViewModel(
         _isLoading.value = true
         _errorMessage.value = null
 
+        bookingRepository.cleanupNoShowBookings(userId = userId)
         bookingRepository.getActiveBookingsForCustomer(userId) { result ->
             result.onSuccess { bookings ->
                 if (bookings.isEmpty()) {
